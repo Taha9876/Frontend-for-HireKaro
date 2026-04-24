@@ -11,7 +11,7 @@ from app.core.security import (
 )
 from app.models.company import Company
 from app.schemas.company import (
-    CompanySignup, CompanyLogin, OTPVerify, ResendOTPRequest,
+    CompanySignup, CompanyLogin, OTPVerify,
     TokenResponse, RefreshTokenRequest, CompanyResponse
 )
 
@@ -77,31 +77,6 @@ def verify_otp(data: OTPVerify, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Email verified successfully. You can now login."}
-
-# ─── RESEND OTP ───────────────────────────────────────────
-@router.post("/resend-otp")
-def resend_otp(data: ResendOTPRequest, db: Session = Depends(get_db)):
-    company = db.query(Company).filter(Company.email == data.email).first()
-    if not company:
-        raise HTTPException(status_code=404, detail="Company not found")
-    if company.is_verified:
-        raise HTTPException(status_code=400, detail="Already verified")
-
-    otp = generate_otp()
-    otp_expiry = datetime.utcnow() + timedelta(minutes=10)
-    company.otp_code = otp
-    company.otp_expires_at = otp_expiry
-    db.commit()
-
-    email_sent = send_otp_email(
-        to_email=company.email,
-        company_name=company.company_name,
-        otp=otp
-    )
-    if not email_sent:
-        print(f"Email failed, OTP: {otp}")
-
-    return {"message": "OTP resent. Check your email."}
 
 # ─── LOGIN ────────────────────────────────────────────────
 @router.post("/login", response_model=TokenResponse)
