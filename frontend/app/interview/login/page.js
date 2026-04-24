@@ -17,6 +17,8 @@ export default function InterviewLoginPage() {
         try {
             const res = await api.post('/api/v1/jobs/interview/candidate-login', form);
             localStorage.setItem("interview_username", form.username);
+            localStorage.setItem("interview_job_id", res.data.job_id);      // ← add
+            localStorage.setItem("interview_id", res.data.interview_id);    // ← add
             setResult(res.data);
 
         } catch (err) {
@@ -57,7 +59,7 @@ export default function InterviewLoginPage() {
                         : access.reason === 'not_started'
                             ? 'bg-gradient-to-br from-amber-50 to-amber-100/50'
                             : 'bg-gradient-to-br from-rose-50 to-rose-100/50'}`}>
-                        
+
                         <div className="text-5xl mb-3 relative z-10">
                             {access.accessible ? '🚀' : access.reason === 'not_started' ? '⏳' : '🔒'}
                         </div>
@@ -122,7 +124,7 @@ export default function InterviewLoginPage() {
                 }} />
 
             <div className="relative z-10 w-full max-w-md">
-                
+
                 {/* Branding above box */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4 shadow-lg text-2xl bg-white border" style={{ borderColor: 'rgba(139,92,246,0.15)', boxShadow: '0 10px 30px rgba(139,92,246,0.15)' }}>
@@ -136,7 +138,7 @@ export default function InterviewLoginPage() {
 
                 {/* Login Box */}
                 <div className="bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl overflow-hidden border p-8" style={{ borderColor: 'rgba(139,92,246,0.15)' }}>
-                    
+
                     {error && (
                         <div className="mb-6 px-4 py-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-600 text-sm font-medium text-center shadow-sm">
                             {error}

@@ -291,8 +291,47 @@ def candidate_login(
         "scheduled_date": str(interview.scheduled_date),
         "start_time": interview.start_time,
         "duration_minutes": interview.duration_minutes,
+        "interview_id": interview.id,        # ← add karo
+        "job_id": interview.job_id,          # ← add karo
         "access": access
     }
+
+@router.get("/interview/candidate-questions")
+def get_candidate_questions(
+    username: str,
+    db: Session = Depends(get_db)
+):
+    candidate = db.query(InterviewCandidate).filter(
+        InterviewCandidate.username == username
+    ).first()
+    if not candidate:
+        raise HTTPException(status_code=404, detail="Candidate not found")
+
+    interview = candidate.interview
+    if not interview:
+        raise HTTPException(status_code=404, detail="Interview not found")
+
+    questions = db.query(JobQuestion).filter(
+        JobQuestion.job_id == interview.job_id
+    ).order_by(JobQuestion.order_index).all()
+
+    return [
+        {
+            "id": q.id,
+            "text": q.question_text,
+            "type": q.question_type.value,
+            "section": q.question_type.value if q.question_type.value in ["verbal", "mcq", "coding"] else "verbal",
+            "difficulty": q.difficulty.value if q.difficulty else "medium",
+            "timeSeconds": (
+                180 if q.question_type.value == "verbal" else
+                480 if q.question_type.value == "coding" else
+                60
+            ),
+            "options": None,  # MCQ options baad mein add hongi
+            "correct": None,
+        }
+        for q in questions
+    ]
 
 
 

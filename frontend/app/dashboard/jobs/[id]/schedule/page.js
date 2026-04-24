@@ -158,29 +158,29 @@ export default function ScheduleInterviewPage() {
 
                         {/* Time */}
                         <div className="form-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] p-6">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center text-lg">
-                                ⏰
+                            <div className="flex items-center gap-3 mb-5">
+                                <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center text-lg">
+                                    ⏰
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-[#0a1628] text-sm">Start Time</h3>
+                                    <p className="text-xs text-slate-400">When should the interview begin?</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="font-bold text-[#0a1628] text-sm">Start Time</h3>
-                                <p className="text-xs text-slate-400">When should the interview begin?</p>
-                            </div>
+                            <input
+                                type="time"
+                                value={form.start_time}
+                                onChange={e => setForm({ ...form, start_time: e.target.value })}
+                                className="w-full px-4 py-3 text-sm text-[#0a1628] bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)] transition-all cursor-pointer"
+                            />
+                            {form.start_time && (
+                                <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
+                                    <span>Start: <strong className="text-[#0a1628]">{form.start_time}</strong></span>
+                                    <span>→</span>
+                                    <span>End: <strong className="text-[#0a1628]">{getEndTime()}</strong></span>
+                                </div>
+                            )}
                         </div>
-                        <input
-                            type="time"
-                            value={form.start_time}
-                            onChange={e => setForm({ ...form, start_time: e.target.value })}
-                            className="w-full px-4 py-3 text-sm text-[#0a1628] bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)] transition-all cursor-pointer"
-                        />
-                        {form.start_time && (
-                            <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
-                                <span>Start: <strong className="text-[#0a1628]">{form.start_time}</strong></span>
-                                <span>→</span>
-                                <span>End: <strong className="text-[#0a1628]">{getEndTime()}</strong></span>
-                            </div>
-                        )}
-                    </div>
 
                         {/* Duration */}
                         <div className="form-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(245,158,11,0.05)] p-6">
@@ -270,52 +270,53 @@ export default function ScheduleInterviewPage() {
                         </button>
                     </div>
 
-                {/* Right — Summary */}
-                <div className="flex flex-col gap-5">
+                    {/* Right — Summary */}
+                    <div className="flex flex-col gap-5">
 
-                    {/* Summary Card */}
-                    <div className="summary-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(59,130,246,0.05)] overflow-hidden">
-                        <div className="px-6 py-5" style={{ background: 'linear-gradient(135deg, #0a1628, #162847)' }}>
-                            <h3 className="text-white font-bold text-base" style={{ fontFamily: 'Syne, sans-serif' }}>
-                                📋 Interview Summary
-                            </h3>
-                            <p className="text-white/50 text-xs mt-0.5">Review before confirming</p>
-                        </div>
-                        <div className="p-6 flex flex-col gap-4">
-                            {[
-                                { icon: '📅', label: 'Date', value: form.scheduled_date || '—' },
-                                { icon: '⏰', label: 'Start Time', value: form.start_time || '—' },
-                                { icon: '🏁', label: 'End Time', value: form.start_time ? getEndTime() : '—' },
-                                { icon: '⏱️', label: 'Duration', value: `${finalDuration} minutes` },
-                            ].map(item => (
-                                <div key={item.label} className="flex items-center justify-between py-2 border-b border-slate-100/50 last:border-0">
-                                    <div className="flex items-center gap-2">
-                                        <span>{item.icon}</span>
-                                        <span className="text-sm text-slate-500">{item.label}</span>
+                        {/* Summary Card */}
+                        <div className="summary-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(59,130,246,0.05)] overflow-hidden">
+                            <div className="px-6 py-5" style={{ background: 'linear-gradient(135deg, #0a1628, #162847)' }}>
+                                <h3 className="text-white font-bold text-base" style={{ fontFamily: 'Syne, sans-serif' }}>
+                                    📋 Interview Summary
+                                </h3>
+                                <p className="text-white/50 text-xs mt-0.5">Review before confirming</p>
+                            </div>
+                            <div className="p-6 flex flex-col gap-4">
+                                {[
+                                    { icon: '📅', label: 'Date', value: form.scheduled_date || '—' },
+                                    { icon: '⏰', label: 'Start Time', value: form.start_time || '—' },
+                                    { icon: '🏁', label: 'End Time', value: form.start_time ? getEndTime() : '—' },
+                                    { icon: '⏱️', label: 'Duration', value: `${finalDuration} minutes` },
+                                ].map(item => (
+                                    <div key={item.label} className="flex items-center justify-between py-2 border-b border-slate-100/50 last:border-0">
+                                        <div className="flex items-center gap-2">
+                                            <span>{item.icon}</span>
+                                            <span className="text-sm text-slate-500">{item.label}</span>
+                                        </div>
+                                        <span className="text-sm font-semibold text-[#0a1628]">{item.value}</span>
                                     </div>
-                                    <span className="text-sm font-semibold text-[#0a1628]">{item.value}</span>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* What happens next */}
-                    <div className="summary-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] p-6">
-                        <h3 className="font-bold text-[#0a1628] text-sm mb-4">What happens after confirming?</h3>
-                        <div className="flex flex-col gap-3">
-                            {[
-                                { step: '1', text: 'Interview is scheduled in the system', color: 'bg-blue-600' },
-                                { step: '2', text: 'Unique login credentials generated for each candidate', color: 'bg-violet-600' },
-                                { step: '3', text: 'Email sent to all shortlisted candidates', color: 'bg-amber-500' },
-                                { step: '4', text: 'Candidates can login only during scheduled time', color: 'bg-emerald-500' },
-                            ].map(item => (
-                                <div key={item.step} className="flex items-start gap-3">
-                                    <div className={`w-6 h-6 rounded-full ${item.color} text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                                        {item.step}
+                        {/* What happens next */}
+                        <div className="summary-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] p-6">
+                            <h3 className="font-bold text-[#0a1628] text-sm mb-4">What happens after confirming?</h3>
+                            <div className="flex flex-col gap-3">
+                                {[
+                                    { step: '1', text: 'Interview is scheduled in the system', color: 'bg-blue-600' },
+                                    { step: '2', text: 'Unique login credentials generated for each candidate', color: 'bg-violet-600' },
+                                    { step: '3', text: 'Email sent to all shortlisted candidates', color: 'bg-amber-500' },
+                                    { step: '4', text: 'Candidates can login only during scheduled time', color: 'bg-emerald-500' },
+                                ].map(item => (
+                                    <div key={item.step} className="flex items-start gap-3">
+                                        <div className={`w-6 h-6 rounded-full ${item.color} text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                                            {item.step}
+                                        </div>
+                                        <p className="text-sm text-slate-500 leading-relaxed">{item.text}</p>
                                     </div>
-                                    <p className="text-sm text-slate-500 leading-relaxed">{item.text}</p>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2,18 +2,10 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const QUESTIONS = [
-    { id: 1, type: 'verbal', section: 'verbal', text: 'Tell me about yourself and your experience with MERN stack development.', timeSeconds: 180 },
-    { id: 2, type: 'verbal', section: 'verbal', text: 'Describe a challenging project you worked on. How did you handle the difficulties?', timeSeconds: 180 },
-    { id: 3, type: 'mcq', section: 'mcq', text: 'Which of the following is used to manage state globally in a React application?', options: ['useState', 'Redux / Context API', 'useEffect', 'React Router'], correct: 1, timeSeconds: 60 },
-    { id: 4, type: 'mcq', section: 'mcq', text: 'Which HTTP method is typically used to update an existing resource in REST API?', options: ['GET', 'POST', 'PUT / PATCH', 'DELETE'], correct: 2, timeSeconds: 60 },
-    { id: 5, type: 'coding', section: 'coding', text: 'Write a function that takes an array of numbers and returns the sum of all even numbers.', timeSeconds: 480 },
-];
-
-const SECTIONS = [
-    { id: 'verbal', label: 'Verbal', icon: '🗣️', color: 'blue', questions: QUESTIONS.filter(q => q.section === 'verbal') },
-    { id: 'mcq', label: 'MCQ', icon: '📝', color: 'amber', questions: QUESTIONS.filter(q => q.section === 'mcq') },
-    { id: 'coding', label: 'Coding', icon: '💻', color: 'violet', questions: QUESTIONS.filter(q => q.section === 'coding') },
+const sections_CONFIG = [
+    { id: 'verbal', label: 'Verbal', icon: '🗣️', color: 'blue' },
+    { id: 'mcq', label: 'MCQ', icon: '📝', color: 'amber' },
+    { id: 'coding', label: 'Coding', icon: '💻', color: 'violet' },
 ];
 
 const LANGUAGES = ['JavaScript', 'Python', 'Java', 'C++'];
@@ -32,20 +24,56 @@ function formatTime(sec) {
 
 function timerColor(sec, total) {
     const ratio = sec / total;
-    if (ratio > 0.5) return '#10b981'; // green
-    if (ratio > 0.25) return '#f59e0b'; // amber
-    return '#ef4444'; // red
+    if (ratio > 0.5) return '#10b981';
+    if (ratio > 0.25) return '#f59e0b';
+    return '#ef4444';
 }
 
 export default function InterviewRoomPage() {
     const [username, setUsername] = useState(null);
+    const [questions, setQuestions] = useState([]);
+    const [sections, setSections] = useState([]);
+    const [questionsLoading, setQuestionsLoading] = useState(true);
 
+    // ── FETCH QUESTIONS ───────────────────────────────────
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const user = localStorage.getItem("interview_username");
-            setUsername(user);
-        }
+        const fetchQuestions = async () => {
+            try {
+                const user = localStorage.getItem('interview_username');
+                if (!user) {
+                    setQuestionsLoading(false);
+                    return;
+                }
+                setUsername(user);
+
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/candidate-questions?username=${user}`
+                );
+                const data = await res.json();
+
+                if (data && data.length > 0) {
+                    setQuestions(data);
+
+                    const verbal = data.filter(q => q.type === 'verbal');
+                    const mcq = data.filter(q => q.type === 'mcq');
+                    const coding = data.filter(q => q.type === 'coding');
+
+                    const built = [];
+                    if (verbal.length > 0) built.push({ ...sections_CONFIG.find(s => s.id === 'verbal'), questions: verbal });
+                    if (mcq.length > 0) built.push({ ...sections_CONFIG.find(s => s.id === 'mcq'), questions: mcq });
+                    if (coding.length > 0) built.push({ ...sections_CONFIG.find(s => s.id === 'coding'), questions: coding });
+
+                    setSections(built);
+                }
+            } catch (e) {
+                console.error('Questions fetch failed:', e);
+            } finally {
+                setQuestionsLoading(false);
+            }
+        };
+        fetchQuestions();
     }, []);
+
     const [phase, setPhase] = useState('guide');
     const [permError, setPermError] = useState('');
     const [sectionIdx, setSectionIdx] = useState(0);
@@ -71,25 +99,29 @@ export default function InterviewRoomPage() {
     const selectedOptionRef = useRef(null);
     const codeRef = useRef(CODE_STUBS['JavaScript']);
     const tabSwitchesRef = useRef(0);
+    // ── Keep sections in a ref so advanceQuestion never has stale closure ──
+    const sectionsRef = useRef([]);
 
-    // Keep refs in sync
     useEffect(() => { answersRef.current = answers; }, [answers]);
     useEffect(() => { transcriptRef.current = transcript; }, [transcript]);
     useEffect(() => { selectedOptionRef.current = selectedOption; }, [selectedOption]);
     useEffect(() => { codeRef.current = code; }, [code]);
     useEffect(() => { tabSwitchesRef.current = tabSwitches; }, [tabSwitches]);
+    useEffect(() => { sectionsRef.current = sections; }, [sections]);
 
-    const currentSection = SECTIONS[sectionIdx];
+    const currentSection = sections[sectionIdx];
     const currentQ = currentSection?.questions[qIdx];
 
-    // Tab switch
+    // Tab switch detection
     useEffect(() => {
-        const handler = () => { if (document.hidden && phase === 'interview') setTabSwitches(p => p + 1); };
+        const handler = () => {
+            if (document.hidden && phase === 'interview') setTabSwitches(p => p + 1);
+        };
         document.addEventListener('visibilitychange', handler);
         return () => document.removeEventListener('visibilitychange', handler);
     }, [phase]);
 
-    // Camera
+    // ── CAMERA ────────────────────────────────────────────
     const startCamera = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -115,7 +147,7 @@ export default function InterviewRoomPage() {
         mediaRecorderRef.current?.stop();
     };
 
-    // Attach stream to video when videoRef mounts in interview phase
+    // Re-attach stream when phase switches to interview
     useEffect(() => {
         if (phase === 'interview' && videoRef.current && streamRef.current) {
             videoRef.current.srcObject = streamRef.current;
@@ -123,7 +155,7 @@ export default function InterviewRoomPage() {
         }
     }, [phase]);
 
-    // Text to Speech
+    // ── SPEECH ────────────────────────────────────────────
     const speakQuestion = useCallback((text) => {
         if (!('speechSynthesis' in window)) return;
         window.speechSynthesis.cancel();
@@ -134,7 +166,6 @@ export default function InterviewRoomPage() {
         setTimeout(() => window.speechSynthesis.speak(utterance), 600);
     }, []);
 
-    // Speech recognition
     const startListening = useCallback(() => {
         if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) return;
         const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -164,7 +195,7 @@ export default function InterviewRoomPage() {
         setIsListening(false);
     }, []);
 
-    // Save answer using refs (safe inside timer callbacks)
+    // ── SAVE ANSWER ───────────────────────────────────────
     const saveCurrentAnswerFromRefs = useCallback((q) => {
         if (!q) return;
         const answer =
@@ -183,51 +214,50 @@ export default function InterviewRoomPage() {
         }));
     }, [language]);
 
-    // ── SUBMIT FUNCTION ───────────────────────────────────
-    const submitInterview = async (finalAnswers, finalTabSwitches) => {
+    // ── SUBMIT ────────────────────────────────────────────
+    const submitInterview = useCallback(async (finalAnswers, finalTabSwitches) => {
         try {
-            const username = localStorage.getItem('interview_username');
-
-            const answersPayload = QUESTIONS.map(q => ({
-                id: q.id,
-                type: q.type,
-                question: q.text,
-                options: q.options || [],
-                correct: q.correct ?? null,
-                ...finalAnswers[q.id] || { answered: false, answer: null }
-            }));
+            const user = localStorage.getItem('interview_username');
+            const answersPayload = sectionsRef.current
+                .flatMap(s => s.questions)
+                .map(q => ({
+                    id: q.id,
+                    type: q.type,
+                    question: q.text,
+                    options: q.options || [],
+                    correct: q.correct ?? null,
+                    ...(finalAnswers[q.id] || { answered: false, answer: null })
+                }));
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/submit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: username,
-                    answers: answersPayload,
-                    tab_switches: finalTabSwitches
-                })
+                body: JSON.stringify({ username: user, answers: answersPayload, tab_switches: finalTabSwitches })
             });
 
-            // Video upload
             if (recordedChunksRef.current.length > 0) {
                 const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
                 const formData = new FormData();
-                formData.append('file', blob, `${username}.webm`);
-                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/upload-video?username=${username}`, {
-                    method: 'POST',
-                    body: formData
-                });
+                formData.append('file', blob, `${user}.webm`);
+                await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/upload-video?username=${user}`,
+                    { method: 'POST', body: formData }
+                );
             }
         } catch (e) {
             console.error('Submit failed:', e);
         }
-    };
+    }, []);
 
-    // Advance question
+    // ── ADVANCE QUESTION — uses ref, never stale ──────────
     const advanceQuestion = useCallback((currentSectionIdx, currentQIdx) => {
-        const section = SECTIONS[currentSectionIdx];
+        const latestSections = sectionsRef.current;
+        const section = latestSections[currentSectionIdx];
+        if (!section) return;
+
         if (currentQIdx < section.questions.length - 1) {
             setQIdx(currentQIdx + 1);
-        } else if (currentSectionIdx < SECTIONS.length - 1) {
+        } else if (currentSectionIdx < latestSections.length - 1) {
             setSectionIdx(currentSectionIdx + 1);
             setQIdx(0);
         } else {
@@ -238,9 +268,9 @@ export default function InterviewRoomPage() {
             setPhase('finished');
             submitInterview(finalAnswers, finalTabSwitches);
         }
-    }, []);
+    }, [submitInterview]);
 
-    // Timer
+    // ── TIMER ─────────────────────────────────────────────
     const startTimer = useCallback((seconds, q, sIdx, qI) => {
         clearInterval(timerRef.current);
         setTimeLeft(seconds);
@@ -257,7 +287,7 @@ export default function InterviewRoomPage() {
         }, 1000);
     }, [saveCurrentAnswerFromRefs, advanceQuestion]);
 
-    // Question change effect
+    // ── QUESTION CHANGE EFFECT ────────────────────────────
     useEffect(() => {
         if (phase === 'interview' && currentQ) {
             setTranscript('');
@@ -295,8 +325,33 @@ export default function InterviewRoomPage() {
         codeRef.current = CODE_STUBS[lang];
     };
 
-    // ── GUIDE ─────────────────────────────────────────────
-    if (phase === 'guide') return (
+    // ══════════════════════════════════════════════════════
+    // ── GUIDE PHASE ───────────────────────────────────────
+    // ══════════════════════════════════════════════════════
+
+    // Loading state
+    if (phase === 'guide' && questionsLoading) return (
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#faf9ff' }}>
+            <div className="text-center">
+                <div className="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-slate-500 font-medium">Loading your interview...</p>
+            </div>
+        </div>
+    );
+
+    // No questions found
+    if (phase === 'guide' && !questionsLoading && sections.length === 0) return (
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#faf9ff' }}>
+            <div className="text-center">
+                <div className="text-5xl mb-4">⚠️</div>
+                <p className="text-slate-700 font-bold text-lg">No questions found</p>
+                <p className="text-slate-400 text-sm mt-2">Please contact the hiring team.</p>
+            </div>
+        </div>
+    );
+
+    // ── FIX: Guide screen with sections loaded ────────────
+    if (phase === 'guide' && sections.length > 0) return (
         <div className="min-h-screen flex items-center justify-center px-4 py-10 relative overflow-hidden"
             style={{ background: '#faf9ff', color: '#1a1535' }}>
             <div className="fixed inset-0 pointer-events-none z-0"
@@ -316,16 +371,19 @@ export default function InterviewRoomPage() {
                     <p className="text-slate-500 font-medium text-sm">Please read carefully before starting</p>
                 </div>
                 <div className="p-8">
+                    {/* Section overview */}
                     <div className="grid grid-cols-3 gap-4 mb-6">
-                        {SECTIONS.map((s, i) => (
+                        {sections.map((s, i) => (
                             <div key={s.id} className="p-4 rounded-2xl border bg-white shadow-sm" style={{ borderColor: 'rgba(139,92,246,0.1)' }}>
                                 <div className="text-2xl mb-2">{s.icon}</div>
                                 <div className="text-xs font-bold text-violet-600 mb-1">Section {i + 1}</div>
                                 <div className="text-sm font-bold text-slate-800">{s.label}</div>
-                                <div className="text-xs text-slate-500 mt-1">{s.questions.length} questions</div>
+                                <div className="text-xs text-slate-500 mt-1">{s.questions.length} question{s.questions.length !== 1 ? 's' : ''}</div>
                             </div>
                         ))}
                     </div>
+
+                    {/* Rules */}
                     <div className="flex flex-col gap-3 mb-8">
                         {[
                             { icon: '🎥', text: 'Camera and microphone will be active throughout. Your video will be recorded.' },
@@ -342,6 +400,7 @@ export default function InterviewRoomPage() {
                             </div>
                         ))}
                     </div>
+
                     <button onClick={() => setPhase('permission')}
                         className="w-full py-4 text-white font-bold text-sm rounded-xl cursor-pointer transition-all hover:-translate-y-0.5 shadow-lg"
                         style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', boxShadow: '0 8px 24px rgba(139,92,246,0.25)' }}>
@@ -371,7 +430,6 @@ export default function InterviewRoomPage() {
                     <p className="text-slate-500 font-medium text-sm mt-1">Preview your camera before starting</p>
                 </div>
                 <div className="p-8">
-                    {/* Live Camera Preview */}
                     <div className="relative rounded-2xl overflow-hidden bg-slate-900 border mb-6 shadow-inner" style={{ aspectRatio: '4/3', borderColor: 'rgba(139,92,246,0.15)' }}>
                         <video ref={videoRef} autoPlay muted playsInline className="w-full h-full object-cover scale-x-[-1]" />
                         {!camReady && (
@@ -436,7 +494,7 @@ export default function InterviewRoomPage() {
 
         return (
             <div className="min-h-screen relative overflow-hidden" style={{ background: '#faf9ff', color: '#1a1535' }}>
-                 <div className="fixed inset-0 pointer-events-none z-0"
+                <div className="fixed inset-0 pointer-events-none z-0"
                     style={{
                         backgroundImage: 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
@@ -457,11 +515,11 @@ export default function InterviewRoomPage() {
                         <div className="text-6xl mb-4 drop-shadow-md">🎉</div>
                         <h1 className="text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">Interview Complete!</h1>
                         <p className="text-slate-500 font-medium">Your responses have been securely recorded.</p>
-                        
+
                         <div className="flex justify-center gap-6 mt-8">
                             {[
-                                { label: 'Answered', value: `${answeredCount}/${QUESTIONS.length}`, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100' },
-                                { label: 'Not Answered', value: QUESTIONS.length - answeredCount, color: 'text-rose-600', bg: 'bg-rose-50 border-rose-100' },
+                                { label: 'Answered', value: `${answeredCount}/${questions.length}`, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100' },
+                                { label: 'Not Answered', value: questions.length - answeredCount, color: 'text-rose-600', bg: 'bg-rose-50 border-rose-100' },
                                 { label: 'Tab Switches', value: tabSwitches, color: tabSwitches > 0 ? 'text-amber-600' : 'text-slate-600', bg: tabSwitches > 0 ? 'bg-amber-50 border-amber-100' : 'bg-slate-50 border-slate-200' },
                             ].map(s => (
                                 <div key={s.label} className={`px-8 py-5 rounded-2xl border ${s.bg} shadow-sm`}>
@@ -472,7 +530,6 @@ export default function InterviewRoomPage() {
                         </div>
                     </div>
 
-                    {/* Video Playback */}
                     {videoBlob && (
                         <div className="bg-white rounded-3xl p-8 mb-8 shadow-xl border border-violet-100">
                             <h2 className="text-slate-900 font-bold mb-5 flex items-center gap-2"><span className="text-xl">🎬</span> Session Recording</h2>
@@ -481,21 +538,20 @@ export default function InterviewRoomPage() {
                         </div>
                     )}
 
-                    {/* Q&A Review */}
                     <div className="mb-4 flex items-center justify-between px-2">
                         <h2 className="text-slate-900 font-bold text-lg">📋 Response Summary</h2>
                     </div>
                     <div className="flex flex-col gap-5">
-                        {QUESTIONS.map((q, idx) => {
+                        {questions.map((q, idx) => {
                             const ans = answers[q.id];
                             const hasAnswer = ans?.answered;
-                            const sectionInfo = SECTIONS.find(s => s.id === q.section);
+                            const sectionInfo = sections.find(s => s.id === q.type);
                             const sText = sectionInfo?.color === 'blue' ? '#2563eb' : sectionInfo?.color === 'amber' ? '#d97706' : '#9333ea';
                             const sBg = sectionInfo?.color === 'blue' ? '#eff6ff' : sectionInfo?.color === 'amber' ? '#fffbeb' : '#faf5ff';
                             const sBorder = sectionInfo?.color === 'blue' ? '#bfdbfe' : sectionInfo?.color === 'amber' ? '#fde68a' : '#e9d5ff';
 
                             return (
-                                <div key={q.id} className={`rounded-3xl border p-6 bg-white shadow-sm hover:shadow-md transition-shadow 
+                                <div key={q.id} className={`rounded-3xl border p-6 bg-white shadow-sm hover:shadow-md transition-shadow
                                     ${hasAnswer ? 'border-violet-100' : 'border-rose-100 bg-rose-50/30'}`}>
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"
@@ -508,7 +564,7 @@ export default function InterviewRoomPage() {
                                         </span>
                                     </div>
                                     <p className="text-slate-800 text-base font-semibold mb-4 leading-relaxed">{q.text}</p>
-                                    
+
                                     {hasAnswer ? (
                                         <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200">
                                             {q.type === 'mcq' ? (
@@ -542,12 +598,11 @@ export default function InterviewRoomPage() {
     const progress = (timeLeft / totalTime) * 100;
     const color = timerColor(timeLeft, totalTime);
     const sectionColor = currentSection.color;
-    // Remap colors for the light theme
     const sectionBg = sectionColor === 'blue' ? '#eff6ff' : sectionColor === 'amber' ? '#fffbeb' : '#faf5ff';
     const sectionBorder = sectionColor === 'blue' ? '#bfdbfe' : sectionColor === 'amber' ? '#fde68a' : '#e9d5ff';
     const sectionText = sectionColor === 'blue' ? '#1d4ed8' : sectionColor === 'amber' ? '#d97706' : '#9333ea';
 
-    const overallQNum = SECTIONS.slice(0, sectionIdx).reduce((acc, s) => acc + s.questions.length, 0) + qIdx + 1;
+    const overallQNum = sections.slice(0, sectionIdx).reduce((acc, s) => acc + s.questions.length, 0) + qIdx + 1;
 
     return (
         <div className="h-screen flex flex-col overflow-hidden" style={{ background: '#faf9ff', color: '#1a1535' }}>
@@ -560,9 +615,9 @@ export default function InterviewRoomPage() {
                         <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-1">Live Evaluation</span>
                     </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
-                    {SECTIONS.map((s, i) => (
+                    {sections.map((s, i) => (
                         <div key={s.id} className="flex items-center gap-2">
                             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all border
                                 ${i === sectionIdx ? 'bg-violet-100 text-violet-700 border-violet-200 shadow-sm'
@@ -570,11 +625,11 @@ export default function InterviewRoomPage() {
                                         : 'text-slate-400 bg-slate-50 border-transparent'}`}>
                                 {i < sectionIdx ? '✓' : s.icon} {s.label}
                             </div>
-                            {i < SECTIONS.length - 1 && <span className="text-slate-300">›</span>}
+                            {i < sections.length - 1 && <span className="text-slate-300">›</span>}
                         </div>
                     ))}
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                     {tabSwitches > 0 && (
                         <div className="flex items-center gap-2 px-3 py-1.5 bg-rose-50 border border-rose-200 rounded-full shadow-sm">
@@ -590,11 +645,9 @@ export default function InterviewRoomPage() {
 
             {/* Main Workspace */}
             <div className="flex flex-1 gap-5 p-5 overflow-hidden">
-                
+
                 {/* Left Panel */}
                 <div className="w-72 flex flex-col gap-4 flex-shrink-0">
-                    
-                    {/* Camera */}
                     <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 shadow-md" style={{ aspectRatio: '4/3' }}>
                         <video ref={videoRef} autoPlay muted playsInline className="w-full h-full object-cover scale-x-[-1]" />
                         <div className="absolute bottom-3 left-3 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10">
@@ -609,7 +662,6 @@ export default function InterviewRoomPage() {
                         )}
                     </div>
 
-                    {/* Section info */}
                     <div className="p-5 rounded-3xl border shadow-sm" style={{ background: sectionBg, borderColor: sectionBorder }}>
                         <div className="flex items-center gap-3 mb-4">
                             <span className="text-2xl">{currentSection.icon}</span>
@@ -627,24 +679,20 @@ export default function InterviewRoomPage() {
                         </div>
                     </div>
 
-                    {/* Progress */}
                     <div className="p-5 bg-white rounded-3xl border border-violet-100 shadow-sm mt-auto">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Overall Progress</p>
                         <div className="h-2 bg-slate-100 rounded-full overflow-hidden mb-3">
                             <div className="h-full rounded-full transition-all duration-700 ease-out"
-                                style={{ width: `${(overallQNum / QUESTIONS.length) * 100}%`, background: 'linear-gradient(90deg, #8b5cf6, #c026d3)' }} />
+                                style={{ width: `${(overallQNum / questions.length) * 100}%`, background: 'linear-gradient(90deg, #8b5cf6, #c026d3)' }} />
                         </div>
-                        <p className="text-xs font-bold text-slate-600">{Math.round((overallQNum / QUESTIONS.length)*100)}% Complete</p>
+                        <p className="text-xs font-bold text-slate-600">{Math.round((overallQNum / questions.length) * 100)}% Complete</p>
                     </div>
                 </div>
 
                 {/* Right Panel */}
                 <div className="flex-1 flex flex-col gap-4 min-w-0 overflow-hidden">
-                    
-                    {/* Question Card */}
                     <div className="bg-white border border-violet-100 shadow-sm rounded-3xl p-6 flex-shrink-0 relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-violet-50 to-transparent rounded-bl-[100px] pointer-events-none opacity-50" />
-                        
                         <div className="flex items-start justify-between gap-6 relative z-10">
                             <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-3">
@@ -656,7 +704,6 @@ export default function InterviewRoomPage() {
                                 </div>
                                 <p className="text-slate-800 text-xl font-bold leading-relaxed">{currentQ.text}</p>
                             </div>
-                            
                             <div className="flex-shrink-0 relative w-16 h-16 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-100 shadow-inner">
                                 <svg className="w-12 h-12 -rotate-90" viewBox="0 0 64 64">
                                     <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="5" />
@@ -672,9 +719,7 @@ export default function InterviewRoomPage() {
                         </div>
                     </div>
 
-                    {/* Answer Workspace */}
                     <div className="flex-1 bg-white border border-violet-100 shadow-sm rounded-3xl p-6 flex flex-col overflow-hidden">
-                        
                         {/* VERBAL */}
                         {currentQ.type === 'verbal' && (
                             <>
@@ -734,21 +779,20 @@ export default function InterviewRoomPage() {
                                     <div className="flex items-center gap-3">
                                         <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Compiler</span>
                                         <div className="flex bg-slate-100 p-1 rounded-xl">
-                                        {LANGUAGES.map(lang => (
-                                            <button key={lang} onClick={() => handleLangChange(lang)}
-                                                className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all"
-                                                style={{ 
-                                                    background: language === lang ? '#ffffff' : 'transparent', 
-                                                    color: language === lang ? '#1a1535' : '#64608a',
-                                                    boxShadow: language === lang ? '0 2px 6px rgba(0,0,0,0.05)' : 'none'
-                                                }}>
-                                                {lang}
-                                            </button>
-                                        ))}
+                                            {LANGUAGES.map(lang => (
+                                                <button key={lang} onClick={() => handleLangChange(lang)}
+                                                    className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all"
+                                                    style={{
+                                                        background: language === lang ? '#ffffff' : 'transparent',
+                                                        color: language === lang ? '#1a1535' : '#64608a',
+                                                        boxShadow: language === lang ? '0 2px 6px rgba(0,0,0,0.05)' : 'none'
+                                                    }}>
+                                                    {lang}
+                                                </button>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div className="flex-1 relative rounded-2xl overflow-hidden border shadow-inner min-h-0 bg-[#0f172a] border-slate-700">
                                     <div className="flex items-center justify-between px-4 py-2 bg-[#1e293b] border-b border-slate-700">
                                         <div className="flex items-center gap-3">
@@ -788,7 +832,7 @@ export default function InterviewRoomPage() {
                             <button onClick={handleNext}
                                 className="flex items-center gap-2 px-8 py-3.5 text-white font-bold text-sm rounded-xl transition-all shadow-lg hover:-translate-y-0.5 hover:shadow-xl"
                                 style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)' }}>
-                                {sectionIdx === SECTIONS.length - 1 && qIdx === currentSection.questions.length - 1
+                                {sectionIdx === sections.length - 1 && qIdx === currentSection.questions.length - 1
                                     ? 'Submit Interview ✓'
                                     : 'Next Question →'}
                             </button>
