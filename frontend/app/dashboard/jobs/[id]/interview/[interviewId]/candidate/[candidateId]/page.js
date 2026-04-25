@@ -36,6 +36,8 @@ export default function CandidateDetailPage() {
             .finally(() => setLoading(false));
 
 
+
+
     }, [interviewId, candidateId]);
 
     const handleVideoDownload = () => {

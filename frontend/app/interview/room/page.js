@@ -62,6 +62,7 @@ export default function InterviewRoomPage() {
                     if (verbal.length > 0) built.push({ ...sections_CONFIG.find(s => s.id === 'verbal'), questions: verbal });
                     if (mcq.length > 0) built.push({ ...sections_CONFIG.find(s => s.id === 'mcq'), questions: mcq });
                     if (coding.length > 0) built.push({ ...sections_CONFIG.find(s => s.id === 'coding'), questions: coding });
+                    console.log(data);
 
                     setSections(built);
                 }

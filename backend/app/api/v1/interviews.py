@@ -19,6 +19,7 @@ from app.core.evaluation import evaluate_verbal_answer, evaluate_coding_answer, 
 from app.core.interview_utils import verify_password, is_interview_accessible
 import os
 from datetime import datetime
+from app.core.video_analysis import analyze_interview_video
 
 router = APIRouter(prefix="/jobs", tags=["Interviews"])
 
@@ -419,6 +420,7 @@ async def submit_interview(
 # ─── UPLOAD VIDEO ─────────────────────────────────────────
 @router.post("/interview/upload-video")
 async def upload_video(
+    background_tasks: BackgroundTasks,
     username: str,
     file: UploadFile = File(...),
     db: Session = Depends(get_db)
@@ -448,8 +450,35 @@ async def upload_video(
         result.video_path = video_path
         db.commit()
 
+    # Video save hone ke baad — yeh add karo return se pehle
+    background_tasks.add_task(
+        _analyze_video_background,
+        video_path=video_path,
+        candidate_id=candidate.id
+    )
+
     return {"message": "Video uploaded", "path": video_path}
 
+
+def _analyze_video_background(video_path: str, candidate_id: int):
+    """Background mein video analyze karo aur result save karo"""
+    db = SessionLocal()
+    try:
+        analysis = analyze_interview_video(video_path)
+        
+        result = db.query(InterviewResult).filter(
+            InterviewResult.interview_candidate_id == candidate_id
+        ).first()
+        
+        if result:
+            result.video_analysis = analysis
+            result.video_analyzed = True
+            db.commit()
+            print(f"Video analysis saved for candidate {candidate_id}")
+    except Exception as e:
+        print(f"Background video analysis failed: {e}")
+    finally:
+        db.close()
 
 # ─── GET CANDIDATE RESULT (for HR) ───────────────────────
 @router.get("/interview/{interview_id}/candidate/{candidate_id}/detail")
@@ -487,6 +516,9 @@ def get_candidate_detail(
             "tab_switches":  result.tab_switches if result else 0,
             "video_path": result.video_path.replace("\\", "/") if result else None,
             "evaluated_at":  str(result.evaluated_at) if result else None,
+            # ── yeh do naye add karo ──
+            "video_analyzed": result.video_analyzed if result else False,
+            "video_analysis": result.video_analysis if result else None,
         } if result else None,
         "answers": [
             {

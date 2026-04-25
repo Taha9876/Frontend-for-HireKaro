@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import enum
 from app.core.database import Base
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 class InterviewStatus(str, enum.Enum):
@@ -79,5 +80,8 @@ class InterviewResult(Base):
     tab_switches = Column(Integer, default=0)
     video_path = Column(String(500), nullable=True)
     evaluated_at = Column(DateTime, nullable=True)
+    # InterviewResult class mein yeh add karo baaki columns ke baad
+    video_analysis = Column(JSONB, nullable=True)
+    video_analyzed = Column(Boolean, default=False)
 
     candidate = relationship("InterviewCandidate", back_populates="result")
