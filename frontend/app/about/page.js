@@ -86,7 +86,7 @@ export default function AboutPage() {
         />
       </div>
 
-      <section className="relative z-10 px-6 pt-36 pb-24 md:pt-44">
+      <section className="relative z-10 px-4 sm:px-6 pt-32 pb-16 sm:pt-36 sm:pb-24 md:pt-44">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>
             <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full backdrop-blur-md bg-white/70 border border-purple-200/50 shadow-sm mb-8">
@@ -95,24 +95,24 @@ export default function AboutPage() {
             </div>
           </motion.div>
 
-          <motion.h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight text-gray-900 mb-7"
+          <motion.h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight text-gray-900 mb-7"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}>
             Building the future of{' '}
             <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">intelligent hiring</span>
           </motion.h1>
 
-          <motion.p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium"
+          <motion.p className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}>
             A team of passionate technologists and HR experts dedicated to making hiring more efficient, fair, and data-driven for companies worldwide.
           </motion.p>
         </div>
       </section>
 
-      <section className="relative z-10 px-6 pb-20">
+      <section className="relative z-10 px-4 sm:px-6 pb-16 sm:pb-20">
         <div className="max-w-5xl mx-auto">
-          <motion.div className="backdrop-blur-md bg-white/60 rounded-3xl p-10 border border-white/30 shadow-xl"
+          <motion.div className="backdrop-blur-md bg-white/60 rounded-3xl p-6 sm:p-10 border border-white/30 shadow-xl"
             initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
               {[
                 { number: '500+', label: 'Companies Trust Us' },
                 { number: '50K+', label: 'Candidates Screened' },
@@ -129,9 +129,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative z-10 px-6 py-20">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
-          <motion.div className="backdrop-blur-md bg-white/60 rounded-3xl p-10 border border-white/30 shadow-xl"
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6 sm:gap-8">
+          <motion.div className="backdrop-blur-md bg-white/60 rounded-3xl p-6 sm:p-10 border border-white/30 shadow-xl"
             initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center mb-6 shadow-md">
               <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -147,7 +147,7 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <motion.div className="backdrop-blur-md bg-white/60 rounded-3xl p-10 border border-white/30 shadow-xl"
+          <motion.div className="backdrop-blur-md bg-white/60 rounded-3xl p-6 sm:p-10 border border-white/30 shadow-xl"
             initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} viewport={{ once: true }}>
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-pink-600 to-violet-600 flex items-center justify-center mb-6 shadow-md">
               <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -166,15 +166,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-20">
         <div className="max-w-7xl mx-auto">
-          <motion.div className="text-center mb-16" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
+          <motion.div className="text-center mb-12 sm:mb-16" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-purple-100 text-purple-700 border border-purple-200">What We Stand For</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">Our Core <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Values</span></h2>
             <p className="mt-4 text-lg text-gray-500 max-w-xl mx-auto">The principles that guide every product decision and customer interaction.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v, i) => (
               <motion.div key={v.title} className="backdrop-blur-md bg-white/60 rounded-3xl p-7 border border-white/30 shadow-lg hover:shadow-xl transition-all"
                 custom={i} initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }} whileHover={{ y: -6 }}>
@@ -187,14 +187,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-20">
         <div className="max-w-5xl mx-auto">
-          <motion.div className="text-center mb-16" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
+          <motion.div className="text-center mb-12 sm:mb-16" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-pink-100 text-pink-700 border border-pink-200">Our Journey</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">Key <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Milestones</span></h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
             {milestones.map((m, i) => (
               <motion.div key={m.year} className="backdrop-blur-md bg-white/60 rounded-3xl p-7 border border-white/30 shadow-lg text-center"
                 custom={i} initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }} whileHover={{ y: -6 }}>
@@ -207,15 +207,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-20">
         <div className="max-w-7xl mx-auto">
-          <motion.div className="text-center mb-16" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
+          <motion.div className="text-center mb-12 sm:mb-16" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-violet-100 text-violet-700 border border-violet-200">Leadership</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">Meet the <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Team</span></h2>
             <p className="mt-4 text-lg text-gray-500 max-w-xl mx-auto">The brilliant minds driving Hire Karo&apos;s mission to transform recruitment.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {teamMembers.map((member, i) => (
               <motion.div key={member.name} className="backdrop-blur-md bg-white/60 rounded-3xl p-7 border border-white/30 shadow-lg hover:shadow-xl transition-all text-center"
                 custom={i} initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }} whileHover={{ y: -6 }}>
@@ -231,23 +231,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative z-10 px-6 py-20 pb-28">
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-20 pb-24 sm:pb-28">
         <div className="max-w-5xl mx-auto">
-          <motion.div className="relative overflow-hidden rounded-[3rem] p-14 md:p-20 text-center shadow-2xl"
+          <motion.div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-14 md:p-20 text-center shadow-2xl"
             initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-95" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15)_0%,transparent_50%)]" />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">Ready to join us?</h2>
-              <p className="text-lg text-white/80 max-w-2xl mx-auto mb-10 font-medium">Start building exceptional teams with AI-powered recruitment. Free for 14 days.</p>
-              <div className="flex flex-wrap justify-center gap-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">Ready to join us?</h2>
+              <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto mb-8 sm:mb-10 font-medium">Start building exceptional teams with AI-powered recruitment. Free for 14 days.</p>
+              <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
                 <Link href="/auth/signup">
-                  <motion.button whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} className="rounded-full bg-white px-10 py-4 text-base font-bold text-purple-600 shadow-xl transition-all hover:shadow-2xl">
+                  <motion.button whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto rounded-full bg-white px-10 py-4 text-base font-bold text-purple-600 shadow-xl transition-all hover:shadow-2xl">
                     Start Free Trial
                   </motion.button>
                 </Link>
                 <Link href="/contact">
-                  <motion.button whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} className="rounded-full px-10 py-4 text-base font-bold text-white border border-white/30 bg-white/10 backdrop-blur-md transition-all shadow-xl hover:bg-white/20">
+                  <motion.button whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto rounded-full px-10 py-4 text-base font-bold text-white border border-white/30 bg-white/10 backdrop-blur-md transition-all shadow-xl hover:bg-white/20">
                     Contact Sales
                   </motion.button>
                 </Link>

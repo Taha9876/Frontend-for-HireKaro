@@ -39,10 +39,18 @@ export default function Sidebar({ isOpen, setIsOpen }) {
     };
 
     return (
-        <aside
-            className="flex h-full flex-shrink-0 flex-col border-r border-violet-100 bg-white shadow-xl shadow-violet-100/60 transition-all"
-            style={{ width: isOpen ? 252 : 82 }}
-        >
+        <>
+            {/* Mobile backdrop */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 lg:hidden"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+            <aside
+                className={`flex h-full flex-shrink-0 flex-col border-r border-violet-100 bg-white shadow-xl shadow-violet-100/60 transition-all fixed lg:relative inset-y-0 left-0 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+                style={{ width: isOpen ? 252 : 82 }}
+            >
                 {/* ── HEADER ── */}
                 <div style={{
                     display: 'flex',
@@ -189,6 +197,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                         </div>
                     )}
                 </div>
-        </aside>
+            </aside>
+        </>
     );
 }

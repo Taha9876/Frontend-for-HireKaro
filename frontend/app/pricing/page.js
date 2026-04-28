@@ -144,38 +144,8 @@ export default function PricingPage() {
           />
         </div>
       </div>
-      {/* Professional Header */}
-      <header className="relative z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <nav className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <motion.div 
-                className="w-8 h-8 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center"
-                whileHover={{ rotate: 360, scale: 1.1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="text-white font-bold text-sm">BH</span>
-              </motion.div>
-              <span className="font-bold text-xl" style={{ color: '#1a1535' }}>Hire Karo</span>
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About</Link>
-              <Link href="/pricing" className="text-purple-600 font-medium">Pricing</Link>
-              <Link href="/auth/login" className="text-gray-600 hover:text-purple-600 transition-colors">Login</Link>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium hover:shadow-lg transition-shadow"
-              >
-                Get Started
-              </motion.button>
-            </div>
-          </nav>
-        </div>
-      </header>
-
       {/* Hero Section */}
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-4 sm:px-6 pt-32 pb-12 md:pt-40 md:pb-20">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -197,7 +167,7 @@ export default function PricingPage() {
             </motion.div>
             
             <motion.h1 
-              className="text-6xl font-bold mb-6"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
               style={{ color: '#1a1535' }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -214,7 +184,7 @@ export default function PricingPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-gray-600 max-w-4xl mx-auto mb-12"
+              className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 px-2"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -226,8 +196,8 @@ export default function PricingPage() {
       </section>
 
       {/* Pricing Cards */}
-      <div className="max-w-7xl mx-auto px-6 mb-20">
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-20">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -276,7 +246,7 @@ export default function PricingPage() {
                   transition={{ duration: 0.6, delay: 0.5 }}
                   viewport={{ once: true }}
                 >
-                  <span className={`text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-4xl sm:text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>
                     {plan.price}
                   </span>
                   <span className={`text-lg ${plan.highlighted ? 'text-purple-100' : 'text-gray-600'}`}>
@@ -348,17 +318,17 @@ export default function PricingPage() {
       </div>
 
         {/* FAQ Section */}
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-4 sm:px-6 py-16 md:py-20">
         <div className="max-w-3xl mx-auto">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-4" style={{ color: '#1a1535' }}>Frequently Asked Questions</h2>
-            <p className="text-xl text-gray-600">Common questions about our pricing</p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#1a1535' }}>Frequently Asked Questions</h2>
+            <p className="text-base sm:text-xl text-gray-600">Common questions about our pricing</p>
           </motion.div>
           
           <div className="space-y-6">
@@ -385,17 +355,17 @@ export default function PricingPage() {
       </section>
 
         {/* CTA Section */}
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-4 sm:px-6 py-16 md:py-20 pb-24">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            className="backdrop-blur-md bg-gradient-to-r from-purple-600/90 to-pink-600/90 rounded-3xl p-16 border border-white/20 shadow-xl text-center"
+            className="backdrop-blur-md bg-gradient-to-r from-purple-600/90 to-pink-600/90 rounded-3xl p-8 sm:p-12 md:p-16 border border-white/20 shadow-xl text-center"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             <motion.h2 
-              className="text-4xl font-bold text-white mb-6"
+              className="text-3xl sm:text-4xl font-bold text-white mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -404,7 +374,7 @@ export default function PricingPage() {
               Ready to Transform Your Hiring?
             </motion.h2>
             <motion.p 
-              className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
+              className="text-base sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -413,26 +383,30 @@ export default function PricingPage() {
               Join 500+ companies already using Hire Karo to build exceptional teams.
             </motion.p>
             <motion.div
-              className="flex justify-center gap-4"
+              className="flex flex-col sm:flex-row justify-center gap-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-full bg-white text-purple-600 font-semibold shadow-lg hover:shadow-xl transition-all"
-              >
-                Start Free Trial
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-full backdrop-blur-md bg-white/20 border border-white/30 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
-              >
-                Schedule Demo
-              </motion.button>
+              <Link href="/auth/signup">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-purple-600 font-semibold shadow-lg hover:shadow-xl transition-all"
+                >
+                  Start Free Trial
+                </motion.button>
+              </Link>
+              <Link href="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto px-8 py-4 rounded-full backdrop-blur-md bg-white/20 border border-white/30 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+                >
+                  Schedule Demo
+                </motion.button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>

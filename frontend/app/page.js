@@ -104,6 +104,21 @@ const faqs = [
 
 const trustedLogos = ['Google', 'Microsoft', 'Stripe', 'Shopify', 'Slack', 'Notion', 'Linear', 'Figma'];
 
+/* ─── FadeIn wrapper ─── */
+function FadeIn({ children, delay = 0, y = 30, className = '' }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay, ease: 'easeOut' }}
+      viewport={{ once: true, margin: '-80px' }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 /* ─── FAQ Item ─── */
 function FAQItem({ faq, index }) {
   const [open, setOpen] = useState(false);
@@ -248,7 +263,7 @@ export default function HomePage() {
       </div>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative px-6 pb-24 pt-32 md:pt-40 md:px-10 z-10" id="hero-section">
+      <section className="relative px-4 sm:px-6 pb-16 md:pb-24 pt-28 md:pt-40 md:px-10 z-10" id="hero-section">
         <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <motion.div
@@ -260,7 +275,7 @@ export default function HomePage() {
               <span className="text-purple-700 font-semibold text-sm tracking-wide">AI-Powered HR Recruitment Platform</span>
             </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-[4rem] font-extrabold leading-[1.08] tracking-tight text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-extrabold leading-[1.08] tracking-tight text-gray-900 mb-6">
               Hire smarter with{' '}
               <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">
                 AI-driven
@@ -268,16 +283,16 @@ export default function HomePage() {
               recruitment
             </h1>
 
-            <p className="text-lg text-gray-500 max-w-xl mb-10 leading-relaxed font-medium">
+            <p className="text-base sm:text-lg text-gray-500 max-w-xl mb-8 sm:mb-10 leading-relaxed font-medium">
               Screen resumes semantically, auto-generate interview questions, evaluate candidate answers with AI, and rank talent objectively — all in one platform.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 mb-6">
               <Link href="/auth/signup">
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-9 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-xl transition-all text-base"
+                  className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-xl transition-all text-base"
                 >
                   Start Free Trial
                 </motion.button>
@@ -286,7 +301,7 @@ export default function HomePage() {
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-9 py-4 rounded-full backdrop-blur-md bg-white/60 border border-gray-200/60 text-gray-700 font-semibold shadow-sm hover:shadow-md transition-all text-base"
+                  className="w-full sm:w-auto px-9 py-4 rounded-full backdrop-blur-md bg-white/60 border border-gray-200/60 text-gray-700 font-semibold shadow-sm hover:shadow-md transition-all text-base"
                 >
                   See How it Works
                 </motion.button>
@@ -317,7 +332,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                <div className="relative w-full h-[360px] lg:h-[500px]">
+                <div className="relative w-full h-[260px] sm:h-[340px] lg:h-[500px]">
                   <Image src="/images/hero.png" alt="Hire Karo Platform" fill className="object-cover object-top" priority />
                 </div>
               </div>
@@ -344,17 +359,19 @@ export default function HomePage() {
       </section>
 
       {/* ═══ STATS / COUNTERS ═══ */}
-      <section id="stats-section" className="py-24 px-6 md:px-10 z-10 relative">
+      <section id="stats-section" className="py-16 sm:py-24 px-4 sm:px-6 md:px-10 z-10 relative">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
-            {counters.map((stat) => (
-              <div key={stat.label} className="stat-card backdrop-blur-md bg-white/60 border border-white/30 shadow-xl hover:shadow-2xl rounded-3xl p-8 transition-all hover:-translate-y-2 text-center group">
+            {counters.map((stat, i) => (
+              <FadeIn key={stat.label} delay={i * 0.1} className="h-full">
+              <div className="stat-card h-full backdrop-blur-md bg-white/60 border border-white/30 shadow-xl hover:shadow-2xl rounded-3xl p-8 transition-all hover:-translate-y-2 text-center group">
                 <p className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                   <span className="counter-value" data-target={stat.value}>0</span>{stat.suffix}
                 </p>
                 <p className="text-base font-bold text-gray-900 mb-1">{stat.label}</p>
                 <p className="text-xs text-gray-500 font-medium">{stat.desc}</p>
               </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -363,19 +380,22 @@ export default function HomePage() {
       {/* ═══ FEATURES ═══ */}
       <section id="features" className="features-section py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="features-heading text-center mb-16">
+          <FadeIn className="features-heading text-center mb-16">
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-pink-100 text-pink-700 border border-pink-200">Uniqueness</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Deeper AI automation across the <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">recruitment pipeline</span></h2>
             <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">While most ATS platforms focus only on resume storage, Hire Karo introduces features that reduce manual HR effort while improving the quality of candidate selection.</p>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f, i) => (
               <motion.div
                 key={f.title}
                 className="feature-card group relative backdrop-blur-md bg-white/60 border border-white/30 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all overflow-hidden"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: 'easeOut' }}
               >
                 <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none" style={{ background: f.gradientCSS }}></div>
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 text-white shadow-md" style={{ background: f.gradientCSS }}>
@@ -390,32 +410,34 @@ export default function HomePage() {
       </section>
 
       {/* ═══ HOW IT WORKS ═══ */}
-      <section id="how-it-works" className="hiw-section py-24 px-6 md:px-10 bg-white/30 backdrop-blur-sm border-y border-white/40 z-10 relative">
+      <section id="how-it-works" className="hiw-section py-16 sm:py-24 px-4 sm:px-6 md:px-10 bg-white/30 backdrop-blur-sm border-y border-white/40 z-10 relative">
         <div className="mx-auto max-w-7xl">
-          <div className="hiw-heading text-center mb-16">
+          <FadeIn className="hiw-heading text-center mb-16">
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] bg-purple-100 text-purple-700 border border-purple-200">System Workflow</span>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl text-gray-900">
               The AI <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Hiring Process</span>
             </h2>
-          </div>
+          </FadeIn>
           <div className="relative grid gap-8 md:grid-cols-4">
             {howItWorks.map((step, i) => (
-              <div key={step.step} className="hiw-step relative text-center z-10 backdrop-blur-md bg-white/60 p-8 rounded-3xl border border-white/50 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+              <FadeIn key={step.step} delay={i * 0.12} className="h-full">
+              <div className="hiw-step h-full relative text-center z-10 backdrop-blur-md bg-white/60 p-8 rounded-3xl border border-white/50 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg flex items-center justify-center mx-auto mb-5 shadow-md">
                   {step.step}
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{step.title}</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{step.desc}</p>
               </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══ DASHBOARD PREVIEW ═══ */}
-      <section className="dashboard-preview-section py-32 px-6 md:px-10 z-10 relative" id="dashboard-preview">
+      <section className="dashboard-preview-section py-20 sm:py-32 px-4 sm:px-6 md:px-10 z-10 relative" id="dashboard-preview">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 dash-heading">
+          <FadeIn className="text-center mb-16 dash-heading">
             <div>
               <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-violet-100 text-violet-700 border border-violet-200">Dashboard</span>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
@@ -425,11 +447,11 @@ export default function HomePage() {
                 Monitor your entire AI recruitment pipeline, track parsed resumes, analyze video behaviors, and make data-driven decisions — all from one beautiful dashboard.
               </p>
             </div>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-12 lg:grid-cols-5 items-center">
             {/* Dashboard Screenshot */}
-            <div className="lg:col-span-3 dash-screenshot">
+            <FadeIn className="lg:col-span-3 dash-screenshot">
               <div className="relative group">
                 {/* Glow effect behind */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-violet-400/20 rounded-[2.5rem] blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
@@ -462,7 +484,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </FadeIn>
 
             {/* Feature highlights */}
             <div className="lg:col-span-2 flex flex-col gap-6">
@@ -484,8 +506,8 @@ export default function HomePage() {
                   desc: 'Review the final candidate rankings generated from a combination of resume, answer, and behavior scores.'
                 }
               ].map((item, i) => (
+                <FadeIn key={item.title} delay={i * 0.1}>
                 <div
-                  key={item.title}
                   className="dash-feature flex items-start gap-4 p-5 rounded-2xl backdrop-blur-md bg-white/50 border border-white/30 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                 >
                   <div>
@@ -493,6 +515,7 @@ export default function HomePage() {
                     <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
+                </FadeIn>
               ))}
 
               <Link href="/auth/signup" className="dash-feature">
@@ -508,9 +531,9 @@ export default function HomePage() {
       </section>
 
       {/* ═══ WHY CHOOSE US ═══ */}
-      <section className="why-choose-section py-32 px-6 md:px-10 z-10 relative bg-white/40 backdrop-blur-sm border-y border-white/40">
+      <section className="why-choose-section py-20 sm:py-32 px-4 sm:px-6 md:px-10 z-10 relative bg-white/40 backdrop-blur-sm border-y border-white/40">
         <div className="max-w-7xl mx-auto">
-          <div className="why-choose-heading text-center mb-16">
+          <FadeIn className="why-choose-heading text-center mb-16">
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-purple-100 text-purple-700 border border-purple-200">The Problem vs. Our Solution</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
               Stop wasting time <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">interviewing poorly matched applicants</span>
@@ -518,7 +541,7 @@ export default function HomePage() {
             <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">
               The proposed system allows HR teams to identify the best candidates quickly and efficiently by completely automating the early stages of the hiring process.
             </p>
-          </div>
+          </FadeIn>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -543,11 +566,13 @@ export default function HomePage() {
                 stat: 'Top 1%'
               }
             ].map((item, i) => (
-              <div key={item.title} className="why-choose-card relative p-8 rounded-2xl bg-white/60 backdrop-blur-md border border-white/40 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+              <FadeIn key={item.title} delay={i * 0.1} className="h-full">
+              <div className="why-choose-card h-full relative p-8 rounded-2xl bg-white/60 backdrop-blur-md border border-white/40 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">{item.stat}</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
               </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -555,10 +580,10 @@ export default function HomePage() {
 
       {/* ═══ TESTIMONIALS ═══ */}
       <section className="testimonials-section py-32 px-0 overflow-hidden z-10 relative">
-        <div className="testimonials-heading mx-auto max-w-7xl px-6 mb-16 text-center">
+        <FadeIn className="testimonials-heading mx-auto max-w-7xl px-6 mb-16 text-center">
           <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-pink-100 text-pink-700 border border-pink-200">Success Stories</span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900">Trusted by the <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Best</span></h2>
-        </div>
+        </FadeIn>
 
         <div className="flex w-[300%] md:w-[200%]">
           <div className="flex gap-6 whitespace-nowrap px-6" ref={testimonialsRef}>
@@ -581,39 +606,41 @@ export default function HomePage() {
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section className="faq-section py-20 px-6 md:px-10 z-10 relative">
+      <section className="faq-section py-16 sm:py-20 px-4 sm:px-6 md:px-10 z-10 relative">
         <div className="mx-auto max-w-3xl">
-          <div className="faq-heading text-center mb-14">
+          <FadeIn className="faq-heading text-center mb-14">
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] bg-purple-100 text-purple-700 border border-purple-200">FAQ</span>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl text-gray-900">
               Frequently asked <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">questions</span>
             </h2>
-          </div>
+          </FadeIn>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
-              <FAQItem key={i} faq={faq} index={i} />
+              <FadeIn key={i} delay={i * 0.05}>
+                <FAQItem faq={faq} index={i} />
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <section className="pb-28 pt-8 px-6 md:px-10 z-10 relative">
-        <div className="final-cta mx-auto w-full max-w-5xl relative overflow-hidden rounded-[3rem] p-14 md:p-20 text-center shadow-2xl">
+      <section className="pb-20 sm:pb-28 pt-8 px-4 sm:px-6 md:px-10 z-10 relative">
+        <FadeIn className="final-cta mx-auto w-full max-w-5xl relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-14 md:p-20 text-center shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-95" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15)_0%,transparent_50%)]" />
           <div className="relative z-10">
             <span className="inline-flex rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest mb-6 bg-white/20 text-white/90 border border-white/20">Ready to transform hiring?</span>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">Let AI handle the pipeline.<br />You make the final call.</h2>
-            <p className="text-lg max-w-2xl mx-auto text-white/80 font-medium mb-10">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">Let AI handle the pipeline.<br />You make the final call.</h2>
+            <p className="text-base sm:text-lg max-w-2xl mx-auto text-white/80 font-medium mb-8 sm:mb-10">
               Join 500+ companies already using our AI hiring assistant to completely reinvent their recruitment pipeline.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-5">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-5">
               <Link href="/auth/signup">
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="rounded-full bg-white px-10 py-4 text-base font-bold text-purple-600 shadow-xl transition-all hover:shadow-2xl"
+                  className="w-full sm:w-auto rounded-full bg-white px-10 py-4 text-base font-bold text-purple-600 shadow-xl transition-all hover:shadow-2xl"
                 >
                   Start Free Trial
                 </motion.button>
@@ -622,14 +649,14 @@ export default function HomePage() {
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="rounded-full px-10 py-4 text-base font-bold text-white border border-white/30 backdrop-blur-md bg-white/10 transition-all shadow-xl hover:bg-white/20"
+                  className="w-full sm:w-auto rounded-full px-10 py-4 text-base font-bold text-white border border-white/30 backdrop-blur-md bg-white/10 transition-all shadow-xl hover:bg-white/20"
                 >
                   Contact Sales
                 </motion.button>
               </Link>
             </div>
           </div>
-        </div>
+        </FadeIn>
       </section>
     </div>
   );

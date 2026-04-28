@@ -108,7 +108,7 @@ export default function ContactPage() {
       </div>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative z-10 px-6 pt-36 pb-16 md:pt-44">
+      <section className="relative z-10 px-4 sm:px-6 pt-32 pb-12 sm:pt-36 sm:pb-16 md:pt-44">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>
             <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full backdrop-blur-md bg-white/70 border border-purple-200/50 shadow-sm mb-8">
@@ -117,13 +117,13 @@ export default function ContactPage() {
             </div>
           </motion.div>
 
-          <motion.h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight text-gray-900 mb-6"
+          <motion.h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight text-gray-900 mb-6"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}>
             Let&apos;s{' '}
             <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">connect</span>
           </motion.h1>
 
-          <motion.p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium"
+          <motion.p className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}>
             Ready to transform your hiring process? Our team is here to help. Reach out through any channel below or send us a message.
           </motion.p>
@@ -131,7 +131,7 @@ export default function ContactPage() {
       </section>
 
       {/* ═══ CONTACT METHODS ═══ */}
-      <section className="relative z-10 px-6 pb-16">
+      <section className="relative z-10 px-4 sm:px-6 pb-12 sm:pb-16">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactMethods.map((m, i) => (
             <motion.div key={m.title} className="backdrop-blur-md bg-white/60 rounded-3xl p-7 border border-white/30 shadow-lg hover:shadow-xl transition-all"
@@ -149,8 +149,8 @@ export default function ContactPage() {
       </section>
 
       {/* ═══ FORM + SIDEBAR ═══ */}
-      <section className="relative z-10 px-6 py-16">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-5 gap-10 items-start">
+      <section className="relative z-10 px-4 sm:px-6 py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
 
           {/* Sidebar info */}
           <motion.div className="lg:col-span-2 space-y-6"
@@ -193,7 +193,7 @@ export default function ContactPage() {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div className="lg:col-span-3 backdrop-blur-md bg-white/60 rounded-3xl p-10 border border-white/30 shadow-xl"
+          <motion.div className="lg:col-span-3 backdrop-blur-md bg-white/60 rounded-3xl p-6 sm:p-10 border border-white/30 shadow-xl"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }} viewport={{ once: true }}>
             {!isSubmitted ? (
               <>
@@ -276,9 +276,9 @@ export default function ContactPage() {
       </section>
 
       {/* ═══ OFFICES ═══ */}
-      <section className="relative z-10 px-6 py-16">
+      <section className="relative z-10 px-4 sm:px-6 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto">
-          <motion.div className="text-center mb-14" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
+          <motion.div className="text-center mb-10 sm:mb-14" initial="hidden" whileInView="visible" variants={fadeUp} viewport={{ once: true }}>
             <span className="inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] mb-4 bg-purple-100 text-purple-700 border border-purple-200">Global Presence</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">Our <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Offices</span></h2>
             <p className="mt-4 text-lg text-gray-500 max-w-xl mx-auto">Visit us at any of our global locations.</p>
@@ -302,25 +302,25 @@ export default function ContactPage() {
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="relative z-10 px-6 py-16 pb-28">
+      <section className="relative z-10 px-4 sm:px-6 py-12 sm:py-16 pb-24 sm:pb-28">
         <div className="max-w-5xl mx-auto">
-          <motion.div className="relative overflow-hidden rounded-[3rem] p-14 md:p-20 text-center shadow-2xl"
+          <motion.div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-14 md:p-20 text-center shadow-2xl"
             initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-95" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15)_0%,transparent_50%)]" />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">Ready to get started?</h2>
-              <p className="text-lg text-white/80 max-w-2xl mx-auto mb-10 font-medium">Join 500+ companies already using Hire Karo to build exceptional teams with AI.</p>
-              <div className="flex flex-wrap justify-center gap-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">Ready to get started?</h2>
+              <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto mb-8 sm:mb-10 font-medium">Join 500+ companies already using Hire Karo to build exceptional teams with AI.</p>
+              <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
                 <Link href="/auth/signup">
                   <motion.button whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}
-                    className="rounded-full bg-white px-10 py-4 text-base font-bold text-purple-600 shadow-xl transition-all hover:shadow-2xl">
+                    className="w-full sm:w-auto rounded-full bg-white px-10 py-4 text-base font-bold text-purple-600 shadow-xl transition-all hover:shadow-2xl">
                     Start Free Trial
                   </motion.button>
                 </Link>
                 <Link href="/pricing">
                   <motion.button whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}
-                    className="rounded-full px-10 py-4 text-base font-bold text-white border border-white/30 bg-white/10 backdrop-blur-md transition-all shadow-xl hover:bg-white/20">
+                    className="w-full sm:w-auto rounded-full px-10 py-4 text-base font-bold text-white border border-white/30 bg-white/10 backdrop-blur-md transition-all shadow-xl hover:bg-white/20">
                     View Pricing
                   </motion.button>
                 </Link>

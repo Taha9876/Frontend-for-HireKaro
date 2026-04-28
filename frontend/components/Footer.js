@@ -20,7 +20,7 @@ const appLinks = [
 export default function Footer() {
   return (
     <footer className="relative bg-white border-t border-gray-200 overflow-hidden pt-20 z-10">
-      <div className="mx-auto grid w-full max-w-7xl gap-12 px-6 pb-16 md:grid-cols-4 md:px-10">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 pb-16 sm:grid-cols-2 lg:grid-cols-4 md:px-10">
         {/* Brand */}
         <div className="md:col-span-1">
           <div className="mb-6 inline-flex items-center gap-3">

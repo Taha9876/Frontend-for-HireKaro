@@ -97,7 +97,7 @@ export default function LoginPage() {
                         </div>
                     </div>
                 </div>
-                <div className="auth-enter relative p-8 md:p-12 bg-gradient-to-br from-pink-50 via-fuchsia-50 to-violet-100/70 rounded-r-[2.5rem] rounded-l-none">
+                <div className="auth-enter relative p-6 sm:p-8 md:p-12 bg-gradient-to-br from-pink-50 via-fuchsia-50 to-violet-100/70 rounded-[2.5rem] lg:rounded-l-none lg:rounded-r-[2.5rem]">
                     <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-pink-200/30 via-fuchsia-100/30 to-transparent" />
                     <div className="relative z-10 flex flex-col gap-8">
                         <div className="max-w-xl">
@@ -105,7 +105,7 @@ export default function LoginPage() {
                             <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">Sign in</h3>
                             <p className="mt-3 text-sm text-slate-600">Access your Hire Karo workspace and keep hiring moving fast.</p>
                         </div>
-                        <div className="rounded-[2rem] border border-white/70 bg-white/90 p-8 shadow-[0_35px_120px_-40px_rgba(124,58,237,0.35)] backdrop-blur-2xl">
+                        <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 sm:p-8 shadow-[0_35px_120px_-40px_rgba(124,58,237,0.35)] backdrop-blur-2xl">
                             {error && (
                                 <div className="mb-5 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                                     {error}

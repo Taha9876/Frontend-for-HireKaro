@@ -174,7 +174,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* ── RIGHT SIDE (Form/OTP/Success) ── */}
-                <div className="auth-enter relative p-8 md:p-12 bg-gradient-to-br from-pink-50 via-fuchsia-50 to-violet-100/70 rounded-r-[2.5rem] rounded-l-none">
+                <div className="auth-enter relative p-6 sm:p-8 md:p-12 bg-gradient-to-br from-pink-50 via-fuchsia-50 to-violet-100/70 rounded-[2.5rem] lg:rounded-l-none lg:rounded-r-[2.5rem]">
                     <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-pink-200/30 via-fuchsia-100/30 to-transparent" />
                     <div className="relative z-10 flex flex-col gap-8 h-full justify-center">
                         

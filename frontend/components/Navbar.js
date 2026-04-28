@@ -107,8 +107,8 @@ export default function Navbar() {
             </nav>
 
             {mobileOpen && (
-                <div className="md:hidden mt-4 mx-6 rounded-2xl border border-gray-100 p-4 shadow-xl bg-white/90 backdrop-blur-md">
-                    <ul className="list-none p-0 m-0 space-y-2">
+                <div className="md:hidden mt-4 mx-4 sm:mx-6 rounded-2xl border border-gray-100 p-4 shadow-xl bg-white/95 backdrop-blur-md">
+                    <ul className="list-none p-0 m-0 space-y-1">
                         {navLinks.map((item) => (
                             <li key={item.href}>
                                 <Link href={item.href} onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-700 no-underline transition hover:bg-purple-50 hover:text-purple-700">
@@ -116,6 +116,17 @@ export default function Navbar() {
                                 </Link>
                             </li>
                         ))}
+                        <li className="border-t border-gray-100 mt-2 pt-2">
+                            {loggedIn ? (
+                                <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-purple-700 no-underline transition hover:bg-purple-50">
+                                    Dashboard
+                                </Link>
+                            ) : (
+                                <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-purple-700 no-underline transition hover:bg-purple-50">
+                                    Login
+                                </Link>
+                            )}
+                        </li>
                     </ul>
                 </div>
             )}
