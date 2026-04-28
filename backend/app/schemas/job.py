@@ -103,6 +103,7 @@ class JobListResponse(BaseModel):
     total_positions: int
     deadline: Optional[datetime]
     skills_count: int = 0
+    candidates_count: int = 0
     created_at: datetime
 
     class Config:

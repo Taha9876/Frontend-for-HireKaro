@@ -103,7 +103,7 @@ export default function LoginPage() {
                         <div className="max-w-xl">
                             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-fuchsia-700">Secure access</p>
                             <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">Sign in</h3>
-                            <p className="mt-3 text-sm text-slate-600">Access your Brain-A-Hire workspace and keep hiring moving fast.</p>
+                            <p className="mt-3 text-sm text-slate-600">Access your Hire Karo workspace and keep hiring moving fast.</p>
                         </div>
                         <div className="rounded-[2rem] border border-white/70 bg-white/90 p-8 shadow-[0_35px_120px_-40px_rgba(124,58,237,0.35)] backdrop-blur-2xl">
                             {error && (

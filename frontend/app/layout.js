@@ -6,7 +6,7 @@ import ConditionalFooter from '@/components/ConditionalFooter';
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Brain-A-Hire — AI Powered Hiring',
+  title: 'Hire Karo — AI Powered Hiring',
   description: 'Automate resume screening and interviews with AI',
 };
 

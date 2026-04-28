@@ -158,3 +158,36 @@ def get_me(token: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Not found")
 
     return company
+
+
+# ─── PROFILE (Bearer Auth) ───────────────────────────────
+from app.core.dependencies import get_current_company
+from pydantic import BaseModel
+from typing import Optional
+
+class ProfileUpdate(BaseModel):
+    company_name: Optional[str] = None
+    industry: Optional[str] = None
+    company_size: Optional[str] = None
+
+
+@router.get("/profile", response_model=CompanyResponse)
+def get_profile(current_company: Company = Depends(get_current_company)):
+    return current_company
+
+
+@router.put("/profile", response_model=CompanyResponse)
+def update_profile(
+    data: ProfileUpdate,
+    db: Session = Depends(get_db),
+    current_company: Company = Depends(get_current_company)
+):
+    if data.company_name is not None:
+        current_company.company_name = data.company_name
+    if data.industry is not None:
+        current_company.industry = data.industry
+    if data.company_size is not None:
+        current_company.company_size = data.company_size
+    db.commit()
+    db.refresh(current_company)
+    return current_company

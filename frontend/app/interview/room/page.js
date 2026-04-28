@@ -504,7 +504,7 @@ export default function InterviewRoomPage() {
                 <div className="relative z-10 flex items-center justify-between px-8 py-4 bg-white/70 backdrop-blur-md border-b border-violet-100 shadow-sm">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-md bg-white border border-violet-100">🧠</div>
-                        <span className="font-extrabold text-slate-800 tracking-tight">Brain-A-Hire</span>
+                        <span className="font-extrabold text-slate-800 tracking-tight">Hire Karo</span>
                     </div>
                     <div className="px-4 py-1.5 bg-emerald-50 border border-emerald-200 rounded-full">
                         <span className="text-emerald-600 text-xs font-bold tracking-wide">✓ Interview Submitted</span>
@@ -612,7 +612,7 @@ export default function InterviewRoomPage() {
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-xl flex items-center justify-center text-sm bg-white border border-violet-100 shadow-sm">🧠</div>
                     <div className="flex flex-col">
-                        <span className="text-slate-900 font-bold text-sm leading-none">Brain-A-Hire</span>
+                        <span className="text-slate-900 font-bold text-sm leading-none">Hire Karo</span>
                         <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-1">Live Evaluation</span>
                     </div>
                 </div>
@@ -754,22 +754,33 @@ export default function InterviewRoomPage() {
                         {/* MCQ */}
                         {currentQ.type === 'mcq' && (
                             <div className="flex flex-col gap-3 flex-1 overflow-y-auto pr-2">
-                                <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Options</p>
-                                {currentQ.options?.map((opt, i) => (
-                                    <button key={i} onClick={() => setSelectedOption(i)}
-                                        className="flex items-center gap-5 p-5 rounded-2xl text-left transition-all border outline-none group"
-                                        style={{
-                                            background: selectedOption === i ? '#eff6ff' : '#ffffff',
-                                            borderColor: selectedOption === i ? '#3b82f6' : '#e2e8f0',
-                                            boxShadow: selectedOption === i ? '0 4px 12px rgba(59,130,246,0.1)' : '0 2px 4px rgba(0,0,0,0.02)'
-                                        }}>
-                                        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 transition-colors
-                                            ${selectedOption === i ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'}`}>
-                                            {String.fromCharCode(65 + i)}
-                                        </span>
-                                        <span className={`text-base font-semibold ${selectedOption === i ? 'text-blue-900' : 'text-slate-700'}`}>{opt}</span>
-                                    </button>
-                                ))}
+                                <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Select the best answer</p>
+                                {currentQ.options && currentQ.options.length > 0 ? (
+                                    currentQ.options.map((opt, i) => (
+                                        <button type="button" key={i} onClick={() => setSelectedOption(i)}
+                                            className="flex items-center gap-5 p-5 rounded-2xl text-left transition-all outline-none group cursor-pointer"
+                                            style={{
+                                                background: selectedOption === i ? '#eff6ff' : '#ffffff',
+                                                border: selectedOption === i ? '2px solid #3b82f6' : '2px solid #e2e8f0',
+                                                boxShadow: selectedOption === i ? '0 4px 16px rgba(59,130,246,0.15)' : '0 2px 4px rgba(0,0,0,0.02)',
+                                                transform: selectedOption === i ? 'scale(1.01)' : 'scale(1)',
+                                                cursor: 'pointer'
+                                            }}>
+                                            <span className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 transition-all
+                                                ${selectedOption === i ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'}`}>
+                                                {String.fromCharCode(65 + i)}
+                                            </span>
+                                            <span className={`text-base font-semibold ${selectedOption === i ? 'text-blue-900' : 'text-slate-700'}`}>{opt}</span>
+                                            {selectedOption === i && (
+                                                <span className="ml-auto text-blue-500 text-lg">✓</span>
+                                            )}
+                                        </button>
+                                    ))
+                                ) : (
+                                    <div className="flex items-center justify-center py-8 text-slate-400 text-sm">
+                                        No options available for this question
+                                    </div>
+                                )}
                             </div>
                         )}
 

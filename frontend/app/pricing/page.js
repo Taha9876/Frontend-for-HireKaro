@@ -156,7 +156,7 @@ export default function PricingPage() {
               >
                 <span className="text-white font-bold text-sm">BH</span>
               </motion.div>
-              <span className="font-bold text-xl" style={{ color: '#1a1535' }}>Brain-A-Hire</span>
+              <span className="font-bold text-xl" style={{ color: '#1a1535' }}>Hire Karo</span>
             </Link>
             <div className="flex items-center gap-6">
               <Link href="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About</Link>
@@ -410,7 +410,7 @@ export default function PricingPage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              Join 500+ companies already using Brain-A-Hire to build exceptional teams.
+              Join 500+ companies already using Hire Karo to build exceptional teams.
             </motion.p>
             <motion.div
               className="flex justify-center gap-4"

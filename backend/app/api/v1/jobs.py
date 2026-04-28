@@ -86,6 +86,7 @@ def get_jobs(
             total_positions=job.total_positions,
             deadline=job.deadline,
             skills_count=len(job.skills),
+            candidates_count=len(job.resumes),
             created_at=job.created_at
         ))
     return result

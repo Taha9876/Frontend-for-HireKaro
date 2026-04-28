@@ -27,9 +27,10 @@ export default function Navbar() {
 
     const navLinks = [
         { label: 'Platform', href: '/' },
-        { label: 'Features', href: '#features' },
-        { label: 'How It Works', href: '#how-it-works' },
+        { label: 'Features', href: '/#features' },
         { label: 'Pricing', href: '/pricing' },
+        { label: 'About Us', href: '/about' },
+        { label: 'Contact', href: '/contact' },
     ];
 
     return (
@@ -44,7 +45,7 @@ export default function Navbar() {
                         BH
                     </motion.div>
                     <span className="text-xl font-bold tracking-tight text-gray-900">
-                        Brain-A-Hire
+                        Hire Karo
                     </span>
                 </Link>
 

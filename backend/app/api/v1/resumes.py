@@ -15,9 +15,51 @@ from app.models.job import Job, Resume, JobStatus, ParseStatus
 from app.schemas.resume import ResumeResponse, BulkUploadResponse
 
 router = APIRouter(prefix="/jobs", tags=["Resumes"])
+candidates_router = APIRouter(prefix="/candidates", tags=["Candidates"])
 
 ALLOWED_TYPES = ["application/pdf"]
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB per file
+
+
+# ─── GET ALL CANDIDATES (across all jobs) ─────────────────
+@candidates_router.get("", response_model=list)
+def get_all_candidates(
+    db: Session = Depends(get_db),
+    current_company: Company = Depends(get_current_company)
+):
+    """Fetch all resumes/candidates across all jobs for this company"""
+    resumes = (
+        db.query(Resume)
+        .join(Job, Resume.job_id == Job.id)
+        .filter(
+            Job.company_id == current_company.id,
+            Job.is_deleted == False
+        )
+        .order_by(Resume.created_at.desc())
+        .all()
+    )
+
+    results = []
+    for r in resumes:
+        results.append({
+            "id": r.id,
+            "job_id": r.job_id,
+            "job_title": r.job.title if r.job else "Unknown",
+            "candidate_name": r.candidate_name or "Unknown",
+            "candidate_email": r.candidate_email or "",
+            "candidate_phone": r.candidate_phone or "",
+            "file_name": r.file_name,
+            "file_size": r.file_size,
+            "parse_status": r.parse_status.value if r.parse_status else "pending",
+            "match_score": round((r.match_score or 0) * 100),
+            "skills_score": round((r.skills_score or 0) * 100),
+            "experience_score": round((r.experience_score or 0) * 100),
+            "education_score": round((r.education_score or 0) * 100),
+            "status": r.status.value if r.status else "pending",
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        })
+
+    return results
 
 
 def get_upload_path(company_id: int, job_id: int) -> str:

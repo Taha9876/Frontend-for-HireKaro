@@ -7,8 +7,8 @@ from app.core.config import settings
 def send_otp_email(to_email: str, company_name: str, otp: str) -> bool:
     try:
         msg = MIMEMultipart("alternative")
-        msg["Subject"] = "Brain-A-Hire — Email Verification Code"
-        msg["From"] = f"Brain-A-Hire <{settings.SMTP_USER}>"
+        msg["Subject"] = "Hire Karo — Email Verification Code"
+        msg["From"] = f"Hire Karo <{settings.SMTP_USER}>"
         msg["To"] = to_email
 
         html = f"""
@@ -28,7 +28,7 @@ def send_otp_email(to_email: str, company_name: str, otp: str) -> bool:
                   <tr>
                     <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 40px 32px; text-align:center;">
                       <h1 style="color:#ffffff; margin:0; font-size:28px; font-weight:700; letter-spacing:-0.5px;">
-                        🧠 Brain-A-Hire
+                        🧠 Hire Karo
                       </h1>
                       <p style="color:rgba(255,255,255,0.85); margin:8px 0 0; font-size:14px;">
                         AI-Powered Hiring Platform
@@ -43,7 +43,7 @@ def send_otp_email(to_email: str, company_name: str, otp: str) -> bool:
                         Verify Your Email Address
                       </h2>
                       <p style="color:#555; font-size:15px; line-height:1.6; margin:0 0 28px;">
-                        Hi <strong>{company_name}</strong>, welcome to Brain-A-Hire! 
+                        Hi <strong>{company_name}</strong>, welcome to Hire Karo! 
                         Use the verification code below to complete your signup.
                       </p>
 
@@ -89,8 +89,8 @@ def send_otp_email(to_email: str, company_name: str, otp: str) -> bool:
                   <tr>
                     <td style="padding: 24px 40px; text-align:center;">
                       <p style="color:#aaa; font-size:12px; margin:0; line-height:1.6;">
-                        If you did not create an account on Brain-A-Hire, please ignore this email.<br>
-                        &copy; 2025 Brain-A-Hire. All rights reserved.
+                        If you did not create an account on Hire Karo, please ignore this email.<br>
+                        &copy; 2025 Hire Karo. All rights reserved.
                       </p>
                     </td>
                   </tr>
@@ -124,7 +124,7 @@ def send_shortlist_email(to_email: str, candidate_name: str, job_title: str, com
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Congratulations! You've been shortlisted — {job_title}"
-        msg["From"] = f"{company_name} via Brain-A-Hire <{settings.SMTP_USER}>"
+        msg["From"] = f"{company_name} via Hire Karo <{settings.SMTP_USER}>"
         msg["To"] = to_email
 
         html = f"""
@@ -149,7 +149,7 @@ def send_shortlist_email(to_email: str, candidate_name: str, job_title: str, com
                 <p style="color:#555;font-size:14px;line-height:1.7;">Please keep an eye on your inbox. We look forward to speaking with you!</p>
               </td></tr>
               <tr><td style="padding:20px 40px;border-top:1px solid #eee;text-align:center;">
-                <p style="color:#aaa;font-size:12px;margin:0;">This email was sent by Brain-A-Hire on behalf of {company_name}</p>
+                <p style="color:#aaa;font-size:12px;margin:0;">This email was sent by Hire Karo on behalf of {company_name}</p>
               </td></tr>
             </table>
           </td></tr>
@@ -171,7 +171,7 @@ def send_rejection_email(to_email: str, candidate_name: str, job_title: str, com
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Update on your application — {job_title}"
-        msg["From"] = f"{company_name} via Brain-A-Hire <{settings.SMTP_USER}>"
+        msg["From"] = f"{company_name} via Hire Karo <{settings.SMTP_USER}>"
         msg["To"] = to_email
 
         html = f"""
@@ -180,7 +180,7 @@ def send_rejection_email(to_email: str, candidate_name: str, job_title: str, com
           <tr><td align="center">
             <table width="580" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
               <tr><td style="background:linear-gradient(135deg,#0a1628,#1e3a5f);padding:40px;text-align:center;">
-                <h1 style="color:#fff;margin:0;font-size:26px;font-weight:700;">🧠 Brain-A-Hire</h1>
+                <h1 style="color:#fff;margin:0;font-size:26px;font-weight:700;">🧠 Hire Karo</h1>
                 <p style="color:rgba(255,255,255,0.7);margin:8px 0 0;font-size:14px;">Application Update — {company_name}</p>
               </td></tr>
               <tr><td style="padding:40px;">
@@ -196,7 +196,7 @@ def send_rejection_email(to_email: str, candidate_name: str, job_title: str, com
                 <p style="color:#555;font-size:14px;line-height:1.7;">We encourage you to apply for future opportunities that match your profile. Thank you for your time.</p>
               </td></tr>
               <tr><td style="padding:20px 40px;border-top:1px solid #eee;text-align:center;">
-                <p style="color:#aaa;font-size:12px;margin:0;">This email was sent by Brain-A-Hire on behalf of {company_name}</p>
+                <p style="color:#aaa;font-size:12px;margin:0;">This email was sent by Hire Karo on behalf of {company_name}</p>
               </td></tr>
             </table>
           </td></tr>
@@ -228,7 +228,7 @@ def send_interview_email(
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Interview Scheduled — {job_title} at {company_name}"
-        msg["From"] = f"{company_name} via Brain-A-Hire <{settings.SMTP_USER}>"
+        msg["From"] = f"{company_name} via Hire Karo <{settings.SMTP_USER}>"
         msg["To"] = to_email
 
         hours = duration_minutes // 60
@@ -337,7 +337,7 @@ def send_interview_email(
               <!-- Footer -->
               <tr><td style="padding:20px 40px;border-top:1px solid #f1f5f9;text-align:center;">
                 <p style="color:#94a3b8;font-size:12px;margin:0;">
-                  Sent by Brain-A-Hire on behalf of {company_name} · Do not share your credentials
+                  Sent by Hire Karo on behalf of {company_name} · Do not share your credentials
                 </p>
               </td></tr>
             </table>
@@ -372,7 +372,7 @@ def send_reschedule_email(
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Interview Rescheduled — {job_title} at {company_name}"
-        msg["From"] = f"{company_name} via Brain-A-Hire <{settings.SMTP_USER}>"
+        msg["From"] = f"{company_name} via Hire Karo <{settings.SMTP_USER}>"
         msg["To"] = to_email
 
         hours = duration_minutes // 60
@@ -437,7 +437,7 @@ def send_reschedule_email(
               </td></tr>
               <tr><td style="padding:20px 40px;border-top:1px solid #f1f5f9;text-align:center;">
                 <p style="color:#94a3b8;font-size:12px;margin:0;">
-                  Sent by Brain-A-Hire on behalf of {company_name}
+                  Sent by Hire Karo on behalf of {company_name}
                 </p>
               </td></tr>
             </table>

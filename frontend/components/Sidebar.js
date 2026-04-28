@@ -61,14 +61,14 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                                 fontSize: 12, fontWeight: 700, color: 'white',
                                 boxShadow: '0 2px 8px rgba(124,58,237,0.35)',
                             }}>
-                                BH
+                                HK
                             </div>
                             <span style={{
                                 fontWeight: 700,
                                 fontSize: 17, color: '#0f172a', letterSpacing: '-0.5px',
                                 whiteSpace: 'nowrap',
                             }}>
-                                Brain<span style={{ color: '#7c3aed' }}>-A-</span>Hire
+                                Hire<span style={{ color: '#7c3aed' }}>Karo</span>
                             </span>
                         </div>
                     )}

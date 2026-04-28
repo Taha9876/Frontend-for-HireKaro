@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 
 const quickLinks = [
   { label: 'Platform', href: '/' },
-  { label: 'Features', href: '#features' },
+  { label: 'Features', href: '/#features' },
+  { label: 'About Us', href: '/about' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -30,7 +31,7 @@ export default function Footer() {
             >
               BH
             </motion.div>
-            <p className="text-xl font-bold tracking-tight text-gray-900">Brain-A-Hire</p>
+            <p className="text-xl font-bold tracking-tight text-gray-900">Hire Karo</p>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-gray-500">
             Professional AI hiring platform to screen resumes, run interviews, and shortlist the best candidates faster. The future of talent acquisition.
@@ -90,7 +91,7 @@ export default function Footer() {
 
       <div className="border-t border-gray-100 bg-gray-50">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs md:flex-row md:px-10 text-gray-500">
-          <p>© {new Date().getFullYear()} Brain-A-Hire. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Hire Karo. All rights reserved.</p>
           <div className="flex gap-6">
             <span className="text-xs transition hover:text-purple-600 cursor-pointer font-medium">Privacy Policy</span>
             <span className="text-xs transition hover:text-purple-600 cursor-pointer font-medium">Terms of Service</span>

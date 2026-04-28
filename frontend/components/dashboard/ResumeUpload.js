@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef } from 'react';
 import api from '@/lib/api';
+import { UploadCloud, FileText, CheckCircle, X, FileUp } from 'lucide-react';
 
 export default function ResumeUpload({ jobId, onSuccess }) {
     const [files, setFiles] = useState([]);
@@ -51,13 +52,13 @@ export default function ResumeUpload({ jobId, onSuccess }) {
     };
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-8 py-5 border-b border-slate-100"
-                style={{ background: 'linear-gradient(135deg, #0a1628, #0f1f3d)' }}>
-                <h2 className="text-lg font-bold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>
-                    📄 Upload Resumes
+        <div className="backdrop-blur-xl bg-white/70 rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] overflow-hidden">
+            <div className="px-8 py-6 border-b border-white/40"
+                style={{ background: 'linear-gradient(135deg, #7c3aed, #9333ea, #c026d3)' }}>
+                <h2 className="text-xl font-extrabold text-white flex items-center gap-2" style={{ fontFamily: 'Syne, sans-serif' }}>
+                    <FileUp size={24} /> Upload Resumes
                 </h2>
-                <p className="text-white/50 text-xs mt-0.5">Upload all received resumes for this position (PDF only)</p>
+                <p className="text-white/80 text-sm mt-1">Upload all received resumes for this position (PDF only)</p>
             </div>
 
             <div className="p-8 flex flex-col gap-6">
@@ -68,8 +69,8 @@ export default function ResumeUpload({ jobId, onSuccess }) {
                 )}
 
                 {uploaded && (
-                    <div className="px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm font-medium text-center">
-                        ✅ Resumes uploaded successfully! Moving to next step...
+                    <div className="px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-700 text-sm font-semibold flex justify-center items-center gap-2">
+                        <CheckCircle size={18} /> Resumes uploaded successfully! Moving to next step...
                     </div>
                 )}
 
@@ -79,15 +80,17 @@ export default function ResumeUpload({ jobId, onSuccess }) {
                     onDragLeave={() => setDragOver(false)}
                     onDrop={(e) => { e.preventDefault(); setDragOver(false); handleFiles(e.dataTransfer.files); }}
                     onClick={() => inputRef.current.click()}
-                    className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all
-            ${dragOver ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-300 hover:bg-slate-50'}`}>
+                    className={`border-2 border-dashed rounded-3xl p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all
+            ${dragOver ? 'border-purple-500 bg-purple-50/50' : 'border-purple-200/50 hover:border-purple-400 hover:bg-purple-50/30'}`}>
                     <input ref={inputRef} type="file" accept=".pdf" multiple className="hidden"
                         onChange={(e) => handleFiles(e.target.files)} />
-                    <div className="text-5xl mb-3">📁</div>
-                    <p className="text-base font-semibold text-[#0a1628] mb-1">
+                    <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-4 shadow-inner">
+                        <UploadCloud size={32} />
+                    </div>
+                    <p className="text-lg font-bold text-[#0a1628] mb-1" style={{ fontFamily: 'Syne, sans-serif' }}>
                         Drop PDF files here or click to browse
                     </p>
-                    <p className="text-sm text-slate-400">Supports multiple files • PDF only • Max 5MB each</p>
+                    <p className="text-sm text-slate-500 font-medium">Supports multiple files • PDF only • Max 5MB each</p>
                 </div>
 
                 {/* File Preview */}
@@ -104,17 +107,17 @@ export default function ResumeUpload({ jobId, onSuccess }) {
                         </div>
                         {files.map((file, idx) => (
                             <div key={idx}
-                                className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
-                                <div className="w-9 h-9 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-sm flex-shrink-0">
-                                    📄
+                                className="flex items-center gap-3 px-4 py-3 bg-white/80 rounded-2xl border border-white shadow-sm hover:shadow-md transition-shadow">
+                                <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">
+                                    <FileText size={18} />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-[#0a1628] truncate">{file.name}</p>
-                                    <p className="text-xs text-slate-400">{formatSize(file.size)}</p>
+                                    <p className="text-sm font-bold text-[#0a1628] truncate">{file.name}</p>
+                                    <p className="text-xs text-slate-500 font-medium">{formatSize(file.size)}</p>
                                 </div>
                                 <button onClick={() => removeFile(idx)}
-                                    className="text-slate-300 hover:text-red-500 text-xl bg-transparent border-none cursor-pointer transition-colors leading-none">
-                                    ×
+                                    className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 border-none cursor-pointer transition-all">
+                                    <X size={16} />
                                 </button>
                             </div>
                         ))}
@@ -128,8 +131,8 @@ export default function ResumeUpload({ jobId, onSuccess }) {
                     </p>
                     <button onClick={handleUpload}
                         disabled={uploading || uploaded || files.length === 0}
-                        className="px-8 py-3 text-white font-semibold rounded-xl transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed border-none cursor-pointer"
-                        style={{ background: 'linear-gradient(135deg, #2563eb, #1e40af)', boxShadow: '0 3px 16px rgba(37,99,235,0.35)' }}>
+                        className="px-8 py-3 text-white font-bold rounded-xl transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed border-none cursor-pointer"
+                        style={{ background: 'linear-gradient(135deg, #9333ea, #db2777)', boxShadow: '0 4px 20px rgba(219,39,119,0.3)' }}>
                         {uploading ? 'Uploading...' : uploaded ? '✓ Uploaded!' : `Upload ${files.length > 0 ? files.length : ''} Resume${files.length > 1 ? 's' : ''} →`}
                     </button>
                 </div>
