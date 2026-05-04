@@ -1,5 +1,32 @@
 @import "tailwindcss";
 
+/* Hide Google Translate top banner / iframe */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-logo-link,
+.goog-te-gadget,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+body {
+  top: 0 !important;
+  position: static !important;
+}
+html {
+  margin-top: 0 !important;
+}
+/* Hover translation tooltip */
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 :root {
   --background: #faf9ff;
   --foreground: #1a1535;
