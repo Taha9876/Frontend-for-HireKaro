@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const menuItems = [
     { label: 'Dashboard', href: '/dashboard' },
@@ -175,6 +176,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                     borderTop: '1px solid rgba(139,92,246,0.1)',
                     display: 'flex', flexDirection: 'column', gap: 6,
                 }}>
+                    {/* Language Switcher */}
+                    {isOpen && (
+                        <div className="px-1 pb-1 relative">
+                            <LanguageSwitcher variant="floating-inline" />
+                        </div>
+                    )}
+
                     {/* Create Job */}
                     {isOpen ? (
                         <Link href="/dashboard/jobs/create" className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-500 px-4 py-2.5 text-sm font-semibold text-white no-underline shadow-lg shadow-violet-300/50 transition hover:-translate-y-0.5">

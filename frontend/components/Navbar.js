@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Navbar() {
     const router = useRouter();
@@ -60,6 +61,7 @@ export default function Navbar() {
                 </ul>
 
                 <div className="flex items-center gap-4">
+                    <LanguageSwitcher />
                     {loggedIn ? (
                         <>
                             <Link href="/dashboard" className="hidden sm:inline-flex rounded-full border border-gray-200 px-5 py-2 text-sm font-medium text-gray-700 no-underline transition hover:bg-gray-50">

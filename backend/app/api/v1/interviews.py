@@ -568,6 +568,8 @@ def get_interview_results(
             "tab_switches": r.tab_switches if r else 0,
             "interviewed": r is not None,
             "interview_id": interview.id,
+            "created_at": c.created_at.isoformat() if c.created_at else None,
+            "evaluated_at": r.evaluated_at.isoformat() if (r and r.evaluated_at) else None,
         })
 
     result_list.sort(key=lambda x: x["final_score"] or 0, reverse=True)

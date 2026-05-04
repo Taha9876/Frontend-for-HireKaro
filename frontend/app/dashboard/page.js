@@ -99,6 +99,7 @@ export default function DashboardPage() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [aiInterviewsDone, setAiInterviewsDone] = useState(0);
+    const [trendData, setTrendData] = useState([]);
 
     useEffect(() => {
         const now = new Date();
@@ -121,12 +122,42 @@ export default function DashboardPage() {
             const interviewResults = await Promise.all(interviewPromises);
             
             let totalInterviews = 0;
+            const allCandidates = [];
             interviewResults.forEach(res => {
                 if (res && res.data && res.data.candidates) {
                     totalInterviews += res.data.candidates.filter(c => c.interviewed).length;
+                    allCandidates.push(...res.data.candidates);
                 }
             });
             setAiInterviewsDone(totalInterviews);
+
+            // Build last-7-days real trend data
+            const days = [];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(today);
+                d.setDate(today.getDate() - i);
+                days.push({
+                    name: d.toLocaleDateString('en-US', { weekday: 'short' }),
+                    dateKey: d.toISOString().slice(0, 10),
+                    resumes: 0,
+                    ai_shortlisted: 0,
+                });
+            }
+            const byKey = Object.fromEntries(days.map(d => [d.dateKey, d]));
+            allCandidates.forEach(c => {
+                if (c.created_at) {
+                    const k = c.created_at.slice(0, 10);
+                    if (byKey[k]) byKey[k].resumes += 1;
+                }
+                const evalDate = c.evaluated_at || (c.interviewed ? c.created_at : null);
+                if (evalDate) {
+                    const k = evalDate.slice(0, 10);
+                    if (byKey[k]) byKey[k].ai_shortlisted += 1;
+                }
+            });
+            setTrendData(days);
 
         } catch (error) {
             console.error('Failed to fetch jobs:', error);
@@ -176,15 +207,13 @@ export default function DashboardPage() {
         { label: 'Ranked Shortlists', value: totalJobs, delta: 'Based on behavior & skills', deltaType: 'info', color: '#10b981', Icon: Activity, bgGrad: 'linear-gradient(135deg, #d1fae5, #ecfdf5)' },
     ];
 
-    const TREND_DATA = [
-        { name: 'Mon', resumes: 12, ai_shortlisted: 4 },
-        { name: 'Tue', resumes: 25, ai_shortlisted: 10 },
-        { name: 'Wed', resumes: 45, ai_shortlisted: 15 },
-        { name: 'Thu', resumes: 30, ai_shortlisted: 8 },
-        { name: 'Fri', resumes: 60, ai_shortlisted: 20 },
-        { name: 'Sat', resumes: 15, ai_shortlisted: 2 },
-        { name: 'Sun', resumes: 20, ai_shortlisted: 5 },
-    ];
+    const TREND_DATA = trendData.length
+        ? trendData
+        : Array.from({ length: 7 }).map((_, i) => {
+            const d = new Date();
+            d.setDate(d.getDate() - (6 - i));
+            return { name: d.toLocaleDateString('en-US', { weekday: 'short' }), resumes: 0, ai_shortlisted: 0 };
+        });
 
     const PIPELINE = [
         { name: 'Resumes Parsed', value: totalCandidates, pct: 100 },
@@ -266,7 +295,7 @@ export default function DashboardPage() {
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(139,92,246,0.1)" />
                                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 13, fill: '#64608a', fontWeight: 500 }} dy={10} />
-                                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 13, fill: '#64608a', fontWeight: 500 }} />
+                                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 13, fill: '#64608a', fontWeight: 500 }} allowDecimals={false} />
                                     <Tooltip content={<CustomTooltip />} />
                                     <Area type="monotone" name="Resumes Parsed" dataKey="resumes" stroke="#8b5cf6" strokeWidth={4} fill="url(#gApps)" dot={{ fill: '#8b5cf6', r: 5, strokeWidth: 3, stroke: '#fff' }} activeDot={{ r: 8, stroke: '#8b5cf6', strokeWidth: 3, fill: '#fff' }} />
                                     <Area type="monotone" name="AI Shortlisted" dataKey="ai_shortlisted" stroke="#c026d3" strokeWidth={4} fill="url(#gShort)" dot={{ fill: '#c026d3', r: 5, strokeWidth: 3, stroke: '#fff' }} activeDot={{ r: 8, stroke: '#c026d3', strokeWidth: 3, fill: '#fff' }} />
