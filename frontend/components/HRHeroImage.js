@@ -6,8 +6,8 @@ export default function HRHeroImage() {
   const [hoveredDoc, setHoveredDoc] = useState(null);
 
   const documents = [
-    { id: 1, name: 'John Doe - Resume', score: 92, color: '#8b5cf6' },
-    { id: 2, name: 'Sarah Smith - CV', score: 87, color: '#ec4899' },
+    { id: 1, name: 'John Doe - Resume', score: 92, color: '#7FA582' },
+    { id: 2, name: 'Sarah Smith - CV', score: 87, color: '#F4A28C' },
     { id: 3, name: 'Mike Johnson - Resume', score: 78, color: '#06b6d4' },
     { id: 4, name: 'Emily Brown - CV', score: 95, color: '#10b981' },
   ];

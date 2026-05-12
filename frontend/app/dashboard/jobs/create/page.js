@@ -31,10 +31,10 @@ export default function CreateJobPage() {
     }, [currentStep]);
 
     return (
-        <div ref={pageRef} className="min-h-screen p-6 lg:p-10 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fafbff 0%, #f3f0ff 100%)' }}>
+        <div ref={pageRef} className="min-h-screen p-6 lg:p-10 relative overflow-hidden" style={{ background: '#FBF8F2' }}>
             {/* Background Orbs */}
-            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
-            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(192,38,211,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.18) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000, margin: '0 auto' }}>
 
@@ -52,7 +52,7 @@ export default function CreateJobPage() {
             </div>
 
             {/* Stepper */}
-            <div className="stepper flex items-center gap-0 mb-10 bg-white/70 backdrop-blur-xl p-4 rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)]">
+            <div className="stepper flex items-center gap-0 mb-10 bg-white/70 backdrop-blur-xl p-4 rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)]">
                 {steps.map((step, idx) => (
                     <div key={step.number} className="flex items-center flex-1 last:flex-none">
                         <div className="flex items-center gap-2.5">

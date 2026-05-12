@@ -19,21 +19,22 @@ const appLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative bg-white border-t border-gray-200 overflow-hidden pt-20 z-10">
+    <footer className="relative bg-white border-t border-[#e8e5df] overflow-hidden pt-20 z-10">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 pb-16 sm:grid-cols-2 lg:grid-cols-4 md:px-10">
         {/* Brand */}
         <div className="md:col-span-1">
-          <div className="mb-6 inline-flex items-center gap-3">
+          <div translate="no" className="notranslate mb-6 inline-flex items-center gap-3">
             <motion.div 
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold text-white shadow-md bg-gradient-to-r from-purple-600 to-pink-600"
-              whileHover={{ rotate: 360, scale: 1.1 }}
-              transition={{ duration: 0.5 }}
+              className="notranslate flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold text-white shadow-md"
+              style={{ background: 'linear-gradient(135deg, #F4A28C, #E9C26A 50%, #7FA582)' }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
-              BH
+              HK
             </motion.div>
-            <p className="text-xl font-bold tracking-tight text-gray-900">Hire Karo</p>
+            <p className="notranslate text-xl font-bold tracking-tight text-[#1C1B2E]">Hire Karo</p>
           </div>
-          <p className="max-w-xs text-sm leading-relaxed text-gray-500">
+          <p className="max-w-xs text-sm leading-relaxed text-[#64608a]">
             Professional AI hiring platform to screen resumes, run interviews, and shortlist the best candidates faster. The future of talent acquisition.
           </p>
           <div className="mt-8 flex gap-4">
@@ -41,7 +42,7 @@ export default function Footer() {
               <motion.span 
                 key={social} 
                 whileHover={{ scale: 1.1 }}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-600 cursor-pointer transition-colors hover:text-purple-600 hover:border-purple-200 hover:bg-purple-50"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#e8e5df] bg-[#FDFCF9] text-xs font-semibold text-[#64608a] cursor-pointer transition-colors hover:text-[#1C1B2E] hover:border-[#1C1B2E]/20 hover:bg-[#f3f1ec]"
               >
                 {social}
               </motion.span>
@@ -51,11 +52,11 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div>
-          <p className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-900">Company</p>
+          <p className="mb-6 text-xs font-bold uppercase tracking-widest text-[#1C1B2E]">Company</p>
           <ul className="space-y-4 list-none p-0 m-0">
             {quickLinks.map((item) => (
               <li key={item.href}>
-                <Link className="text-sm font-medium text-gray-500 no-underline transition-colors hover:text-purple-600" href={item.href}>{item.label}</Link>
+                <Link className="text-sm font-medium text-[#64608a] no-underline transition-colors hover:text-[#1C1B2E]" href={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>
@@ -63,11 +64,11 @@ export default function Footer() {
 
         {/* Application Links */}
         <div>
-          <p className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-900">Application</p>
+          <p className="mb-6 text-xs font-bold uppercase tracking-widest text-[#1C1B2E]">Application</p>
           <ul className="space-y-4 list-none p-0 m-0">
             {appLinks.map((item) => (
               <li key={item.label}>
-                <Link className="text-sm font-medium text-gray-500 no-underline transition-colors hover:text-purple-600" href={item.href}>{item.label}</Link>
+                <Link className="text-sm font-medium text-[#64608a] no-underline transition-colors hover:text-[#1C1B2E]" href={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>
@@ -75,13 +76,14 @@ export default function Footer() {
 
         {/* CTA */}
         <div>
-          <p className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-900">Get Started</p>
-          <p className="mb-6 text-sm leading-relaxed text-gray-500">Build a smarter hiring workflow with modern, AI-first recruitment tooling.</p>
+          <p className="mb-6 text-xs font-bold uppercase tracking-widest text-[#1C1B2E]">Get Started</p>
+          <p className="mb-6 text-sm leading-relaxed text-[#64608a]">Build a smarter hiring workflow with modern, AI-first recruitment tooling.</p>
           <Link href="/auth/signup">
             <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-md hover:shadow-lg transition-all"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all"
+              style={{ background: '#1C1B2E' }}
             >
               Start Free Trial
             </motion.button>
@@ -89,12 +91,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-gray-100 bg-gray-50">
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs md:flex-row md:px-10 text-gray-500">
+      <div className="border-t border-[#e8e5df] bg-[#FDFCF9]">
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs md:flex-row md:px-10 text-[#94a3b8]">
           <p>© {new Date().getFullYear()} Hire Karo. All rights reserved.</p>
           <div className="flex gap-6">
-            <span className="text-xs transition hover:text-purple-600 cursor-pointer font-medium">Privacy Policy</span>
-            <span className="text-xs transition hover:text-purple-600 cursor-pointer font-medium">Terms of Service</span>
+            <span className="text-xs transition hover:text-[#1C1B2E] cursor-pointer font-medium">Privacy Policy</span>
+            <span className="text-xs transition hover:text-[#1C1B2E] cursor-pointer font-medium">Terms of Service</span>
           </div>
         </div>
       </div>

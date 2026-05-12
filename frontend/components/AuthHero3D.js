@@ -7,7 +7,7 @@ function MonitorScene() {
   const frame = useRef(null);
   const cards = useMemo(
     () => [
-      { pos: [1.3, 0.4, -0.35], scale: [0.72, 0.42, 0.08], color: '#7c3aed' },
+      { pos: [1.3, 0.4, -0.35], scale: [0.72, 0.42, 0.08], color: '#1C1B2E' },
       { pos: [-1.25, 0.2, -0.55], scale: [0.68, 0.34, 0.08], color: '#c026d3' },
       { pos: [0, -0.65, -0.35], scale: [0.88, 0.26, 0.08], color: '#60a5fa' },
     ],
@@ -37,11 +37,11 @@ function MonitorScene() {
         <group position={[0, 0.5, 0.05]}>
           <mesh position={[-1.05, 0, 0]}>
             <boxGeometry args={[0.8, 0.18, 0.08]} />
-            <meshStandardMaterial color="#8b5cf6" />
+            <meshStandardMaterial color="#7FA582" />
           </mesh>
           <mesh position={[0.5, 0, 0]}>
             <boxGeometry args={[1.6, 0.18, 0.08]} />
-            <meshStandardMaterial color="#a855f7" />
+            <meshStandardMaterial color="#9DBF9E" />
           </mesh>
         </group>
         <group position={[-0.65, -0.35, 0.05]}>

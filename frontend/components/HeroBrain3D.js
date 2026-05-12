@@ -37,7 +37,7 @@ function ResumeScreen() {
           </Text>
 
           <RoundedBox args={[1.88, 0.16, 0.04]} radius={0.08} smoothness={6} position={[-0.05, 0.2, 0.05]}>
-            <meshStandardMaterial color="#7c3aed" />
+            <meshStandardMaterial color="#1C1B2E" />
           </RoundedBox>
           <RoundedBox args={[1.88, 0.10, 0.04]} radius={0.08} smoothness={6} position={[-0.05, 0.05, 0.05]}>
             <meshStandardMaterial color="#1f2937" />
@@ -52,7 +52,7 @@ function ResumeScreen() {
                 smoothness={6}
                 position={[0, -idx * 0.14, 0]}
               >
-                <meshStandardMaterial color={idx === 0 ? '#8b5cf6' : idx === 1 ? '#c026d3' : '#60a5fa'} />
+                <meshStandardMaterial color={idx === 0 ? '#7FA582' : idx === 1 ? '#c026d3' : '#60a5fa'} />
               </RoundedBox>
             ))}
           </group>
@@ -69,7 +69,7 @@ function ResumeScreen() {
       <Float speed={1.35} rotationIntensity={0.32} floatIntensity={0.28}>
         <mesh position={[1.6, 0.78, 0.12]}>
           <torusGeometry args={[0.18, 0.04, 24, 48]} />
-          <meshStandardMaterial color="#8b5cf6" metalness={0.5} roughness={0.15} />
+          <meshStandardMaterial color="#7FA582" metalness={0.5} roughness={0.15} />
         </mesh>
       </Float>
     </group>
@@ -116,7 +116,7 @@ function ProfileCard({ position, rotation, accent, name, role }) {
 function Scene() {
   const profiles = useMemo(
     () => [
-      { position: [1.85, 0.85, -0.36], rotation: [0.04, -0.46, 0.02], accent: '#8b5cf6', name: 'Emma S.', role: 'Senior Engineer' },
+      { position: [1.85, 0.85, -0.36], rotation: [0.04, -0.46, 0.02], accent: '#7FA582', name: 'Emma S.', role: 'Senior Engineer' },
       { position: [-2.05, -0.18, -0.62], rotation: [-0.03, 0.54, -0.04], accent: '#c026d3', name: 'Marcus R.', role: 'Product Lead' },
       { position: [1.55, -0.92, -0.42], rotation: [0.02, -0.31, 0.03], accent: '#60a5fa', name: 'Ava K.', role: 'Talent Ops' },
     ],
@@ -129,7 +129,7 @@ function Scene() {
       <ambientLight intensity={0.65} />
       <directionalLight position={[5, 6, 4]} intensity={1.02} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
       <pointLight position={[-4.5, 1.8, -1.6]} intensity={0.65} color="#c026d3" />
-      <pointLight position={[4.8, -0.8, 1.8]} intensity={0.55} color="#8b5cf6" />
+      <pointLight position={[4.8, -0.8, 1.8]} intensity={0.55} color="#7FA582" />
 
       <group position={[0, 0.1, 0]}>
         <ResumeScreen />
@@ -153,7 +153,7 @@ export default function HeroBrain3D() {
       className="relative w-full h-[480px] md:h-[560px] lg:h-[650px]"
     >
       <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-purple-deep/10 via-transparent to-transparent blur-2xl -rotate-6" />
-      <div className="absolute inset-0 rounded-[2.5rem]" style={{ background: 'radial-gradient(circle at 35% 30%, rgba(139,92,246,0.12), rgba(255,255,255,0) 55%)' }} />
+      <div className="absolute inset-0 rounded-[2.5rem]" style={{ background: 'radial-gradient(circle at 35% 30%, rgba(127, 165, 130,0.12), rgba(255,255,255,0) 55%)' }} />
       <Canvas
         shadows
         dpr={[1, 1.75]}

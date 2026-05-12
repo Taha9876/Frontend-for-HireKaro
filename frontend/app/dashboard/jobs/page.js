@@ -36,14 +36,14 @@ export default function JobsPage() {
     };
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: 'linear-gradient(135deg, #fafbff 0%, #f3f0ff 100%)', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
             {/* Background Orbs */}
-            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
-            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(192,38,211,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.18) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
                 {/* Header */}
-                <div className="page-header flex items-center justify-between mb-8 p-6 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)]">
+                <div className="page-header flex items-center justify-between mb-8 p-6 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)]">
                     <div className="flex items-center gap-4">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white shadow-lg shadow-violet-500/30">
                             <Briefcase size={24} />
@@ -55,7 +55,7 @@ export default function JobsPage() {
                     </div>
                     <Link href="/dashboard/jobs/create"
                         className="flex items-center gap-2 px-6 py-3 text-white text-sm font-bold rounded-full no-underline transition-all hover:scale-105"
-                        style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', boxShadow: '0 8px 24px rgba(139,92,246,0.35)' }}>
+                        style={{ background: 'linear-gradient(135deg, #7FA582, #9DBF9E)', boxShadow: '0 8px 24px rgba(127, 165, 130,0.35)' }}>
                         <Plus size={18} strokeWidth={3} /> Post New Job
                     </Link>
                 </div>
@@ -74,7 +74,7 @@ export default function JobsPage() {
                         <p className="text-slate-500 text-base mb-8 max-w-md">Start building your dream team by creating your very first job posting.</p>
                         <Link href="/dashboard/jobs/create"
                             className="px-8 py-3.5 text-white text-base font-bold rounded-full no-underline transition-transform hover:scale-105 shadow-lg shadow-violet-500/30"
-                            style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)' }}>
+                            style={{ background: 'linear-gradient(135deg, #7FA582, #9DBF9E)' }}>
                             Create First Job
                         </Link>
                     </div>
@@ -82,7 +82,7 @@ export default function JobsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {jobs.map((job) => (
                             <div key={job.id}
-                                className="job-card group flex flex-col p-6 bg-white/70 backdrop-blur-xl rounded-3xl border border-white/80 hover:border-violet-300 hover:shadow-[0_8px_30px_rgba(139,92,246,0.12)] transition-all duration-300">
+                                className="job-card group flex flex-col p-6 bg-white/70 backdrop-blur-xl rounded-3xl border border-white/80 hover:border-violet-300 hover:shadow-[0_8px_30px_rgba(127, 165, 130,0.12)] transition-all duration-300">
                                 
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">

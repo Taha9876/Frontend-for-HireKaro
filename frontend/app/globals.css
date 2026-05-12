@@ -28,21 +28,25 @@ html {
 }
 
 :root {
-  --background: #faf9ff;
-  --foreground: #1a1535;
-  --text-secondary: #64608a;
-  --text-muted: #8a85a3;
-  --purple: #8b5cf6;
-  --purple-deep: #7c3aed;
-  --violet: #a855f7;
-  --magenta: #c026d3;
-  --pink-violet: #e879f9;
-  --pink: #f472b6;
-  --rose: #fb7185;
-  --rose-deep: #f43f5e;
-  --gradient-primary: linear-gradient(135deg, #8b5cf6, #c026d3);
-  --gradient-rich: linear-gradient(135deg, #7c3aed, #c026d3, #e879f9);
-  --gradient-soft: linear-gradient(135deg, #a855f7, #e879f9);
+  /* EquaHire V3 palette */
+  --background: #FBF8F2;
+  --foreground: #1C1B2E;
+  --text-secondary: #4A4860;
+  --text-muted: #807E94;
+  --coral: #F4A28C;
+  --coral-deep: #E88A72;
+  --sage: #9DBF9E;
+  --sage-deep: #7FA582;
+  --yellow: #F4D58D;
+  --yellow-deep: #E9C26A;
+  --mint: #9AD0C2;
+  --mint-deep: #7BB8A8;
+  --lilac: #C4B5E0;
+  --lilac-deep: #A693CC;
+  --ink: #1C1B2E;
+  --gradient-primary: linear-gradient(135deg, #F4A28C, #F4D58D 50%, #C4B5E0);
+  --gradient-rich: linear-gradient(135deg, #F4A28C 0%, #F4D58D 40%, #9AD0C2 75%, #C4B5E0 100%);
+  --gradient-soft: linear-gradient(135deg, #FBF8F2, #FFF4E6);
 }
 
 @theme inline {
@@ -50,6 +54,77 @@ html {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* ── Re-map legacy purple / pink / indigo / violet / fuchsia utilities to V3 palette ── */
+  /* Purple = dark ink / sage family (primary CTA + brand) */
+  --color-purple-50:  #F3F7EF;
+  --color-purple-100: #E5EEDF;
+  --color-purple-200: #C7D9C0;
+  --color-purple-300: #A4C0A1;
+  --color-purple-400: #9DBF9E;
+  --color-purple-500: #7FA582;
+  --color-purple-600: #1C1B2E;
+  --color-purple-700: #1C1B2E;
+  --color-purple-800: #15141F;
+  --color-purple-900: #0B0A14;
+
+  /* Pink = coral family (accent / warm CTA) */
+  --color-pink-50:  #FDF2EE;
+  --color-pink-100: #FAE2D8;
+  --color-pink-200: #F5C4AE;
+  --color-pink-300: #F2A890;
+  --color-pink-400: #F4B58A;
+  --color-pink-500: #F4A28C;
+  --color-pink-600: #E88A72;
+  --color-pink-700: #D97356;
+  --color-pink-800: #B85A3F;
+  --color-pink-900: #8E4530;
+
+  /* Indigo / violet = lilac family */
+  --color-indigo-50:  #F3EFFA;
+  --color-indigo-100: #E6DEF5;
+  --color-indigo-200: #D0C2EB;
+  --color-indigo-300: #C4B5E0;
+  --color-indigo-400: #B39FD6;
+  --color-indigo-500: #A693CC;
+  --color-indigo-600: #8A77B5;
+  --color-indigo-700: #6F5E99;
+  --color-indigo-800: #554778;
+  --color-indigo-900: #3B3054;
+
+  /* Violet = sage family (used for primary brand accents on dashboard) */
+  --color-violet-50:  #F3F7EF;
+  --color-violet-100: #E5EEDF;
+  --color-violet-200: #C7D9C0;
+  --color-violet-300: #A4C0A1;
+  --color-violet-400: #9DBF9E;
+  --color-violet-500: #7FA582;
+  --color-violet-600: #68935F;
+  --color-violet-700: #527A4A;
+  --color-violet-800: #3E5E37;
+  --color-violet-900: #2A4225;
+
+  /* Fuchsia = coral-leaning pink */
+  --color-fuchsia-50:  #FDF2EE;
+  --color-fuchsia-100: #FAE2D8;
+  --color-fuchsia-200: #F5C4AE;
+  --color-fuchsia-300: #F2A890;
+  --color-fuchsia-400: #F4B58A;
+  --color-fuchsia-500: #F4A28C;
+  --color-fuchsia-600: #E88A72;
+  --color-fuchsia-700: #D97356;
+  --color-fuchsia-800: #B85A3F;
+  --color-fuchsia-900: #8E4530;
+
+  /* Named palette aliases (optional shorthand) */
+  --color-coral: #F4A28C;
+  --color-coral-deep: #E88A72;
+  --color-sage: #9DBF9E;
+  --color-sage-deep: #7FA582;
+  --color-ink: #1C1B2E;
+  --color-cream: #FBF8F2;
+  --color-mint: #9AD0C2;
+  --color-lilac: #C4B5E0;
 }
 
 html {
@@ -68,15 +143,15 @@ body {
 
 /* ─── Glass card ─── */
 .glass-card {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(28, 27, 46, 0.06);
 }
 
 /* ─── Gradient text ─── */
 .gradient-text {
-  background: linear-gradient(135deg, #7c3aed, #c026d3, #e879f9);
+  background: linear-gradient(135deg, #E88A72, #E9C26A, #A693CC);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -94,7 +169,7 @@ body {
   transform: translateX(-50%);
   width: 60%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(127, 165, 130, 0.35), transparent);
 }
 
 /* ─── FAQ accordion ─── */
@@ -119,6 +194,6 @@ font { background: transparent !important; box-shadow: none !important; }
 
 /* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f5f3ff; }
-::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+::-webkit-scrollbar-track { background: #FBF8F2; }
+::-webkit-scrollbar-thumb { background: #C4B5E0; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #1C1B2E; }

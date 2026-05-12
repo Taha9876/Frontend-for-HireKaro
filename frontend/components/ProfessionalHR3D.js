@@ -131,12 +131,12 @@ function AIProcessingCore({ position }) {
       <mesh ref={coreRef} castShadow>
         <icosahedronGeometry args={[1, 1]} />
         <meshPhysicalMaterial 
-          color="#7c3aed" 
+          color="#1C1B2E" 
           roughness={0.1}
           metalness={0.8}
           clearcoat={0.5}
           clearcoatRoughness={0.1}
-          emissive="#7c3aed"
+          emissive="#1C1B2E"
           emissiveIntensity={0.2}
         />
       </mesh>
@@ -147,11 +147,11 @@ function AIProcessingCore({ position }) {
           <mesh ref={el => ringsRef.current[i] = el}>
             <torusGeometry args={[1.2 + i * 0.4, 0.08, 16, 48]} />
             <meshPhysicalMaterial 
-              color={i === 0 ? "#c026d3" : i === 1 ? "#a855f7" : i === 2 ? "#8b5cf6" : "#6366f1"}
+              color={i === 0 ? "#c026d3" : i === 1 ? "#9DBF9E" : i === 2 ? "#7FA582" : "#6366f1"}
               roughness={0.15}
               metalness={0.7}
               clearcoat={0.3}
-              emissive={i === 0 ? "#c026d3" : i === 1 ? "#a855f7" : i === 2 ? "#8b5cf6" : "#6366f1"}
+              emissive={i === 0 ? "#c026d3" : i === 1 ? "#9DBF9E" : i === 2 ? "#7FA582" : "#6366f1"}
               emissiveIntensity={0.15}
             />
           </mesh>
@@ -375,10 +375,10 @@ function SkillsVisualization({ position }) {
   });
 
   const skills = [
-    { name: 'Leadership', level: 0.9, color: '#8b5cf6' },
+    { name: 'Leadership', level: 0.9, color: '#7FA582' },
     { name: 'Communication', level: 0.85, color: '#c026d3' },
-    { name: 'Technical', level: 0.8, color: '#a855f7' },
-    { name: 'Analytics', level: 0.75, color: '#7c3aed' },
+    { name: 'Technical', level: 0.8, color: '#9DBF9E' },
+    { name: 'Analytics', level: 0.75, color: '#1C1B2E' },
     { name: 'Strategy', level: 0.7, color: '#6366f1' },
     { name: 'Innovation', level: 0.65, color: '#60a5fa' }
   ];
@@ -454,7 +454,7 @@ function ProfessionalHRScene() {
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
-      <pointLight position={[-5, 8, -5]} intensity={1.2} color="#7c3aed" />
+      <pointLight position={[-5, 8, -5]} intensity={1.2} color="#1C1B2E" />
       <pointLight position={[5, 6, 5]} intensity={1.0} color="#c026d3" />
       <pointLight position={[0, 10, 0]} intensity={0.8} color="#60a5fa" />
       <spotLight 
@@ -506,7 +506,7 @@ export default function ProfessionalHR3D() {
       className="relative w-full h-[480px] md:h-[560px] lg:h-[650px]"
     >
       <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-purple-deep/10 via-transparent to-transparent blur-2xl -rotate-6" />
-      <div className="absolute inset-0 rounded-[2.5rem]" style={{ background: 'radial-gradient(circle at 35% 30%, rgba(139,92,246,0.12), rgba(255,255,255,0) 55%)' }} />
+      <div className="absolute inset-0 rounded-[2.5rem]" style={{ background: 'radial-gradient(circle at 35% 30%, rgba(127, 165, 130,0.12), rgba(255,255,255,0) 55%)' }} />
       
       <Canvas
         shadows

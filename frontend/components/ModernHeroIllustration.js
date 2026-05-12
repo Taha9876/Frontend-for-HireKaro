@@ -106,7 +106,7 @@ export default function ModernHeroIllustration() {
               y1="50%"
               x2="67%"
               y2="50%"
-              stroke={activeIndex === 1 ? "#8b5cf6" : "#e5e7eb"}
+              stroke={activeIndex === 1 ? "#7FA582" : "#e5e7eb"}
               strokeWidth="2"
               strokeDasharray={activeIndex === 1 ? "0" : "5,5"}
               animate={{ strokeDashoffset: activeIndex === 1 ? 0 : 10 }}

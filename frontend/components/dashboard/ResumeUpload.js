@@ -52,9 +52,9 @@ export default function ResumeUpload({ jobId, onSuccess }) {
     };
 
     return (
-        <div className="backdrop-blur-xl bg-white/70 rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] overflow-hidden">
+        <div className="backdrop-blur-xl bg-white/70 rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)] overflow-hidden">
             <div className="px-8 py-6 border-b border-white/40"
-                style={{ background: 'linear-gradient(135deg, #7c3aed, #9333ea, #c026d3)' }}>
+                style={{ background: 'linear-gradient(135deg, #1C1B2E, #7FA582, #c026d3)' }}>
                 <h2 className="text-xl font-extrabold text-white flex items-center gap-2" style={{ fontFamily: 'Syne, sans-serif' }}>
                     <FileUp size={24} /> Upload Resumes
                 </h2>
@@ -132,7 +132,7 @@ export default function ResumeUpload({ jobId, onSuccess }) {
                     <button onClick={handleUpload}
                         disabled={uploading || uploaded || files.length === 0}
                         className="px-8 py-3 text-white font-bold rounded-xl transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed border-none cursor-pointer"
-                        style={{ background: 'linear-gradient(135deg, #9333ea, #db2777)', boxShadow: '0 4px 20px rgba(219,39,119,0.3)' }}>
+                        style={{ background: 'linear-gradient(135deg, #7FA582, #E88A72)', boxShadow: '0 4px 20px rgba(232, 138, 114,0.3)' }}>
                         {uploading ? 'Uploading...' : uploaded ? '✓ Uploaded!' : `Upload ${files.length > 0 ? files.length : ''} Resume${files.length > 1 ? 's' : ''} →`}
                     </button>
                 </div>

@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import api from '@/lib/api';
 import { Briefcase, Plus, ChevronRight, ArrowLeft, Save } from 'lucide-react';
 
-const inputClass = "w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white/60 backdrop-blur-sm border border-white/40 rounded-xl outline-none transition-all focus:border-purple-500 focus:bg-white focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)]";
+const inputClass = "w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white/60 backdrop-blur-sm border border-white/40 rounded-xl outline-none transition-all focus:border-purple-500 focus:bg-white focus:shadow-[0_0_0_3px_rgba(127, 165, 130,0.1)]";
 const labelClass = "block text-xs font-semibold text-gray-600 mb-1.5";
 
 export default function EditJobPage() {
@@ -130,16 +130,16 @@ export default function EditJobPage() {
     };
 
     if (loading) return (
-        <div className="flex items-center justify-center h-screen" style={{ background: 'linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #f5f3ff 100%)' }}>
+        <div className="flex items-center justify-center h-screen" style={{ background: '#FBF8F2' }}>
             <div className="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" />
         </div>
     );
 
     return (
-        <div ref={pageRef} className="min-h-screen relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #f5f3ff 100%)' }}>
+        <div ref={pageRef} className="min-h-screen relative overflow-hidden" style={{ background: '#FBF8F2' }}>
             {/* Background Orbs */}
             <div className="pointer-events-none absolute inset-0 z-0">
-                <div className="absolute w-[500px] h-[500px] top-[-10%] right-[-5%] rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 blur-3xl" />
+                <div className="absolute w-[500px] h-[500px] top-[-10%] right-[-5%] rounded-full bg-gradient-to-br from-[#9DBF9E]/25 to-[#F4A28C]/20 blur-3xl" />
                 <div className="absolute w-[400px] h-[400px] bottom-[10%] left-[-10%] rounded-full bg-gradient-to-br from-violet-400/20 to-purple-400/20 blur-3xl" />
             </div>
 
@@ -164,7 +164,7 @@ export default function EditJobPage() {
                 {/* Form */}
                 <div className="edit-form backdrop-blur-md bg-white/50 rounded-3xl border border-white/40 shadow-xl overflow-hidden">
                     <div className="px-8 py-6 border-b border-purple-100/50"
-                        style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.08), rgba(236,72,153,0.05))' }}>
+                        style={{ background: 'linear-gradient(135deg, rgba(127, 165, 130,0.08), rgba(244, 162, 140,0.05))' }}>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white shadow-lg shadow-purple-500/30">
                                 <Briefcase size={20} />
@@ -368,7 +368,7 @@ export default function EditJobPage() {
                             </button>
                             <button type="submit" disabled={saving}
                                 className="flex items-center gap-2 px-8 py-3.5 text-white text-sm font-bold rounded-full transition-all hover:scale-105 disabled:opacity-60 disabled:hover:scale-100 disabled:cursor-not-allowed border-none cursor-pointer shadow-lg shadow-purple-500/30"
-                                style={{ background: 'linear-gradient(135deg, #9333ea, #ec4899)' }}>
+                                style={{ background: 'linear-gradient(135deg, #7FA582, #9DBF9E)' }}>
                                 <Save size={18} /> {saving ? 'Saving...' : 'Save Changes'}
                             </button>
                         </div>

@@ -42,18 +42,18 @@ export default function InterviewLoginPage() {
 
                 {/* Aesthetic background flares */}
                 <div className="pointer-events-none absolute inset-0 z-0">
-                    <div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full blur-[100px]" style={{ background: 'rgba(139,92,246,0.12)' }} />
+                    <div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full blur-[100px]" style={{ background: 'rgba(127, 165, 130,0.12)' }} />
                     <div className="absolute bottom-10 left-10 h-[400px] w-[400px] rounded-full blur-[100px]" style={{ background: 'rgba(192,38,211,0.08)' }} />
                 </div>
 
                 {/* Subtile grid pattern */}
                 <div className="fixed inset-0 pointer-events-none z-0"
                     style={{
-                        backgroundImage: 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
+                        backgroundImage: 'linear-gradient(rgba(127, 165, 130,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 165, 130,0.04) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
                     }} />
 
-                <div className="relative z-10 bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl max-w-md w-full overflow-hidden border" style={{ borderColor: 'rgba(139,92,246,0.15)' }}>
+                <div className="relative z-10 bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl max-w-md w-full overflow-hidden border" style={{ borderColor: 'rgba(127, 165, 130,0.15)' }}>
                     <div className={`p-8 text-center relative overflow-hidden ${access.accessible
                         ? 'bg-gradient-to-br from-emerald-50 to-emerald-100/50'
                         : access.reason === 'not_started'
@@ -89,7 +89,7 @@ export default function InterviewLoginPage() {
                             <button
                                 onClick={() => router.push('/interview/room')}
                                 className="w-full py-3.5 text-white font-bold text-sm rounded-xl cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2"
-                                style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', boxShadow: '0 8px 24px rgba(139,92,246,0.25)' }}>
+                                style={{ background: 'linear-gradient(135deg, #7FA582, #F4A28C)', boxShadow: '0 8px 24px rgba(127, 165, 130,0.25)' }}>
                                 Start Interview <span className="ml-1">→</span>
                             </button>
                         ) : (
@@ -112,14 +112,14 @@ export default function InterviewLoginPage() {
 
             {/* Aesthetic background flares */}
             <div className="pointer-events-none absolute inset-0 z-0">
-                <div className="absolute top-[-10%] right-[-5%] h-[600px] w-[600px] rounded-full blur-[120px]" style={{ background: 'rgba(139,92,246,0.1)' }} />
+                <div className="absolute top-[-10%] right-[-5%] h-[600px] w-[600px] rounded-full blur-[120px]" style={{ background: 'rgba(127, 165, 130,0.1)' }} />
                 <div className="absolute bottom-[-10%] left-[-5%] h-[500px] w-[500px] rounded-full blur-[100px]" style={{ background: 'rgba(192,38,211,0.08)' }} />
             </div>
 
             {/* Subtile grid pattern */}
             <div className="fixed inset-0 pointer-events-none z-0"
                 style={{
-                    backgroundImage: 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
+                    backgroundImage: 'linear-gradient(rgba(127, 165, 130,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 165, 130,0.04) 1px, transparent 1px)',
                     backgroundSize: '40px 40px'
                 }} />
 
@@ -127,7 +127,7 @@ export default function InterviewLoginPage() {
 
                 {/* Branding above box */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4 shadow-lg text-2xl bg-white border" style={{ borderColor: 'rgba(139,92,246,0.15)', boxShadow: '0 10px 30px rgba(139,92,246,0.15)' }}>
+                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4 shadow-lg text-2xl bg-white border" style={{ borderColor: 'rgba(127, 165, 130,0.15)', boxShadow: '0 10px 30px rgba(127, 165, 130,0.15)' }}>
                         🧠
                     </div>
                     <h1 className="text-3xl font-extrabold tracking-tight mb-2" style={{ color: '#1a1535' }}>
@@ -137,7 +137,7 @@ export default function InterviewLoginPage() {
                 </div>
 
                 {/* Login Box */}
-                <div className="bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl overflow-hidden border p-8" style={{ borderColor: 'rgba(139,92,246,0.15)' }}>
+                <div className="bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl overflow-hidden border p-8" style={{ borderColor: 'rgba(127, 165, 130,0.15)' }}>
 
                     {error && (
                         <div className="mb-6 px-4 py-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-600 text-sm font-medium text-center shadow-sm">
@@ -153,9 +153,9 @@ export default function InterviewLoginPage() {
                                 onChange={e => setForm({ ...form, username: e.target.value })}
                                 placeholder="Enter interview username"
                                 className="w-full px-4 py-3.5 text-sm font-medium bg-white border rounded-xl outline-none transition-all focus:bg-white placeholder:text-slate-300"
-                                style={{ borderColor: 'rgba(139,92,246,0.2)', color: '#1a1535' }}
-                                onFocus={(e) => { e.target.style.borderColor = '#8b5cf6'; e.target.style.boxShadow = '0 0 0 4px rgba(139,92,246,0.1)'; }}
-                                onBlur={(e) => { e.target.style.borderColor = 'rgba(139,92,246,0.2)'; e.target.style.boxShadow = 'none'; }}
+                                style={{ borderColor: 'rgba(127, 165, 130,0.2)', color: '#1a1535' }}
+                                onFocus={(e) => { e.target.style.borderColor = '#7FA582'; e.target.style.boxShadow = '0 0 0 4px rgba(127, 165, 130,0.1)'; }}
+                                onBlur={(e) => { e.target.style.borderColor = 'rgba(127, 165, 130,0.2)'; e.target.style.boxShadow = 'none'; }}
                             />
                         </div>
                         <div>
@@ -165,14 +165,14 @@ export default function InterviewLoginPage() {
                                 onChange={e => setForm({ ...form, password: e.target.value })}
                                 placeholder="••••••••"
                                 className="w-full px-4 py-3.5 text-sm font-medium bg-white border rounded-xl outline-none transition-all focus:bg-white placeholder:text-slate-300"
-                                style={{ borderColor: 'rgba(139,92,246,0.2)', color: '#1a1535' }}
-                                onFocus={(e) => { e.target.style.borderColor = '#8b5cf6'; e.target.style.boxShadow = '0 0 0 4px rgba(139,92,246,0.1)'; }}
-                                onBlur={(e) => { e.target.style.borderColor = 'rgba(139,92,246,0.2)'; e.target.style.boxShadow = 'none'; }}
+                                style={{ borderColor: 'rgba(127, 165, 130,0.2)', color: '#1a1535' }}
+                                onFocus={(e) => { e.target.style.borderColor = '#7FA582'; e.target.style.boxShadow = '0 0 0 4px rgba(127, 165, 130,0.1)'; }}
+                                onBlur={(e) => { e.target.style.borderColor = 'rgba(127, 165, 130,0.2)'; e.target.style.boxShadow = 'none'; }}
                             />
                         </div>
                         <button type="submit" disabled={loading}
                             className="w-full mt-2 py-3.5 text-white font-bold text-sm rounded-xl cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-                            style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', boxShadow: '0 8px 24px rgba(139,92,246,0.25)' }}>
+                            style={{ background: 'linear-gradient(135deg, #7FA582, #F4A28C)', boxShadow: '0 8px 24px rgba(127, 165, 130,0.25)' }}>
                             {loading ? 'Verifying...' : 'Access Interview'}
                         </button>
                     </form>

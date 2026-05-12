@@ -3,28 +3,25 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
 import api from '@/lib/api';
-import {
-    Users, Search, Filter, Download, FileText, CheckCircle,
-    XCircle, Clock, Briefcase, ChevronDown, Mail, Phone, Award
-} from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 
-const statusColors = {
-    shortlisted: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', icon: CheckCircle },
-    rejected: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200', icon: XCircle },
-    pending: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', icon: Clock },
-    processing: { bg: 'bg-violet-50', text: 'text-violet-700', border: 'border-violet-200', icon: Clock },
+const statusStyles = {
+    shortlisted: { bg: 'rgba(127,165,130,0.10)', color: '#4a7c4f', label: 'Shortlisted' },
+    rejected: { bg: 'rgba(220,80,60,0.08)', color: '#b33a2a', label: 'Rejected' },
+    pending: { bg: 'rgba(244,162,140,0.15)', color: '#c06a4e', label: 'Pending' },
+    processing: { bg: 'rgba(28,27,46,0.06)', color: '#64608a', label: 'Processing' },
 };
 
 const scoreColor = (score) => {
-    if (score >= 75) return 'text-emerald-600';
-    if (score >= 55) return 'text-amber-600';
-    return 'text-red-500';
+    if (score >= 75) return '#4a7c4f';
+    if (score >= 55) return '#c06a4e';
+    return '#b33a2a';
 };
 
-const scoreBg = (score) => {
-    if (score >= 75) return 'bg-gradient-to-r from-emerald-500 to-emerald-400';
-    if (score >= 55) return 'bg-gradient-to-r from-amber-500 to-amber-400';
-    return 'bg-gradient-to-r from-red-500 to-red-400';
+const scoreBgColor = (score) => {
+    if (score >= 75) return '#7FA582';
+    if (score >= 55) return '#F4A28C';
+    return '#dc5043';
 };
 
 export default function CandidatesPage() {
@@ -93,51 +90,50 @@ export default function CandidatesPage() {
     };
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: 'linear-gradient(135deg, #fafbff 0%, #f3f0ff 100%)', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px 40px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
             {/* Background Orbs */}
-            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
-            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(192,38,211,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127,165,130,0.10) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.08) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
                 {/* Header */}
-                <div className="page-header" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 20, borderRadius: 24, padding: '24px 32px', marginBottom: 32, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)' }}>
+                <div className="page-header" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, marginBottom: 28 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 24px rgba(139,92,246,0.3)' }}>
-                            <Users size={28} />
-                        </div>
+                        <div style={{ width: 3, height: 48, borderRadius: 2, background: 'linear-gradient(180deg, #7FA582, #F4A28C)' }} />
                         <div>
-                            <h1 style={{ fontSize: 26, fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.5px', fontFamily: 'Syne, sans-serif' }}>Candidates Talent Pool</h1>
-                            <p style={{ fontSize: 14, color: '#64608a', margin: '4px 0 0', fontWeight: 500 }}>
-                                Browse, search, and manage all applicants
-                                <span style={{ margin: '0 10px', color: '#c4b5fd' }}>•</span>
-                                <span style={{ fontWeight: 700, color: '#8b5cf6' }}>{candidates.length} total</span>
+                            <h1 style={{ fontSize: 30, fontWeight: 800, color: '#1C1B2E', margin: 0, letterSpacing: '-0.8px', fontFamily: 'Syne, sans-serif' }}>Candidates</h1>
+                            <p style={{ fontSize: 13, color: '#64608a', margin: '4px 0 0', fontWeight: 500 }}>
+                                Browse and manage all applicants
+                                <span style={{ margin: '0 8px', color: '#ccc' }}>·</span>
+                                <span style={{ fontWeight: 700, color: '#1C1B2E' }}>{candidates.length} total</span>
                             </p>
                         </div>
                     </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <div style={{ position: 'relative' }}>
-                            <Search style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={18} />
+                            <Search style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={16} />
                             <input
                                 type="text"
                                 placeholder="Search candidates..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                style={{ paddingLeft: 42, paddingRight: 16, paddingTop: 12, paddingBottom: 12, width: 280, background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(139,92,246,0.15)', borderRadius: 14, fontSize: 14, fontWeight: 500, color: '#0f172a', outline: 'none' }}
+                                style={{ paddingLeft: 40, paddingRight: 16, paddingTop: 11, paddingBottom: 11, width: 280, background: '#fff', border: '1px solid #e8e5df', borderRadius: 12, fontSize: 13, fontWeight: 500, color: '#1C1B2E', outline: 'none', transition: 'border-color 0.2s, box-shadow 0.2s' }}
+                                onFocus={e => { e.target.style.borderColor = '#7FA582'; e.target.style.boxShadow = '0 0 0 3px rgba(127,165,130,0.10)'; }}
+                                onBlur={e => { e.target.style.borderColor = '#e8e5df'; e.target.style.boxShadow = 'none'; }}
                             />
                         </div>
                         <div style={{ position: 'relative' }}>
                             <button
                                 onClick={() => setShowFilter(!showFilter)}
-                                style={{ width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 14, background: showFilter ? 'linear-gradient(135deg, #8b5cf6, #c026d3)' : 'rgba(255,255,255,0.8)', color: showFilter ? '#fff' : '#64608a', border: '1px solid rgba(139,92,246,0.15)', cursor: 'pointer', transition: 'all 0.2s' }}
+                                style={{ width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 12, background: showFilter ? '#1C1B2E' : '#fff', color: showFilter ? '#fff' : '#64608a', border: '1px solid #e8e5df', cursor: 'pointer', transition: 'all 0.2s' }}
                             >
-                                <Filter size={20} />
+                                <Filter size={16} />
                             </button>
                             {showFilter && (
-                                <div style={{ position: 'absolute', top: '110%', right: 0, background: '#fff', borderRadius: 16, padding: 8, boxShadow: '0 12px 40px rgba(0,0,0,0.12)', border: '1px solid rgba(139,92,246,0.1)', zIndex: 50, minWidth: 160 }}>
+                                <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', borderRadius: 14, padding: 6, boxShadow: '0 16px 48px rgba(0,0,0,0.12)', border: '1px solid #e8e5df', zIndex: 50, minWidth: 180 }}>
                                     {['all', 'shortlisted', 'rejected', 'pending'].map(f => (
                                         <button key={f} onClick={() => { setFilter(f); setShowFilter(false); }}
-                                            style={{ display: 'block', width: '100%', padding: '10px 16px', textAlign: 'left', background: filter === f ? 'rgba(139,92,246,0.08)' : 'transparent', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: filter === f ? 700 : 500, color: filter === f ? '#8b5cf6' : '#64608a', cursor: 'pointer', textTransform: 'capitalize' }}>
+                                            style={{ display: 'block', width: '100%', padding: '10px 16px', textAlign: 'left', background: filter === f ? '#1C1B2E' : 'transparent', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: filter === f ? 700 : 500, color: filter === f ? '#fff' : '#64608a', cursor: 'pointer', textTransform: 'capitalize', transition: 'all 0.15s' }}>
                                             {f === 'all' ? 'All Candidates' : f}
                                         </button>
                                     ))}
@@ -147,104 +143,97 @@ export default function CandidatesPage() {
                     </div>
                 </div>
 
-                {/* Stats Cards */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20, marginBottom: 32 }}>
+                {/* Stats Bar */}
+                <div className="candidate-card" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginBottom: 24, background: '#fff', borderRadius: 18, border: '1px solid #e8e5df', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
                     {[
-                        { label: 'Total Candidates', value: stats.total, icon: <Users size={22} />, gradient: 'linear-gradient(135deg, #8b5cf6, #c026d3)' },
-                        { label: 'Shortlisted', value: stats.shortlisted, icon: <CheckCircle size={22} />, gradient: 'linear-gradient(135deg, #10b981, #059669)' },
-                        { label: 'Rejected', value: stats.rejected, icon: <XCircle size={22} />, gradient: 'linear-gradient(135deg, #ef4444, #dc2626)' },
-                        { label: 'Pending Review', value: stats.pending, icon: <Clock size={22} />, gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
-                    ].map((s) => (
-                        <div key={s.label} className="candidate-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: '20px 24px', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)', display: 'flex', alignItems: 'center', gap: 16 }}>
-                            <div style={{ width: 44, height: 44, borderRadius: 14, background: s.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: `0 4px 16px rgba(0,0,0,0.15)`, flexShrink: 0 }}>
-                                {s.icon}
-                            </div>
-                            <div>
-                                <p style={{ fontSize: 28, fontWeight: 800, color: '#0f172a', margin: 0, lineHeight: 1, fontFamily: 'Syne, sans-serif' }}>{s.value}</p>
-                                <p style={{ fontSize: 13, color: '#64608a', fontWeight: 600, margin: '4px 0 0' }}>{s.label}</p>
-                            </div>
+                        { label: 'Total', value: stats.total, accent: '#1C1B2E', sub: 'Applicants' },
+                        { label: 'Shortlisted', value: stats.shortlisted, accent: '#7FA582', sub: 'Passed screening' },
+                        { label: 'Rejected', value: stats.rejected, accent: '#dc5043', sub: 'Did not match' },
+                        { label: 'Pending', value: stats.pending, accent: '#F4A28C', sub: 'Awaiting review' },
+                    ].map((s, i) => (
+                        <div key={s.label} style={{ padding: '24px 28px', borderRight: i < 3 ? '1px solid #e8e5df' : 'none', position: 'relative', transition: 'all 0.2s', cursor: 'default' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.borderLeft = '3px solid ' + s.accent; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderLeft = 'none'; }}>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>{s.label}</p>
+                            <p style={{ fontSize: 34, fontWeight: 800, color: s.accent, margin: 0, lineHeight: 1, fontFamily: 'Syne, sans-serif' }}>{s.value}</p>
+                            <p style={{ fontSize: 12, color: '#94a3b8', margin: '6px 0 0', fontWeight: 500 }}>{s.sub}</p>
                         </div>
                     ))}
                 </div>
 
-                {/* Candidates List */}
+                {/* Candidates Table */}
                 {loading ? (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 80 }}>
-                        <div style={{ width: 40, height: 40, border: '4px solid #8b5cf6', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 100 }}>
+                        <div style={{ width: 40, height: 40, border: '3px solid #1C1B2E', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                     </div>
                 ) : filteredCandidates.length === 0 ? (
-                    <div className="candidate-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 32px', textAlign: 'center', background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)' }}>
-                        <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(139,92,246,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#c4b5fd', marginBottom: 20 }}>
-                            <Users size={40} />
+                    <div className="candidate-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '100px 32px', textAlign: 'center', background: '#fff', borderRadius: 18, border: '1px solid #e8e5df', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
+                        <div style={{ width: 56, height: 56, borderRadius: 16, background: 'linear-gradient(135deg, #FDFCF9, #F5F3ED)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, border: '1px solid #e8e5df', boxShadow: '0 4px 12px rgba(0,0,0,0.04)' }}>
+                            <Search size={22} style={{ color: '#94a3b8' }} />
                         </div>
-                        <h3 style={{ fontSize: 22, fontWeight: 800, color: '#0f172a', margin: '0 0 8px', fontFamily: 'Syne, sans-serif' }}>
-                            {candidates.length === 0 ? 'Talent Pool is Empty' : 'No Matching Candidates'}
+                        <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1C1B2E', margin: '0 0 6px', fontFamily: 'Syne, sans-serif' }}>
+                            {candidates.length === 0 ? 'No Candidates Yet' : 'No Matching Candidates'}
                         </h3>
-                        <p style={{ fontSize: 15, color: '#64608a', maxWidth: 400, lineHeight: 1.6, fontWeight: 500 }}>
+                        <p style={{ fontSize: 14, color: '#64608a', maxWidth: 360, lineHeight: 1.6, fontWeight: 500, margin: 0 }}>
                             {candidates.length === 0
-                                ? 'Once you upload resumes to your job postings and run screening, candidates will appear here automatically.'
+                                ? 'Upload resumes and run screening to see candidates here.'
                                 : 'Try adjusting your search or filter criteria.'}
                         </p>
                     </div>
                 ) : (
-                    <div className="candidate-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)', overflow: 'hidden' }}>
+                    <div className="candidate-card" style={{ background: '#fff', borderRadius: 18, border: '1px solid #e8e5df', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
                         {/* Table Header */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.2fr 0.8fr 0.6fr 0.6fr 0.6fr 1fr 0.8fr', gap: 8, padding: '16px 24px', background: 'rgba(139,92,246,0.04)', borderBottom: '1px solid rgba(139,92,246,0.1)' }}>
-                            {['Candidate', 'Applied For', 'Status', 'Skills', 'Exp', 'Edu', 'Score', 'Actions'].map((h) => (
-                                <span key={h} style={{ fontSize: 11, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</span>
+                        <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1.3fr 0.9fr 0.7fr 0.7fr 0.7fr 1.1fr 1fr', gap: 12, padding: '18px 32px', borderBottom: '1px solid #e8e5df', background: '#FDFCF9' }}>
+                            {['Candidate', 'Applied For', 'Status', 'Skills', 'Exp', 'Edu', 'Match Score', 'Actions'].map((h) => (
+                                <span key={h} style={{ fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{h}</span>
                             ))}
                         </div>
 
                         {/* Candidate Rows */}
                         {filteredCandidates.map((c, idx) => {
-                            const st = statusColors[c.status] || statusColors.pending;
-                            const StatusIcon = st.icon;
+                            const st = statusStyles[c.status] || statusStyles.pending;
                             return (
-                                <div key={c.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1.2fr 0.8fr 0.6fr 0.6fr 0.6fr 1fr 0.8fr', gap: 8, padding: '16px 24px', alignItems: 'center', borderBottom: idx < filteredCandidates.length - 1 ? '1px solid rgba(139,92,246,0.06)' : 'none', transition: 'background 0.2s', cursor: 'default' }}
-                                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(139,92,246,0.03)'}
-                                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                >
+                                <div key={c.id}
+                                    style={{ display: 'grid', gridTemplateColumns: '2.2fr 1.3fr 0.9fr 0.7fr 0.7fr 0.7fr 1.1fr 1fr', gap: 12, padding: '16px 32px', alignItems: 'center', borderBottom: idx < filteredCandidates.length - 1 ? '1px solid #f3f1ec' : 'none', transition: 'all 0.2s', cursor: 'pointer', borderLeft: '3px solid transparent' }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.paddingLeft = '36px'; e.currentTarget.style.paddingRight = '28px'; e.currentTarget.style.borderLeft = '3px solid #7FA582'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '32px'; e.currentTarget.style.paddingRight = '32px'; e.currentTarget.style.borderLeft = '3px solid transparent'; }}>
                                     {/* Candidate Info */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                                        <div style={{ width: 40, height: 40, borderRadius: 12, background: c.status === 'shortlisted' ? 'linear-gradient(135deg, #10b981, #059669)' : c.status === 'rejected' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #8b5cf6, #c026d3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 16, flexShrink: 0 }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                                        <div style={{ width: 40, height: 40, borderRadius: 12, background: '#1C1B2E', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 15, flexShrink: 0, fontFamily: 'Syne, sans-serif' }}>
                                             {c.candidate_name.charAt(0).toUpperCase()}
                                         </div>
                                         <div style={{ minWidth: 0 }}>
-                                            <p style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.candidate_name}</p>
-                                            <p style={{ fontSize: 12, color: '#94a3b8', margin: '2px 0 0', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4 }}>
-                                                {c.candidate_email ? <><Mail size={10} /> {c.candidate_email}</> : 'No email'}
+                                            <p style={{ fontSize: 14, fontWeight: 700, color: '#1C1B2E', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.candidate_name}</p>
+                                            <p style={{ fontSize: 12, color: '#94a3b8', margin: '3px 0 0', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                {c.candidate_email || 'No email'}
                                             </p>
                                         </div>
                                     </div>
 
                                     {/* Job Title */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <Briefcase size={14} style={{ color: '#8b5cf6', flexShrink: 0 }} />
-                                        <span style={{ fontSize: 13, fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.job_title}</span>
-                                    </div>
+                                    <span style={{ fontSize: 13, fontWeight: 600, color: '#1C1B2E', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.job_title}</span>
 
                                     {/* Status Badge */}
                                     <div>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, textTransform: 'capitalize' }}
-                                            className={`${st.bg} ${st.text} border ${st.border}`}>
-                                            <StatusIcon size={12} /> {c.status}
+                                        <span style={{ display: 'inline-block', padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 700, background: st.bg, color: st.color, textTransform: 'capitalize', letterSpacing: '0.02em' }}>
+                                            {c.status}
                                         </span>
                                     </div>
 
                                     {/* Skills */}
-                                    <span style={{ fontSize: 14, fontWeight: 800, color: '#8b5cf6' }}>{c.skills_score}%</span>
+                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.skills_score}%</span>
 
                                     {/* Experience */}
-                                    <span style={{ fontSize: 14, fontWeight: 800, color: '#c026d3' }}>{c.experience_score}%</span>
+                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.experience_score}%</span>
 
                                     {/* Education */}
-                                    <span style={{ fontSize: 14, fontWeight: 800, color: '#7c3aed' }}>{c.education_score}%</span>
+                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.education_score}%</span>
 
                                     {/* Overall Score */}
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                        <span style={{ fontSize: 18, fontWeight: 800 }} className={scoreColor(c.match_score)}>{c.match_score}%</span>
-                                        <div style={{ flex: 1, height: 6, background: 'rgba(139,92,246,0.08)', borderRadius: 3, overflow: 'hidden' }}>
-                                            <div style={{ width: `${c.match_score}%`, height: '100%', borderRadius: 3 }} className={scoreBg(c.match_score)} />
+                                        <span style={{ fontSize: 15, fontWeight: 800, color: scoreColor(c.match_score), fontFamily: 'Syne, sans-serif', minWidth: 38 }}>{c.match_score}%</span>
+                                        <div style={{ flex: 1, height: 5, background: '#f3f1ec', borderRadius: 3, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.04)' }}>
+                                            <div style={{ width: `${c.match_score}%`, height: '100%', borderRadius: 3, background: `linear-gradient(90deg, ${scoreBgColor(c.match_score)}, ${c.match_score >= 75 ? '#9DBF9E' : c.match_score >= 55 ? '#F4D58D' : '#F4A28C'})`, transition: 'width 0.5s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />
                                         </div>
                                     </div>
 
@@ -252,17 +241,19 @@ export default function CandidatesPage() {
                                     <div style={{ display: 'flex', gap: 8 }}>
                                         <button
                                             onClick={() => router.push(`/dashboard/jobs/${c.job_id}`)}
-                                            style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: 'rgba(139,92,246,0.1)', color: '#8b5cf6', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
-                                            title="View Job"
+                                            style={{ padding: '7px 14px', fontSize: 12, fontWeight: 700, color: '#fff', background: '#1C1B2E', border: 'none', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, transition: 'opacity 0.2s' }}
+                                            onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
+                                            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
                                         >
-                                            <Briefcase size={14} />
+                                            View
                                         </button>
                                         <button
                                             onClick={() => handleDownload(c.id, c.job_id, c.file_name)}
-                                            style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: 'rgba(192,38,211,0.1)', color: '#c026d3', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
-                                            title="Download Resume"
+                                            style={{ padding: '7px 14px', fontSize: 12, fontWeight: 700, color: '#1C1B2E', background: '#fff', border: '1px solid #e8e5df', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, transition: 'all 0.2s' }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.borderColor = '#7FA582'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#e8e5df'; }}
                                         >
-                                            <Download size={14} />
+                                            Resume
                                         </button>
                                     </div>
                                 </div>

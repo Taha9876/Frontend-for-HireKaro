@@ -63,9 +63,9 @@ export default function JobForm({ onSuccess }) {
     };
 
     return (
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] overflow-hidden">
+        <div className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)] overflow-hidden">
             <div className="px-8 py-6 border-b border-white/40"
-                style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.1), rgba(192,38,211,0.05))' }}>
+                style={{ background: 'linear-gradient(135deg, rgba(127, 165, 130,0.1), rgba(192,38,211,0.05))' }}>
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white shadow-lg shadow-violet-500/30">
                         <Briefcase size={20} />
@@ -260,7 +260,7 @@ export default function JobForm({ onSuccess }) {
                 <div className="flex justify-end pt-4 border-t border-slate-100 mt-2">
                     <button type="submit" disabled={loading}
                         className="flex items-center gap-2 px-8 py-3.5 text-white text-sm font-bold rounded-full transition-all hover:scale-105 disabled:opacity-60 disabled:hover:scale-100 disabled:cursor-not-allowed border-none cursor-pointer shadow-lg shadow-violet-500/30"
-                        style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)' }}>
+                        style={{ background: 'linear-gradient(135deg, #7FA582, #c026d3)' }}>
                         {loading ? 'Processing...' : 'Save & Continue'} <ChevronRight size={18} />
                     </button>
                 </div>

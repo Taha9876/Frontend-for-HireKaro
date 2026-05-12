@@ -14,7 +14,7 @@ const PREVIEW_DATA = [
 ];
 
 const METRICS = [
-  { label: 'Active roles', value: '12', accent: '#8b5cf6' },
+  { label: 'Active roles', value: '12', accent: '#7FA582' },
   { label: 'New applications', value: '284', accent: '#c026d3' },
   { label: 'Interview-ready', value: '63', accent: '#0ea5e9' },
 ];
@@ -26,7 +26,7 @@ const JOBS = [
 ];
 
 const statusMap = {
-  Screening: { bg: 'rgba(139,92,246,0.12)', color: '#7c3aed' },
+  Screening: { bg: 'rgba(127, 165, 130,0.12)', color: '#1C1B2E' },
   Interview: { bg: 'rgba(192,38,211,0.12)', color: '#c026d3' },
   Shortlist: { bg: 'rgba(14,165,233,0.12)', color: '#0ea5e9' },
 };
@@ -51,7 +51,7 @@ function CustomTooltip({ active, payload, label }) {
 export default function DashboardPreview() {
   return (
     <motion.div
-      className="dashboard-preview relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/95 shadow-[0_35px_120px_-40px_rgba(124,58,237,0.32)]"
+      className="dashboard-preview relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/95 shadow-[0_35px_120px_-40px_rgba(28, 27, 46,0.32)]"
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
@@ -102,19 +102,19 @@ export default function DashboardPreview() {
                   <AreaChart data={PREVIEW_DATA} margin={{ top: 10, right: 10, left: -18, bottom: 0 }}>
                     <defs>
                       <linearGradient id="previewApps" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#7FA582" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#7FA582" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="previewInterviews" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#c026d3" stopOpacity={0.35} />
                         <stop offset="95%" stopColor="#c026d3" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(139,92,246,0.12)" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#7c3aed', fontSize: 12 }} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: '#7c3aed', fontSize: 12 }} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(127, 165, 130,0.12)" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#1C1B2E', fontSize: 12 }} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fill: '#1C1B2E', fontSize: 12 }} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Area type="monotone" dataKey="applications" stroke="#8b5cf6" strokeWidth={3} fill="url(#previewApps)" />
+                    <Area type="monotone" dataKey="applications" stroke="#7FA582" strokeWidth={3} fill="url(#previewApps)" />
                     <Area type="monotone" dataKey="interviews" stroke="#c026d3" strokeWidth={3} fill="url(#previewInterviews)" />
                   </AreaChart>
                 </ResponsiveContainer>

@@ -86,10 +86,10 @@ function AIProcessor({ position }) {
       <mesh ref={coreRef} castShadow>
         <octahedronGeometry args={[0.8, 0]} />
         <meshStandardMaterial 
-          color="#7c3aed" 
+          color="#1C1B2E" 
           roughness={0.1} 
           metalness={0.8}
-          emissive="#7c3aed"
+          emissive="#1C1B2E"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -103,10 +103,10 @@ function AIProcessor({ position }) {
         >
           <torusGeometry args={[1.2 + i * 0.3, 0.05, 16, 32]} />
           <meshStandardMaterial 
-            color={i === 0 ? "#c026d3" : i === 1 ? "#a855f7" : "#8b5cf6"}
+            color={i === 0 ? "#c026d3" : i === 1 ? "#9DBF9E" : "#7FA582"}
             roughness={0.2} 
             metalness={0.6}
-            emissive={i === 0 ? "#c026d3" : i === 1 ? "#a855f7" : "#8b5cf6"}
+            emissive={i === 0 ? "#c026d3" : i === 1 ? "#9DBF9E" : "#7FA582"}
             emissiveIntensity={0.2}
           />
         </mesh>
@@ -257,7 +257,7 @@ function SkillsRadar({ position }) {
           <mesh position={[0, 0.5 + skill.level * 0.5, 0]}>
             <cylinderGeometry args={[0.03, 0.03, skill.level, 8]} />
             <meshStandardMaterial 
-              color="#8b5cf6" 
+              color="#7FA582" 
               roughness={0.2}
               metalness={0.4}
             />
@@ -284,7 +284,7 @@ function HRCVScene() {
         shadow-mapSize-width={2048} 
         shadow-mapSize-height={2048}
       />
-      <pointLight position={[-3, 4, -2]} intensity={0.8} color="#7c3aed" />
+      <pointLight position={[-3, 4, -2]} intensity={0.8} color="#1C1B2E" />
       <pointLight position={[3, -2, 3]} intensity={0.6} color="#c026d3" />
       <pointLight position={[0, 6, 0]} intensity={0.4} color="#60a5fa" />
       
@@ -328,7 +328,7 @@ export default function HRCVScreening3D() {
       className="relative w-full h-[480px] md:h-[560px] lg:h-[650px]"
     >
       <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-purple-deep/10 via-transparent to-transparent blur-2xl -rotate-6" />
-      <div className="absolute inset-0 rounded-[2.5rem]" style={{ background: 'radial-gradient(circle at 35% 30%, rgba(139,92,246,0.12), rgba(255,255,255,0) 55%)' }} />
+      <div className="absolute inset-0 rounded-[2.5rem]" style={{ background: 'radial-gradient(circle at 35% 30%, rgba(127, 165, 130,0.12), rgba(255,255,255,0) 55%)' }} />
       
       <Canvas
         shadows

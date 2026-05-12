@@ -36,31 +36,32 @@ export default function Navbar() {
 
     return (
         <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-200/50 py-3 shadow-sm' : 'bg-transparent py-5 border-b border-transparent'}`}>
-            <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 md:px-10">
-                <Link href="/" className="flex items-center gap-3 no-underline group">
+            <nav className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-6 px-6 md:px-10">
+                <Link href="/" translate="no" className="notranslate flex items-center gap-2.5 no-underline group justify-self-start">
                     <motion.div 
-                        className="flex h-10 w-10 items-center justify-center rounded-xl text-base font-bold text-white shadow-md bg-gradient-to-r from-purple-600 to-pink-600"
+                        className="notranslate flex h-9 w-9 items-center justify-center rounded-lg text-[13px] font-bold text-white shadow-md"
+                        style={{ background: 'linear-gradient(135deg, #F4A28C, #E9C26A 50%, #A693CC)' }}
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                     >
-                        BH
+                        HK
                     </motion.div>
-                    <span className="text-xl font-bold tracking-tight text-gray-900">
+                    <span className="notranslate text-lg font-bold tracking-tight text-[#1C1B2E]">
                         Hire Karo
                     </span>
                 </Link>
 
-                <ul className="hidden list-none items-center gap-8 p-0 md:flex m-0">
+                <ul className="hidden list-none items-center justify-center gap-8 p-0 md:flex m-0">
                     {navLinks.map((item) => (
                         <li key={item.href}>
-                            <Link href={item.href} className="text-sm font-medium text-gray-600 no-underline transition-all hover:text-purple-600">
+                            <Link href={item.href} className="text-sm font-medium text-[#4A4860] no-underline transition-all hover:text-[#1C1B2E]">
                                 {item.label}
                             </Link>
                         </li>
                     ))}
                 </ul>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-end gap-3 justify-self-end">
                     <LanguageSwitcher />
                     {loggedIn ? (
                         <>
@@ -71,23 +72,23 @@ export default function Navbar() {
                                 onClick={handleLogout} 
                                 whileHover={{ scale: 1.05, y: -2 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="rounded-full px-5 py-2 text-sm font-medium text-white border-none cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-lg transition-all"
+                                className="rounded-full px-5 py-2 text-sm font-semibold text-white border-none cursor-pointer bg-[#1C1B2E] hover:shadow-lg transition-all"
                             >
                                 Logout
                             </motion.button>
                         </>
                     ) : (
                         <>
-                            <Link href="/auth/login" className="hidden sm:inline-flex text-sm font-medium text-gray-600 no-underline transition hover:text-purple-600">
+                            <Link href="/auth/login" className="hidden sm:inline-flex text-sm font-medium text-[#4A4860] no-underline transition hover:text-[#1C1B2E]">
                                 Login
                             </Link>
                             <Link href="/auth/signup">
                                 <motion.button
                                     whileHover={{ scale: 1.05, y: -2 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="rounded-full px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-lg transition-all"
+                                    className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white bg-[#1C1B2E] hover:shadow-lg transition-all"
                                 >
-                                    Get Started
+                                    Book a Demo <span aria-hidden>→</span>
                                 </motion.button>
                             </Link>
                         </>
@@ -113,18 +114,18 @@ export default function Navbar() {
                     <ul className="list-none p-0 m-0 space-y-1">
                         {navLinks.map((item) => (
                             <li key={item.href}>
-                                <Link href={item.href} onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-700 no-underline transition hover:bg-purple-50 hover:text-purple-700">
+                                <Link href={item.href} onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-medium text-[#1C1B2E] no-underline transition hover:bg-[#F4D58D]/30">
                                     {item.label}
                                 </Link>
                             </li>
                         ))}
                         <li className="border-t border-gray-100 mt-2 pt-2">
                             {loggedIn ? (
-                                <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-purple-700 no-underline transition hover:bg-purple-50">
+                                <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-[#1C1B2E] no-underline transition hover:bg-[#9AD0C2]/30">
                                     Dashboard
                                 </Link>
                             ) : (
-                                <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-purple-700 no-underline transition hover:bg-purple-50">
+                                <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-[#1C1B2E] no-underline transition hover:bg-[#9AD0C2]/30">
                                     Login
                                 </Link>
                             )}

@@ -81,13 +81,13 @@ export default function ScheduleInterviewPage() {
     };
 
     if (loading) return (
-        <div className="flex items-center justify-center h-screen bg-slate-50">
+        <div className="flex items-center justify-center h-screen bg-[#FBF8F2]">
             <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
         </div>
     );
 
     if (success) return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="min-h-screen bg-[#FBF8F2] flex items-center justify-center p-6">
             <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-12 max-w-md w-full text-center">
                 <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-6
           animate-bounce">
@@ -108,10 +108,10 @@ export default function ScheduleInterviewPage() {
     const breakdown = durationData?.breakdown || {};
 
     return (
-        <div ref={pageRef} className="min-h-screen bg-slate-50 p-6 lg:p-10 relative overflow-hidden">
+        <div ref={pageRef} className="min-h-screen bg-[#FBF8F2] p-6 lg:p-10 relative overflow-hidden">
             {/* Background Orbs */}
-            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
-            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(157,191,158,0.22) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
                 {/* Back */}
@@ -157,7 +157,7 @@ export default function ScheduleInterviewPage() {
                         </div>
 
                         {/* Time */}
-                        <div className="form-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] p-6">
+                        <div className="form-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)] p-6">
                             <div className="flex items-center gap-3 mb-5">
                                 <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center text-lg">
                                     ⏰
@@ -171,7 +171,7 @@ export default function ScheduleInterviewPage() {
                                 type="time"
                                 value={form.start_time}
                                 onChange={e => setForm({ ...form, start_time: e.target.value })}
-                                className="w-full px-4 py-3 text-sm text-[#0a1628] bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)] transition-all cursor-pointer"
+                                className="w-full px-4 py-3 text-sm text-[#0a1628] bg-[#FBF8F2] border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)] transition-all cursor-pointer"
                             />
                             {form.start_time && (
                                 <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
@@ -196,7 +196,7 @@ export default function ScheduleInterviewPage() {
 
                             {/* Suggested */}
                             <div className={`p-4 rounded-xl border-2 mb-4 cursor-pointer transition-all
-              ${!useCustomDuration ? 'border-blue-500 bg-blue-50/80 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'}`}
+              ${!useCustomDuration ? 'border-blue-500 bg-blue-50/80 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-[#FBF8F2]'}`}
                                 onClick={() => setUseCustomDuration(false)}>
                                 <div className="flex items-center justify-between">
                                     <div>
@@ -222,7 +222,7 @@ export default function ScheduleInterviewPage() {
 
                             {/* Custom */}
                             <div className={`p-4 rounded-xl border-2 cursor-pointer transition-all
-              ${useCustomDuration ? 'border-blue-500 bg-blue-50/80 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'}`}
+              ${useCustomDuration ? 'border-blue-500 bg-blue-50/80 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-[#FBF8F2]'}`}
                                 onClick={() => setUseCustomDuration(true)}>
                                 <div className="flex items-center gap-2 mb-3">
                                     <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center
@@ -300,7 +300,7 @@ export default function ScheduleInterviewPage() {
                         </div>
 
                         {/* What happens next */}
-                        <div className="summary-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] p-6">
+                        <div className="summary-card bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)] p-6">
                             <h3 className="font-bold text-[#0a1628] text-sm mb-4">What happens after confirming?</h3>
                             <div className="flex flex-col gap-3">
                                 {[

@@ -357,15 +357,15 @@ export default function InterviewRoomPage() {
             style={{ background: '#faf9ff', color: '#1a1535' }}>
             <div className="fixed inset-0 pointer-events-none z-0"
                 style={{
-                    backgroundImage: 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
+                    backgroundImage: 'linear-gradient(rgba(127, 165, 130,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 165, 130,0.04) 1px, transparent 1px)',
                     backgroundSize: '40px 40px'
                 }} />
             <div className="pointer-events-none absolute inset-0 z-0">
-                <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full blur-[100px]" style={{ background: 'rgba(139,92,246,0.1)' }} />
+                <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full blur-[100px]" style={{ background: 'rgba(127, 165, 130,0.1)' }} />
                 <div className="absolute bottom-10 left-10 h-[400px] w-[400px] rounded-full blur-[100px]" style={{ background: 'rgba(192,38,211,0.08)' }} />
             </div>
 
-            <div className="relative z-10 bg-white/80 backdrop-blur-3xl rounded-3xl shadow-xl max-w-2xl w-full overflow-hidden border" style={{ borderColor: 'rgba(139,92,246,0.15)' }}>
+            <div className="relative z-10 bg-white/80 backdrop-blur-3xl rounded-3xl shadow-xl max-w-2xl w-full overflow-hidden border" style={{ borderColor: 'rgba(127, 165, 130,0.15)' }}>
                 <div className="px-8 py-8 text-center bg-violet-50/50 border-b border-violet-100/50">
                     <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl shadow-lg bg-white border border-violet-100">🧠</div>
                     <h1 className="text-3xl font-extrabold mb-1 tracking-tight text-slate-900">Virtual Interview Guidelines</h1>
@@ -375,7 +375,7 @@ export default function InterviewRoomPage() {
                     {/* Section overview */}
                     <div className="grid grid-cols-3 gap-4 mb-6">
                         {sections.map((s, i) => (
-                            <div key={s.id} className="p-4 rounded-2xl border bg-white shadow-sm" style={{ borderColor: 'rgba(139,92,246,0.1)' }}>
+                            <div key={s.id} className="p-4 rounded-2xl border bg-white shadow-sm" style={{ borderColor: 'rgba(127, 165, 130,0.1)' }}>
                                 <div className="text-2xl mb-2">{s.icon}</div>
                                 <div className="text-xs font-bold text-violet-600 mb-1">Section {i + 1}</div>
                                 <div className="text-sm font-bold text-slate-800">{s.label}</div>
@@ -404,7 +404,7 @@ export default function InterviewRoomPage() {
 
                     <button onClick={() => setPhase('permission')}
                         className="w-full py-4 text-white font-bold text-sm rounded-xl cursor-pointer transition-all hover:-translate-y-0.5 shadow-lg"
-                        style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', boxShadow: '0 8px 24px rgba(139,92,246,0.25)' }}>
+                        style={{ background: 'linear-gradient(135deg, #7FA582, #F4A28C)', boxShadow: '0 8px 24px rgba(127, 165, 130,0.25)' }}>
                         I Understand — Continue →
                     </button>
                 </div>
@@ -418,20 +418,20 @@ export default function InterviewRoomPage() {
             style={{ background: '#faf9ff', color: '#1a1535' }}>
             <div className="fixed inset-0 pointer-events-none z-0"
                 style={{
-                    backgroundImage: 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
+                    backgroundImage: 'linear-gradient(rgba(127, 165, 130,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 165, 130,0.04) 1px, transparent 1px)',
                     backgroundSize: '40px 40px'
                 }} />
             <div className="pointer-events-none absolute inset-0 z-0">
-                <div className="absolute top-20 right-10 h-[400px] w-[400px] rounded-full blur-[100px]" style={{ background: 'rgba(139,92,246,0.1)' }} />
+                <div className="absolute top-20 right-10 h-[400px] w-[400px] rounded-full blur-[100px]" style={{ background: 'rgba(127, 165, 130,0.1)' }} />
             </div>
 
-            <div className="relative z-10 bg-white/80 backdrop-blur-3xl rounded-3xl shadow-xl max-w-md w-full overflow-hidden border" style={{ borderColor: 'rgba(139,92,246,0.15)' }}>
+            <div className="relative z-10 bg-white/80 backdrop-blur-3xl rounded-3xl shadow-xl max-w-md w-full overflow-hidden border" style={{ borderColor: 'rgba(127, 165, 130,0.15)' }}>
                 <div className="px-8 py-6 text-center bg-violet-50/50 border-b border-violet-100/50">
                     <h2 className="text-xl font-bold text-slate-900 tracking-tight">System Check</h2>
                     <p className="text-slate-500 font-medium text-sm mt-1">Preview your camera before starting</p>
                 </div>
                 <div className="p-8">
-                    <div className="relative rounded-2xl overflow-hidden bg-slate-900 border mb-6 shadow-inner" style={{ aspectRatio: '4/3', borderColor: 'rgba(139,92,246,0.15)' }}>
+                    <div className="relative rounded-2xl overflow-hidden bg-slate-900 border mb-6 shadow-inner" style={{ aspectRatio: '4/3', borderColor: 'rgba(127, 165, 130,0.15)' }}>
                         <video ref={videoRef} autoPlay muted playsInline className="w-full h-full object-cover scale-x-[-1]" />
                         {!camReady && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-800">
@@ -477,7 +477,7 @@ export default function InterviewRoomPage() {
                     ) : (
                         <button onClick={() => setPhase('interview')}
                             className="w-full py-4 text-white font-bold text-sm rounded-xl cursor-pointer transition-all hover:-translate-y-0.5 shadow-lg"
-                            style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', boxShadow: '0 8px 24px rgba(139,92,246,0.3)' }}>
+                            style={{ background: 'linear-gradient(135deg, #7FA582, #F4A28C)', boxShadow: '0 8px 24px rgba(127, 165, 130,0.3)' }}>
                             🚀 Enter Interview Room
                         </button>
                     )}
@@ -497,7 +497,7 @@ export default function InterviewRoomPage() {
             <div className="min-h-screen relative overflow-hidden" style={{ background: '#faf9ff', color: '#1a1535' }}>
                 <div className="fixed inset-0 pointer-events-none z-0"
                     style={{
-                        backgroundImage: 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
+                        backgroundImage: 'linear-gradient(rgba(127, 165, 130,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 165, 130,0.04) 1px, transparent 1px)',
                         backgroundSize: '40px 40px'
                     }} />
 
@@ -547,9 +547,9 @@ export default function InterviewRoomPage() {
                             const ans = answers[q.id];
                             const hasAnswer = ans?.answered;
                             const sectionInfo = sections.find(s => s.id === q.type);
-                            const sText = sectionInfo?.color === 'blue' ? '#2563eb' : sectionInfo?.color === 'amber' ? '#d97706' : '#9333ea';
-                            const sBg = sectionInfo?.color === 'blue' ? '#eff6ff' : sectionInfo?.color === 'amber' ? '#fffbeb' : '#faf5ff';
-                            const sBorder = sectionInfo?.color === 'blue' ? '#bfdbfe' : sectionInfo?.color === 'amber' ? '#fde68a' : '#e9d5ff';
+                            const sText = sectionInfo?.color === 'blue' ? '#2563eb' : sectionInfo?.color === 'amber' ? '#d97706' : '#7FA582';
+                            const sBg = sectionInfo?.color === 'blue' ? '#eff6ff' : sectionInfo?.color === 'amber' ? '#fffbeb' : '#F3F7EF';
+                            const sBorder = sectionInfo?.color === 'blue' ? '#bfdbfe' : sectionInfo?.color === 'amber' ? '#fde68a' : '#C7D9C0';
 
                             return (
                                 <div key={q.id} className={`rounded-3xl border p-6 bg-white shadow-sm hover:shadow-md transition-shadow
@@ -599,9 +599,9 @@ export default function InterviewRoomPage() {
     const progress = (timeLeft / totalTime) * 100;
     const color = timerColor(timeLeft, totalTime);
     const sectionColor = currentSection.color;
-    const sectionBg = sectionColor === 'blue' ? '#eff6ff' : sectionColor === 'amber' ? '#fffbeb' : '#faf5ff';
-    const sectionBorder = sectionColor === 'blue' ? '#bfdbfe' : sectionColor === 'amber' ? '#fde68a' : '#e9d5ff';
-    const sectionText = sectionColor === 'blue' ? '#1d4ed8' : sectionColor === 'amber' ? '#d97706' : '#9333ea';
+    const sectionBg = sectionColor === 'blue' ? '#eff6ff' : sectionColor === 'amber' ? '#fffbeb' : '#F3F7EF';
+    const sectionBorder = sectionColor === 'blue' ? '#bfdbfe' : sectionColor === 'amber' ? '#fde68a' : '#C7D9C0';
+    const sectionText = sectionColor === 'blue' ? '#1d4ed8' : sectionColor === 'amber' ? '#d97706' : '#7FA582';
 
     const overallQNum = sections.slice(0, sectionIdx).reduce((acc, s) => acc + s.questions.length, 0) + qIdx + 1;
 
@@ -684,7 +684,7 @@ export default function InterviewRoomPage() {
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Overall Progress</p>
                         <div className="h-2 bg-slate-100 rounded-full overflow-hidden mb-3">
                             <div className="h-full rounded-full transition-all duration-700 ease-out"
-                                style={{ width: `${(overallQNum / questions.length) * 100}%`, background: 'linear-gradient(90deg, #8b5cf6, #c026d3)' }} />
+                                style={{ width: `${(overallQNum / questions.length) * 100}%`, background: 'linear-gradient(90deg, #7FA582, #F4A28C)' }} />
                         </div>
                         <p className="text-xs font-bold text-slate-600">{Math.round((overallQNum / questions.length) * 100)}% Complete</p>
                     </div>
@@ -843,7 +843,7 @@ export default function InterviewRoomPage() {
                             </span>
                             <button onClick={handleNext}
                                 className="flex items-center gap-2 px-8 py-3.5 text-white font-bold text-sm rounded-xl transition-all shadow-lg hover:-translate-y-0.5 hover:shadow-xl"
-                                style={{ background: 'linear-gradient(135deg, #8b5cf6, #c026d3)' }}>
+                                style={{ background: 'linear-gradient(135deg, #7FA582, #F4A28C)' }}>
                                 {sectionIdx === sections.length - 1 && qIdx === currentSection.questions.length - 1
                                     ? 'Submit Interview ✓'
                                     : 'Next Question →'}

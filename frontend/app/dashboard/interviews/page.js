@@ -19,14 +19,14 @@ export default function InterviewsPage() {
     }, []);
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: 'linear-gradient(135deg, #fafbff 0%, #f3f0ff 100%)', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
             {/* Background Orbs */}
-            <div className="dash-orb" style={{ position: 'absolute', top: '15%', right: '5%', width: '35vw', height: '35vw', background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
-            <div className="dash-orb" style={{ position: 'absolute', bottom: '-5%', left: '-15%', width: '45vw', height: '45vw', background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', top: '15%', right: '5%', width: '35vw', height: '35vw', background: 'radial-gradient(circle, rgba(244, 162, 140,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', bottom: '-5%', left: '-15%', width: '45vw', height: '45vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
                 {/* Header */}
-                <div className="page-header flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 p-6 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)]">
+                <div className="page-header flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 p-6 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)]">
                     <div className="flex items-center gap-4">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-pink-500/30">
                             <Calendar size={26} />
@@ -42,7 +42,7 @@ export default function InterviewsPage() {
                             <Filter size={20} />
                         </button>
                         <button className="flex items-center gap-2 px-6 py-3 text-white text-sm font-bold rounded-full transition-transform hover:scale-105 shadow-lg shadow-pink-500/30"
-                            style={{ background: 'linear-gradient(135deg, #ec4899, #8b5cf6)' }}>
+                            style={{ background: 'linear-gradient(135deg, #F4A28C, #7FA582)' }}>
                             <Plus size={18} strokeWidth={3} /> Schedule
                         </button>
                     </div>

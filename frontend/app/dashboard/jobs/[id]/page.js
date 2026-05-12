@@ -4,32 +4,28 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import gsap from 'gsap';
 import api from '@/lib/api';
-import {
-    FileText, CheckCircle, XCircle, BarChart2, Trophy, TrendingDown,
-    Folder, MapPin, Edit3, Rocket, Settings, Calendar, RefreshCw,
-    Target, Award, Phone, Inbox, Clock, Timer, Users, AlertTriangle, Download, Check
-} from 'lucide-react';
+// No icons used on this page — editorial style
 
 const statusConfig = {
-    draft: { color: 'bg-slate-100 text-slate-600', label: 'Draft' },
-    active: { color: 'bg-blue-50 text-blue-700 border border-blue-200', label: 'Active' },
-    processing: { color: 'bg-amber-50 text-amber-700 border border-amber-200', label: 'Processing...' },
-    screened: { color: 'bg-violet-50 text-violet-700 border border-violet-200', label: 'Screened' },
-    interview_scheduled: { color: 'bg-emerald-50 text-emerald-700 border border-emerald-200', label: 'Interview Scheduled' },
-    closed: { color: 'bg-red-50 text-red-600', label: 'Closed' },
-    archived: { color: 'bg-slate-100 text-slate-500', label: 'Archived' },
+    draft: { bg: 'rgba(28,27,46,0.06)', color: '#64608a', label: 'Draft' },
+    active: { bg: 'rgba(127,165,130,0.10)', color: '#4a7c4f', label: 'Active' },
+    processing: { bg: 'rgba(244,162,140,0.15)', color: '#c06a4e', label: 'Processing...' },
+    screened: { bg: 'rgba(233,194,106,0.15)', color: '#9a7e2e', label: 'Screened' },
+    interview_scheduled: { bg: 'rgba(127,165,130,0.10)', color: '#4a7c4f', label: 'Interview Scheduled' },
+    closed: { bg: 'rgba(220,80,60,0.08)', color: '#b33a2a', label: 'Closed' },
+    archived: { bg: 'rgba(28,27,46,0.06)', color: '#64608a', label: 'Archived' },
 };
 
 const scoreColor = (score) => {
-    if (score >= 75) return 'text-emerald-600';
-    if (score >= 55) return 'text-amber-600';
-    return 'text-red-500';
+    if (score >= 75) return '#4a7c4f';
+    if (score >= 55) return '#c06a4e';
+    return '#b33a2a';
 };
 
 const scoreBg = (score) => {
-    if (score >= 75) return 'bg-emerald-500';
-    if (score >= 55) return 'bg-amber-500';
-    return 'bg-red-500';
+    if (score >= 75) return '#7FA582';
+    if (score >= 55) return '#F4A28C';
+    return '#E88A72';
 };
 
 export default function JobDetailPage() {
@@ -125,8 +121,8 @@ export default function JobDetailPage() {
     };
 
     if (loading) return (
-        <div className="flex items-center justify-center h-screen bg-slate-50">
-            <div className="w-10 h-10 border-4 border-violet-600 border-t-transparent rounded-full animate-spin" />
+        <div className="flex items-center justify-center h-screen bg-[#FBF8F2]">
+            <div className="w-10 h-10 border-4 border-[#1C1B2E] border-t-transparent rounded-full animate-spin" />
         </div>
     );
 
@@ -145,51 +141,55 @@ export default function JobDetailPage() {
     const showTabs = job.status === 'interview_scheduled' || job.status === 'closed';
 
     return (
-        <div ref={pageRef} className="min-h-screen relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #f5f3ff 100%)' }}>
+        <div ref={pageRef} className="min-h-screen relative overflow-hidden" style={{ background: '#FBF8F2' }}>
             {/* Background Orbs */}
             <div className="pointer-events-none absolute inset-0 z-0">
-                <div className="absolute w-[500px] h-[500px] top-[-10%] right-[-5%] rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 blur-3xl" />
-                <div className="absolute w-[400px] h-[400px] bottom-[10%] left-[-10%] rounded-full bg-gradient-to-br from-violet-400/20 to-purple-400/20 blur-3xl" />
-                <div className="absolute w-[300px] h-[300px] top-[40%] right-[20%] rounded-full bg-gradient-to-br from-pink-400/15 to-violet-400/15 blur-3xl" />
+                <div className="absolute w-[500px] h-[500px] top-[-10%] right-[-5%] rounded-full bg-gradient-to-br from-[#9DBF9E]/25 to-[#F4A28C]/20 blur-3xl" />
+                <div className="absolute w-[400px] h-[400px] bottom-[10%] left-[-10%] rounded-full bg-gradient-to-br from-[#F4D58D]/25 to-[#9DBF9E]/20 blur-3xl" />
+                <div className="absolute w-[300px] h-[300px] top-[40%] right-[20%] rounded-full bg-gradient-to-br from-[#F4D58D]/20 to-[#F4A28C]/15 blur-3xl" />
             </div>
 
             {/* Candidate Report Modal */}
             {selectedCandidate && (
-                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+                <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
                     onClick={() => setSelectedCandidate(null)}>
-                    <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+                    <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+                        style={{ boxShadow: '0 25px 80px rgba(0,0,0,0.25)' }}
                         onClick={e => e.stopPropagation()}>
-                        <div className="p-6 border-b border-slate-100 flex items-center justify-between"
-                            style={{ background: selectedCandidate.status === 'shortlisted' ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)' }}>
-                            <div>
-                                <h3 className="text-xl font-bold text-white">{selectedCandidate.name}</h3>
-                                <p className="text-white/70 text-sm">{selectedCandidate.email}</p>
+                        <div className="p-8 border-b border-white/10 flex items-center justify-between relative overflow-hidden"
+                            style={{ background: selectedCandidate.status === 'shortlisted' ? 'linear-gradient(135deg, #1C1B2E 0%, #2D4A3E 50%, #7FA582 100%)' : 'linear-gradient(135deg, #1C1B2E 0%, #8E4530 50%, #E88A72 100%)' }}>
+                            <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl opacity-25 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.30), transparent 70%)' }} />
+                            <div className="relative z-10">
+                                <h3 className="text-2xl font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{selectedCandidate.name}</h3>
+                                <p className="text-white/80 text-sm" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '0.01em' }}>{selectedCandidate.email}</p>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="text-center">
-                                    <div className="text-3xl font-extrabold text-white">{selectedCandidate.match_score}%</div>
-                                    <div className="text-white/70 text-xs">Match Score</div>
+                            <div className="flex items-center gap-5 relative z-10">
+                                <div className="text-center px-5 py-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                                    <div className="text-4xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.02em' }}>{selectedCandidate.match_score}%</div>
+                                    <div className="text-white/80 text-xs font-semibold" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Match Score</div>
                                 </div>
                                 <button onClick={() => setSelectedCandidate(null)}
-                                    className="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center border-none cursor-pointer hover:bg-white/30 text-lg">
+                                    className="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center border-none cursor-pointer hover:bg-white/30 hover:scale-110 transition-all text-xl font-light" style={{ backdropFilter: 'blur(10px)' }}>
                                     ×
                                 </button>
                             </div>
                         </div>
 
-                        <div className="p-6 flex flex-col gap-5">
+                        <div className="p-8 flex flex-col gap-6">
                             {/* Status */}
-                            <div className={`px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2
-                ${selectedCandidate.status === 'shortlisted' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
-                                {selectedCandidate.status === 'shortlisted' ? <><CheckCircle size={16} /> Shortlisted for Interview</> : <><XCircle size={16} /> Not Selected</>}
+                            <div className="px-5 py-4 rounded-xl text-sm font-semibold flex items-center gap-3"
+                                style={selectedCandidate.status === 'shortlisted'
+                                    ? { background: 'linear-gradient(135deg, rgba(127,165,130,0.12), rgba(127,165,130,0.06))', color: '#4a7c4f', border: '1px solid rgba(127,165,130,0.25)', boxShadow: '0 2px 12px rgba(127,165,130,0.15)' }
+                                    : { background: 'linear-gradient(135deg, rgba(220,80,60,0.10), rgba(220,80,60,0.05))', color: '#b33a2a', border: '1px solid rgba(220,80,60,0.20)', boxShadow: '0 2px 12px rgba(220,80,60,0.12)' }}>
+                                {selectedCandidate.status === 'shortlisted' ? 'Shortlisted for Interview' : 'Not Selected'}
                                 {selectedCandidate.status === 'rejected' && selectedCandidate.rejection_reason && (
                                     <span className="font-normal ml-1">— {selectedCandidate.rejection_reason}</span>
                                 )}
                             </div>
 
                             {/* Score Breakdown */}
-                            <div>
-                                <h4 className="text-sm font-bold text-[#0a1628] mb-3">Score Breakdown</h4>
+                            <div className="p-5 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FDFCF9, #F5F3ED)', border: '1px solid #e8e5df' }}>
+                                <h4 style={{ fontSize: 12, fontWeight: 800, color: '#1C1B2E', margin: '0 0 20px', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne, sans-serif' }}>Score Breakdown</h4>
                                 {[
                                     { label: 'Skills Match', score: selectedCandidate.skills_score, weight: '35%' },
                                     { label: 'Experience', score: selectedCandidate.experience_score, weight: '25%' },
@@ -197,17 +197,17 @@ export default function JobDetailPage() {
                                     { label: 'Education', score: selectedCandidate.education_score, weight: '10%' },
                                     { label: 'Semantic Match', score: selectedCandidate.semantic_score, weight: '10%' },
                                 ].map(item => (
-                                    <div key={item.label} className="mb-3">
-                                        <div className="flex justify-between items-center mb-1">
-                                            <span className="text-sm text-slate-600">{item.label}</span>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-xs text-slate-400">weight {item.weight}</span>
-                                                <span className={`text-sm font-bold ${scoreColor(item.score)}`}>{item.score}%</span>
+                                    <div key={item.label} className="mb-5" style={{ marginBottom: item.label === 'Semantic Match' ? '0' : '20px' }}>
+                                        <div className="flex justify-between items-center mb-3">
+                                            <span className="text-sm text-[#64608a] font-semibold" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '0.01em' }}>{item.label}</span>
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-xs text-[#94a3b8] font-medium">weight {item.weight}</span>
+                                                <span style={{ fontSize: 17, fontWeight: 800, color: scoreColor(item.score), fontFamily: 'Syne, sans-serif', letterSpacing: '-0.01em' }}>{item.score}%</span>
                                             </div>
                                         </div>
-                                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                            <div className={`h-full rounded-full transition-all ${scoreBg(item.score)}`}
-                                                style={{ width: `${item.score}%` }} />
+                                        <div className="h-3 bg-[#f3f1ec] rounded-full overflow-hidden" style={{ boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.08)' }}>
+                                            <div className="h-full rounded-full transition-all"
+                                                style={{ width: `${item.score}%`, background: `linear-gradient(90deg, ${scoreBg(item.score)}, ${item.score >= 75 ? '#9DBF9E' : item.score >= 55 ? '#F4D58D' : '#F4A28C'})`, boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }} />
                                         </div>
                                     </div>
                                 ))}
@@ -215,27 +215,27 @@ export default function JobDetailPage() {
 
                             {/* Parsed Info */}
                             {selectedCandidate.score_breakdown && (
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-2 gap-5">
                                     {selectedCandidate.score_breakdown.skills && (
-                                        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                                            <p className="text-xs font-bold text-slate-500 mb-2">SKILLS</p>
-                                            <p className="text-xs text-slate-600 flex items-center gap-1">
-                                                <Check size={12} className="text-emerald-500" /> Matched: {selectedCandidate.score_breakdown.skills.matched_required?.join(', ') || 'None'}
+                                        <div className="p-5 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FDFCF9, #F5F3ED)', border: '1px solid #e8e5df', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                                            <p style={{ fontSize: 10, fontWeight: 800, color: '#64608a', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne, sans-serif' }}>Skills</p>
+                                            <p className="text-sm text-[#1C1B2E] font-medium" style={{ fontFamily: 'Syne, sans-serif' }}>
+                                                Matched: {selectedCandidate.score_breakdown.skills.matched_required?.join(', ') || 'None'}
                                             </p>
                                             {selectedCandidate.score_breakdown.skills.missing_required?.length > 0 && (
-                                                <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-                                                    <XCircle size={12} /> Missing: {selectedCandidate.score_breakdown.skills.missing_required.join(', ')}
+                                                <p className="text-sm mt-2" style={{ color: '#b33a2a', fontWeight: 500, fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                                    Missing: {selectedCandidate.score_breakdown.skills.missing_required.join(', ')}
                                                 </p>
                                             )}
                                         </div>
                                     )}
                                     {selectedCandidate.score_breakdown.experience && (
-                                        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                                            <p className="text-xs font-bold text-slate-500 mb-2">EXPERIENCE</p>
-                                            <p className="text-xs text-slate-600">
+                                        <div className="p-5 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FDFCF9, #F5F3ED)', border: '1px solid #e8e5df', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                                            <p style={{ fontSize: 10, fontWeight: 800, color: '#64608a', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne, sans-serif' }}>Experience</p>
+                                            <p className="text-sm text-[#1C1B2E] font-medium" style={{ fontFamily: 'Syne, sans-serif' }}>
                                                 {selectedCandidate.score_breakdown.experience.total_years} years actual
                                             </p>
-                                            <p className="text-xs text-slate-400 mt-1">
+                                            <p className="text-sm text-[#94a3b8] mt-2" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                                                 Min required: {selectedCandidate.score_breakdown.experience.expected_min} years
                                             </p>
                                         </div>
@@ -245,36 +245,36 @@ export default function JobDetailPage() {
 
                             {/* Projects Section */}
                             {selectedCandidate.score_breakdown?.projects && (
-                                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                                    <p className="text-xs font-bold text-slate-500 mb-2">PROJECTS</p>
-                                    <p className="text-xs text-slate-600">
+                                <div className="p-5 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FDFCF9, #F5F3ED)', border: '1px solid #e8e5df', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                                    <p style={{ fontSize: 10, fontWeight: 800, color: '#64608a', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne, sans-serif' }}>Projects</p>
+                                    <p className="text-sm text-[#1C1B2E] font-medium" style={{ fontFamily: 'Syne, sans-serif' }}>
                                         {selectedCandidate.score_breakdown.projects.relevant_projects} of{' '}
                                         {selectedCandidate.score_breakdown.projects.total_projects} projects relevant
                                     </p>
                                     {selectedCandidate.score_breakdown.projects.matched_techs?.length > 0 && (
-                                        <div className="flex flex-wrap gap-1 mt-1">
+                                        <div className="flex flex-wrap gap-2 mt-3">
                                             {selectedCandidate.score_breakdown.projects.matched_techs.map((t, i) => (
-                                                <span key={i} className="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded border border-emerald-200">
+                                                <span key={i} className="px-2 py-1 text-sm rounded" style={{ background: 'rgba(127,165,130,0.10)', color: '#4a7c4f', border: '1px solid rgba(127,165,130,0.15)', fontWeight: 500 }}>
                                                     {t}
                                                 </span>
                                             ))}
                                         </div>
                                     )}
                                     {selectedCandidate.score_breakdown.projects.relevant_projects === 0 && (
-                                        <p className="text-xs text-red-500 mt-1 flex items-center gap-1"><XCircle size={12} /> No relevant projects found</p>
+                                        <p className="text-sm mt-2" style={{ color: '#b33a2a', fontWeight: 500, fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>No relevant projects found</p>
                                     )}
                                 </div>
                             )}
 
                             {/* Experience Relevance */}
                             {selectedCandidate.score_breakdown?.experience && (
-                                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                                    <p className="text-xs font-bold text-slate-500 mb-2">EXPERIENCE</p>
-                                    <p className="text-xs text-slate-600">
+                                <div className="p-5 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FDFCF9, #F5F3ED)', border: '1px solid #e8e5df', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                                    <p style={{ fontSize: 10, fontWeight: 800, color: '#64608a', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Syne, sans-serif' }}>Experience</p>
+                                    <p className="text-sm text-[#1C1B2E] font-medium" style={{ fontFamily: 'Syne, sans-serif' }}>
                                         {selectedCandidate.score_breakdown.experience.relevant_years ?? 0} relevant years
                                         {' '}(of {selectedCandidate.score_breakdown.experience.total_years ?? 0} total)
                                     </p>
-                                    <p className="text-xs text-slate-400 mt-1">
+                                    <p className="text-sm text-[#94a3b8] mt-2" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                                         Relevance: {Math.round((selectedCandidate.score_breakdown.experience.relevance_ratio ?? 0) * 100)}%
                                         {' '}• Min required: {selectedCandidate.score_breakdown.experience.expected_min ?? 0} years
                                     </p>
@@ -284,93 +284,86 @@ export default function JobDetailPage() {
                             {/* Download */}
                             <button
                                 onClick={() => handleDownload(selectedCandidate.id, selectedCandidate.file_name)}
-                                className="w-full py-2.5 border-2 border-blue-200 text-blue-600 flex items-center justify-center gap-2 text-sm font-semibold rounded-xl hover:bg-blue-50 transition-colors bg-transparent cursor-pointer">
-                                <Download size={16} /> Download Resume
+                                className="w-full py-4 text-white text-sm font-semibold rounded-xl cursor-pointer transition-all hover:scale-[1.02] shadow-lg"
+                                style={{ background: 'linear-gradient(135deg, #1C1B2E, #2D4A3E)', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                Download Resume
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            <div className="relative z-10 p-8 max-w-6xl mx-auto">
+            <div className="relative z-10 px-10 py-8 max-w-6xl mx-auto">
                 {/* Back */}
-                <button onClick={() => router.push('/dashboard/jobs')}
-                    className="flex items-center gap-2 text-sm text-gray-500 hover:text-purple-600 transition-colors bg-transparent border-none cursor-pointer mb-6">
-                    ← Back to Jobs
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+                    <button onClick={() => router.push('/dashboard/jobs')}
+                        className="text-sm text-[#64608a] hover:text-[#1C1B2E] transition-colors bg-transparent border-none cursor-pointer font-medium" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                        ← Back to Jobs
+                    </button>
+                </div>
 
                 {/* Job Header */}
-                <div className="page-header backdrop-blur-md bg-white/50 rounded-3xl border border-white/40 shadow-xl overflow-hidden mb-6">
-                    <div className="p-8" style={{ background: 'linear-gradient(135deg, #7c3aed, #9333ea, #c026d3)' }}>
+                <div className="page-header rounded-2xl border border-[#e8e5df] overflow-hidden mb-8" style={{ background: '#fff' }}>
+                    <div className="p-8 relative">
                         <div className="flex items-start justify-between flex-wrap gap-4">
                             <div>
                                 <div className="flex items-center gap-3 mb-3">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${status.color}`}>
+                                    <span className="px-3 py-1 rounded-full text-[11px] font-semibold" style={{ background: status.bg, color: status.color }}>
                                         {status.label}
                                     </span>
                                     {job.department && (
-                                        <span className="text-white/50 text-sm flex items-center gap-1"><Folder size={14} /> {job.department}</span>
+                                        <span className="text-[#64608a] text-xs font-medium">{job.department}</span>
                                     )}
                                     {job.location && (
-                                        <span className="text-white/50 text-sm flex items-center gap-1"><MapPin size={14} /> {job.location}</span>
+                                        <span className="text-[#64608a] text-xs font-medium">· {job.location}</span>
                                     )}
                                 </div>
-                                <h1 className="text-3xl font-extrabold text-white mb-2"
-                                    style={{ fontFamily: 'Syne, sans-serif' }}>{job.title}</h1>
+                                <h1 className="text-3xl font-bold text-[#1C1B2E] mb-3" style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{job.title}</h1>
                                 <div className="flex flex-wrap gap-2 mt-3">
                                     {job.skills.map((s, i) => (
                                         <span key={i}
-                                            className={`px-2.5 py-1 rounded-full text-xs font-semibold
-                        ${s.is_required ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' : 'bg-white/10 text-white/60'}`}>
+                                            className={`px-3 py-1 rounded-full text-[11px] font-medium
+                        ${s.is_required ? 'bg-[#1C1B2E] text-white' : 'bg-[#FDFCF9] text-[#64608a] border border-[#e8e5df]'}`} style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                                             {s.skill_name}
                                         </span>
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex gap-3 flex-wrap">
+                            <div className="flex gap-2 flex-wrap">
                                 <button onClick={() => router.push(`/dashboard/jobs/${id}/edit`)}
-                                    className="px-5 py-2.5 flex items-center gap-2 text-white/90 text-sm font-semibold rounded-xl border border-white/30 cursor-pointer transition-all hover:-translate-y-0.5 hover:bg-white/20"
-                                    style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}>
-                                    <Edit3 size={16} /> Edit Job
+                                    className="px-4 py-2 text-[#1C1B2E] text-xs font-medium rounded-lg border border-[#e8e5df] cursor-pointer transition-colors hover:bg-[#FDFCF9] bg-white" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                    Edit Job
                                 </button>
 
                                 {job.status === 'active' && (
                                     <button onClick={handleScreen} disabled={screening}
-                                        className="px-6 py-2.5 flex items-center gap-2 text-white text-sm font-semibold rounded-xl border-none cursor-pointer disabled:opacity-60 transition-all hover:-translate-y-0.5"
-                                        style={{ background: 'linear-gradient(135deg, #2563eb, #1e40af)', boxShadow: '0 3px 16px rgba(37,99,235,0.4)' }}>
-                                        {screening ? <><Settings size={16} className="animate-spin" /> Starting...</> : <><Rocket size={16} /> Start Screening</>}
+                                        className="px-5 py-2 text-white text-xs font-medium rounded-lg border-none cursor-pointer disabled:opacity-60 transition-colors"
+                                        style={{ background: '#1C1B2E', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                        {screening ? 'Starting…' : 'Start Screening'}
                                     </button>
                                 )}
 
-                                {job.status === 'screened' && (
+                                {(job.status === 'screened' || isCompleted) && (
                                     <button onClick={() => router.push(`/dashboard/jobs/${id}/schedule`)}
-                                        className="px-6 py-2.5 flex items-center gap-2 text-white text-sm font-semibold rounded-xl border-none cursor-pointer transition-all hover:-translate-y-0.5"
-                                        style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}>
-                                        <Calendar size={16} /> Schedule Interviews
+                                        className="px-5 py-2 text-white text-xs font-medium rounded-lg border-none cursor-pointer transition-colors"
+                                        style={{ background: '#7FA582', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                        Schedule Interviews
                                     </button>
                                 )}
 
                                 {job.status === 'interview_scheduled' && (
                                     <button onClick={() => router.push(`/dashboard/jobs/${id}/schedule`)}
-                                        className="px-6 py-2.5 flex items-center gap-2 text-white text-sm font-semibold rounded-xl border-none cursor-pointer transition-all hover:-translate-y-0.5"
-                                        style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}>
-                                        <RefreshCw size={16} /> Reschedule Interview
-                                    </button>
-                                )}
-                                {isCompleted && (
-                                    <button
-                                        onClick={() => router.push(`/dashboard/jobs/${id}/schedule`)}
-                                        className="px-6 py-2.5 flex items-center gap-2 text-white text-sm font-semibold rounded-xl border-none cursor-pointer transition-all hover:-translate-y-0.5"
-                                        style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}>
-                                        <Calendar size={16} /> Schedule Interviews
+                                        className="px-5 py-2 text-white text-xs font-medium rounded-lg border-none cursor-pointer transition-colors"
+                                        style={{ background: '#7FA582', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                        Reschedule Interview
                                     </button>
                                 )}
                             </div>
                         </div>
 
                         {/* Job Description */}
-                        <div className="mt-6 pt-6 border-t border-white/10">
-                            <p className="text-white/70 text-sm leading-relaxed">{job.description}</p>
+                        <div className="mt-6 pt-6 border-t border-[#e8e5df]">
+                            <p className="text-[#64608a] text-sm leading-relaxed max-w-3xl" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', lineHeight: 1.7 }}>{job.description}</p>
                         </div>
                     </div>
                 </div>
@@ -380,24 +373,24 @@ export default function JobDetailPage() {
                     <div className="job-content bg-amber-50/80 backdrop-blur-md border border-amber-200 rounded-2xl p-5 mb-6 flex items-center gap-4 shadow-sm">
                         <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin flex-shrink-0" />
                         <div>
-                            <p className="font-semibold text-amber-800">Screening in Progress</p>
-                            <p className="text-sm text-amber-600">AI is analyzing all resumes. You can leave this page — results will be ready when you return.</p>
+                            <p className="font-semibold text-amber-800" style={{ fontFamily: 'Syne, sans-serif' }}>Screening in Progress</p>
+                            <p className="text-sm text-amber-600" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>AI is analyzing all resumes. You can leave this page — results will be ready when you return.</p>
                         </div>
                     </div>
                 )}
 
-                {/* Tabs — sirf interview_scheduled ya baad ke status pe dikho */}
+                {/* Tabs */}
                 {showTabs && (
-                    <div className="job-content flex gap-1 bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_4px_16px_rgba(139,92,246,0.05)] p-1.5 mb-6">
+                    <div className="job-content flex gap-1 bg-white rounded-2xl border border-[#e8e5df] p-1.5 mb-6">
                         {[
-                            { id: 'screening', label: 'Resume Screening', icon: <FileText size={16} /> },
-                            { id: 'interview', label: 'Interview Results', icon: <Target size={16} /> },
+                            { id: 'screening', label: 'Resume Screening' },
+                            { id: 'interview', label: 'Interview Results' },
                         ].map(tab => (
                             <button key={tab.id}
                                 onClick={() => handleTabChange(tab.id)}
-                                className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-bold transition-all border-none cursor-pointer flex items-center justify-center gap-2
-                                    ${activeTab === tab.id ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/25' : 'bg-transparent text-slate-500 hover:text-violet-600 hover:bg-violet-50/50'}`}>
-                                {tab.icon} {tab.label}
+                                className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition-all border-none cursor-pointer
+                                    ${activeTab === tab.id ? 'bg-[#1C1B2E] text-white' : 'bg-transparent text-[#64608a] hover:text-[#1C1B2E]'}`}>
+                                {tab.label}
                             </button>
                         ))}
                     </div>
@@ -408,19 +401,18 @@ export default function JobDetailPage() {
                     <>
                         {/* Metrics */}
                         {(isCompleted || metrics.total_resumes > 0) && (
-                            <div className="job-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+                            <div className="job-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8 bg-white rounded-2xl border border-[#e8e5df] p-6">
                                 {[
-                                    { label: 'Total Resumes', value: metrics.total_resumes, icon: <FileText size={24} />, color: 'text-gray-700' },
-                                    { label: 'Shortlisted', value: metrics.shortlisted, icon: <CheckCircle size={24} />, color: 'text-emerald-600' },
-                                    { label: 'Rejected', value: metrics.rejected, icon: <XCircle size={24} />, color: 'text-red-500' },
-                                    { label: 'Avg Score', value: `${metrics.avg_score}%`, icon: <BarChart2 size={24} />, color: 'text-purple-600' },
-                                    { label: 'Top Score', value: `${metrics.max_score}%`, icon: <Trophy size={24} />, color: 'text-amber-600' },
-                                    { label: 'Min Score', value: `${metrics.min_score}%`, icon: <TrendingDown size={24} />, color: 'text-gray-500' },
-                                ].map(m => (
-                                    <div key={m.label} className="backdrop-blur-md bg-white/50 rounded-2xl border border-white/40 p-4 text-center shadow-lg hover:-translate-y-1 transition-transform hover:shadow-xl">
-                                        <div className={`flex justify-center mb-1 ${m.color}`}>{m.icon}</div>
-                                        <div className={`text-2xl font-extrabold ${m.color}`}>{m.value}</div>
-                                        <div className="text-xs text-gray-400 mt-1">{m.label}</div>
+                                    { label: 'Total Resumes', value: metrics.total_resumes, accent: '#1C1B2E', sub: 'Uploaded' },
+                                    { label: 'Shortlisted', value: metrics.shortlisted, accent: '#7FA582', sub: 'Passed screening' },
+                                    { label: 'Rejected', value: metrics.rejected, accent: '#E88A72', sub: 'Did not match' },
+                                    { label: 'Avg Score', value: `${metrics.avg_score}%`, accent: '#E9C26A', sub: 'Overall average' },
+                                    { label: 'Top Score', value: `${metrics.max_score}%`, accent: '#E9C26A', sub: 'Highest match' },
+                                    { label: 'Min Score', value: `${metrics.min_score}%`, accent: '#807E94', sub: 'Lowest match' },
+                                ].map((m, i) => (
+                                    <div key={m.label} className="flex flex-col">
+                                        <p style={{ fontSize: 10, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 4px' }}>{m.label}</p>
+                                        <p style={{ fontSize: 24, fontWeight: 700, color: m.accent, lineHeight: 1, fontFamily: 'Syne, sans-serif' }}>{m.value}</p>
                                     </div>
                                 ))}
                             </div>
@@ -428,91 +420,95 @@ export default function JobDetailPage() {
 
                         {/* Candidates */}
                         {candidates.length > 0 && (
-                            <div className="job-content backdrop-blur-md bg-white/50 rounded-3xl border border-white/40 shadow-xl overflow-hidden">
-                                <div className="p-6 border-b border-purple-100/30 flex items-center justify-between flex-wrap gap-3">
-                                    <h2 className="text-lg font-bold text-gray-900">
+                            <div className="job-content bg-white rounded-2xl border border-[#e8e5df] overflow-hidden">
+                                <div className="p-6 border-b border-[#e8e5df] flex items-center justify-between flex-wrap gap-4">
+                                    <h2 style={{ fontSize: 16, fontWeight: 700, color: '#1C1B2E', margin: 0, fontFamily: 'Syne, sans-serif' }}>
                                         Candidates ({filteredCandidates.length})
                                     </h2>
-                                    <div className="flex gap-2 bg-white/60 backdrop-blur-sm p-1 rounded-xl border border-white/40">
+                                    <div className="flex gap-1 bg-[#FDFCF9] p-1.5 rounded-xl border border-[#e8e5df]">
                                         {['all', 'shortlisted', 'rejected', 'pending'].map(f => (
                                             <button key={f} onClick={() => setFilter(f)}
-                                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all border-none cursor-pointer capitalize
-                                                    ${filter === f ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md' : 'bg-transparent text-gray-500 hover:text-gray-800'}`}>
-                                                {f}
+                                                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all border-none cursor-pointer capitalize
+                                                    ${filter === f ? 'bg-[#1C1B2E] text-white' : 'bg-transparent text-[#64608a] hover:text-[#1C1B2E]'}`}>
+                                                {f === 'all' ? 'All' : f}
                                             </button>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="divide-y divide-purple-100/20">
+                                <div className="divide-y divide-[#f3f1ec]">
                                     {filteredCandidates.length === 0 ? (
-                                        <div className="p-12 text-center text-gray-400">No candidates in this category</div>
+                                        <div className="p-16 text-center text-[#807E94]">No candidates in this category</div>
                                     ) : (
                                         filteredCandidates.map((c, idx) => (
-                                            <div key={c.id} className="flex items-center gap-4 p-5 hover:bg-purple-50/30 transition-colors">
+                                            <div key={c.id} 
+                                                style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderBottom: idx < filteredCandidates.length - 1 ? '1px solid #f3f1ec' : 'none', transition: 'background-color 0.2s', cursor: 'pointer' }}
+                                                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#FDFCF9'; }}
+                                                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
                                                 {/* Rank */}
-                                                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-extrabold flex-shrink-0
-                                                    ${idx === 0 ? 'bg-amber-100 text-amber-700' : idx === 1 ? 'bg-gray-100 text-gray-600' : idx === 2 ? 'bg-orange-50 text-orange-600' : 'bg-gray-50 text-gray-400'}`}>
-                                                    {idx <= 2 ? <Award size={16} /> : idx + 1}
+                                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-extrabold flex-shrink-0"
+                                                    style={{ background: idx === 0 ? '#f3e9c8' : idx === 1 ? '#f3f1ec' : idx === 2 ? '#f3e5d8' : '#f9f8f5', color: idx === 0 ? '#9a7e2e' : '#64608a' }}>
+                                                    {idx + 1}
                                                 </div>
 
                                                 {/* Avatar */}
-                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0
-                                                    ${c.status === 'shortlisted' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' : c.status === 'rejected' ? 'bg-gradient-to-br from-red-400 to-red-500' : 'bg-gradient-to-br from-gray-400 to-gray-500'}`}>
+                                                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                                                    style={{ background: '#1C1B2E' }}>
                                                     {c.name.charAt(0).toUpperCase()}
                                                 </div>
 
                                                 {/* Info */}
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 mb-0.5">
-                                                        <p className="font-semibold text-gray-900 text-sm">{c.name}</p>
-                                                        <span className={`px-2 py-0.5 rounded-full text-xs font-semibold
-                                                            ${c.status === 'shortlisted' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                                                                c.status === 'rejected' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-gray-100 text-gray-500 border border-gray-200'}`}>
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <p className="font-semibold text-[#1C1B2E] text-sm">{c.name}</p>
+                                                        <span className="px-2.5 py-1 rounded-md text-[10px] font-semibold capitalize"
+                                                            style={c.status === 'shortlisted' ? { background: 'rgba(127,165,130,0.10)', color: '#4a7c4f' } :
+                                                                c.status === 'rejected' ? { background: 'rgba(244,162,140,0.15)', color: '#c06a4e' } :
+                                                                    { background: 'rgba(28,27,46,0.04)', color: '#64608a' }}>
                                                             {c.status}
                                                         </span>
                                                     </div>
-                                                    <div className="flex items-center gap-3 text-xs text-gray-400">
+                                                    <div className="flex items-center gap-3 text-xs text-[#94a3b8]">
                                                         <span className="truncate">{c.email || 'No email'}</span>
-                                                        {c.phone && <span className="flex items-center gap-1"><Phone size={10} /> {c.phone}</span>}
+                                                        {c.phone && <span>{c.phone}</span>}
                                                     </div>
                                                 </div>
 
                                                 {/* Score Breakdown Mini */}
-                                                <div className="hidden lg:flex items-center gap-3 text-xs text-gray-400">
+                                                <div className="hidden lg:flex items-center gap-6 text-[10px] text-[#94a3b8] uppercase tracking-wider">
                                                     <div className="text-center">
-                                                        <div className="font-bold text-purple-600">{c.skills_score}%</div>
+                                                        <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.skills_score}%</div>
                                                         <div>Skills</div>
                                                     </div>
                                                     <div className="text-center">
-                                                        <div className="font-bold text-pink-600">{c.experience_score}%</div>
+                                                        <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.experience_score}%</div>
                                                         <div>Exp</div>
                                                     </div>
                                                     <div className="text-center">
-                                                        <div className="font-bold text-violet-600">{c.education_score}%</div>
+                                                        <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.education_score}%</div>
                                                         <div>Edu</div>
                                                     </div>
                                                 </div>
 
                                                 {/* Score Bar */}
-                                                <div className="hidden md:flex flex-col items-end gap-1 w-32">
-                                                    <span className={`text-lg font-extrabold ${scoreColor(c.match_score)}`}>
+                                                <div className="hidden md:flex flex-col items-end gap-2 w-32">
+                                                    <span style={{ fontSize: 18, fontWeight: 800, color: '#1C1B2E', fontFamily: 'Syne, sans-serif' }}>
                                                         {c.match_score}%
                                                     </span>
-                                                    <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                                        <div className={`h-full rounded-full ${scoreBg(c.match_score)}`}
-                                                            style={{ width: `${c.match_score}%` }} />
+                                                    <div className="w-full h-1.5 bg-[#f3f1ec] rounded-full overflow-hidden">
+                                                        <div className="h-full rounded-full"
+                                                            style={{ width: `${c.match_score}%`, background: c.match_score >= 75 ? '#7FA582' : c.match_score >= 55 ? '#F4A28C' : '#E88A72' }} />
                                                     </div>
                                                 </div>
 
                                                 {/* Actions */}
                                                 <div className="flex gap-2 flex-shrink-0">
                                                     <button onClick={() => setSelectedCandidate(c)}
-                                                        className="px-3 py-1.5 text-xs font-semibold text-purple-600 border border-purple-200 rounded-lg hover:bg-purple-50 transition-colors bg-transparent cursor-pointer">
+                                                        className="px-4 py-2 text-xs font-semibold text-white bg-[#1C1B2E] rounded-lg border-none cursor-pointer hover:opacity-80 transition-opacity">
                                                         Report
                                                     </button>
                                                     <button onClick={() => handleDownload(c.id, c.file_name)}
-                                                        className="px-3 py-1.5 text-xs font-semibold text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors bg-transparent cursor-pointer">
+                                                        className="px-4 py-2 text-xs font-semibold text-[#1C1B2E] border border-[#e8e5df] rounded-lg hover:bg-[#FDFCF9] bg-white cursor-pointer">
                                                         Resume
                                                     </button>
                                                 </div>
@@ -525,10 +521,9 @@ export default function JobDetailPage() {
 
                         {/* Empty state */}
                         {candidates.length === 0 && !isProcessing && (
-                            <div className="job-content bg-white rounded-2xl border border-slate-200 p-16 text-center">
-                                <div className="flex justify-center text-slate-300 mb-4"><Inbox size={48} /></div>
-                                <h3 className="text-lg font-bold text-[#0a1628] mb-2">No resumes yet</h3>
-                                <p className="text-slate-400 text-sm">Upload resumes first, then start screening.</p>
+                            <div className="job-content bg-white rounded-2xl border border-[#e8e5df] p-16 text-center">
+                                <h3 className="text-lg font-bold text-[#1C1B2E] mb-2" style={{ fontFamily: 'Syne, sans-serif' }}>No resumes yet</h3>
+                                <p className="text-[#807E94] text-sm" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>Upload resumes first, then start screening.</p>
                             </div>
                         )}
                     </>
@@ -539,84 +534,82 @@ export default function JobDetailPage() {
                     <div className="job-content">
                         {loadingResults ? (
                             <div className="flex items-center justify-center py-16">
-                                <div className="w-8 h-8 border-4 border-violet-600 border-t-transparent rounded-full animate-spin" />
+                                <div className="w-8 h-8 border-4 border-[#1C1B2E] border-t-transparent rounded-full animate-spin" />
                             </div>
                         ) : !interviewResults ? (
-                            <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/80 p-16 text-center shadow-[0_8px_32px_rgba(139,92,246,0.05)]">
-                                <div className="flex justify-center text-slate-300 mb-4"><Target size={48} /></div>
-                                <h3 className="text-lg font-bold text-[#0a1628] mb-2">No Interview Data Yet</h3>
-                                <p className="text-slate-400 text-sm">Interview results will appear here after candidates complete their interviews.</p>
+                            <div className="bg-white rounded-2xl border border-[#e8e5df] p-16 text-center">
+                                                                <h3 className="text-lg font-bold text-[#1C1B2E] mb-2" style={{ fontFamily: 'Syne, sans-serif' }}>No Interview Data Yet</h3>
+                                <p className="text-[#807E94] text-sm" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>Interview results will appear here after candidates complete their interviews.</p>
                             </div>
                         ) : (
                             <div className="flex flex-col gap-4">
                                 {/* Interview Info */}
-                                <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/80 p-5 flex items-center justify-around flex-wrap gap-6 shadow-[0_8px_32px_rgba(139,92,246,0.05)]">
+                                <div className="bg-white rounded-2xl border border-[#e8e5df] p-6 grid grid-cols-2 md:grid-cols-5 gap-4">
                                     {[
-                                        { label: 'Date', value: interviewResults.interview.scheduled_date, icon: <Calendar size={24} /> },
-                                        { label: 'Time', value: interviewResults.interview.start_time, icon: <Clock size={24} /> },
-                                        { label: 'Duration', value: `${interviewResults.interview.duration_minutes} min`, icon: <Timer size={24} /> },
-                                        { label: 'Total Candidates', value: interviewResults.candidates.length, icon: <Users size={24} /> },
-                                        { label: 'Interviewed', value: interviewResults.candidates.filter(c => c.interviewed).length, icon: <CheckCircle size={24} /> },
-                                    ].map(item => (
-                                        <div key={item.label} className="text-center px-4">
-                                            <div className="flex justify-center text-violet-600 mb-2">{item.icon}</div>
-                                            <div className="text-xl font-extrabold text-[#0a1628]" style={{ fontFamily: 'Syne, sans-serif' }}>{item.value}</div>
-                                            <div className="text-xs text-slate-400 uppercase tracking-wider mt-1">{item.label}</div>
+                                        { label: 'Date', value: interviewResults.interview.scheduled_date, accent: '#1C1B2E', sub: 'Scheduled' },
+                                        { label: 'Time', value: interviewResults.interview.start_time, accent: '#7FA582', sub: 'Start time' },
+                                        { label: 'Duration', value: `${interviewResults.interview.duration_minutes} min`, accent: '#F4A28C', sub: 'Length' },
+                                        { label: 'Total', value: interviewResults.candidates.length, accent: '#E9C26A', sub: 'Candidates' },
+                                        { label: 'Interviewed', value: interviewResults.candidates.filter(c => c.interviewed).length, accent: '#807E94', sub: 'Completed' },
+                                    ].map((item, i) => (
+                                        <div key={item.label} className="flex flex-col">
+                                            <span style={{ fontSize: 10, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 4px' }}>{item.label}</span>
+                                            <span style={{ fontSize: 20, fontWeight: 700, color: item.accent, fontFamily: 'Syne, sans-serif' }}>{item.value}</span>
                                         </div>
                                     ))}
                                 </div>
 
                                 {/* Ranked List */}
-                                <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(139,92,246,0.05)] overflow-hidden">
-                                    <div className="p-6 border-b border-slate-100/50">
-                                        <h2 className="text-lg font-bold text-[#0a1628] flex items-center gap-2" style={{ fontFamily: 'Syne, sans-serif' }}>
-                                            <Trophy size={20} className="text-amber-500" /> Final Candidate Rankings
-                                        </h2>
-                                        <p className="text-slate-400 text-xs mt-1">Sorted by interview performance score</p>
+                                <div className="bg-white rounded-2xl border border-[#e8e5df] overflow-hidden">
+                                    <div className="p-6 border-b border-[#e8e5df]">
+                                        <h2 style={{ fontSize: 15, fontWeight: 600, color: '#1C1B2E', margin: 0, fontFamily: 'Syne, sans-serif' }}>Candidate Rankings</h2>
                                     </div>
-                                    <div className="divide-y divide-slate-100">
+                                    <div className="divide-y divide-[#f3f1ec]">
                                         {interviewResults.candidates.map((c, idx) => (
-                                            <div key={c.candidate_id} className="flex items-center gap-4 p-5 hover:bg-slate-50 transition-colors">
+                                            <div key={c.candidate_id} 
+                                                style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderBottom: idx < interviewResults.candidates.length - 1 ? '1px solid #f3f1ec' : 'none', transition: 'background-color 0.2s', cursor: 'pointer' }}
+                                                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#FDFCF9'; }}
+                                                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
                                                 {/* Rank */}
-                                                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-extrabold flex-shrink-0
-                                                    ${idx === 0 ? 'bg-amber-100 text-amber-700' : idx === 1 ? 'bg-slate-100 text-slate-600' : idx === 2 ? 'bg-orange-50 text-orange-600' : 'bg-slate-50 text-slate-400'}`}>
-                                                    {idx <= 2 ? <Award size={16} /> : idx + 1}
+                                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0"
+                                                    style={{ background: '#f3f1ec', color: '#64608a' }}>
+                                                    {idx + 1}
                                                 </div>
 
                                                 {/* Avatar */}
-                                                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                                                    style={{ background: c.interviewed ? 'linear-gradient(135deg, #2563eb, #1e40af)' : '#94a3b8' }}>
+                                                <div className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-medium flex-shrink-0"
+                                                    style={{ background: '#f3f1ec', color: '#64608a' }}>
                                                     {c.name.charAt(0).toUpperCase()}
                                                 </div>
 
                                                 {/* Info */}
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 mb-0.5">
-                                                        <p className="font-semibold text-[#0a1628] text-sm">{c.name}</p>
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <p className="font-semibold text-[#1C1B2E] text-sm">{c.name}</p>
                                                         {!c.interviewed && (
-                                                            <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-full">Not interviewed</span>
+                                                            <span className="px-2.5 py-1 text-[10px] rounded-md font-medium" style={{ background: 'rgba(28,27,46,0.04)', color: '#64608a' }}>Not interviewed</span>
                                                         )}
                                                         {c.tab_switches > 0 && (
-                                                            <span className="px-2 py-0.5 bg-red-50 text-red-500 text-xs rounded-full flex items-center gap-1"><AlertTriangle size={10} /> {c.tab_switches} tab switch</span>
+                                                            <span className="px-2.5 py-1 text-[10px] rounded-md font-medium" style={{ background: 'rgba(244,162,140,0.15)', color: '#c06a4e', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>{c.tab_switches} tab switch</span>
                                                         )}
                                                     </div>
-                                                    <p className="text-xs text-slate-400">{c.email}</p>
+                                                    <p className="text-xs text-[#94a3b8]" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>{c.email}</p>
                                                 </div>
 
                                                 {/* Score breakdown */}
                                                 {c.interviewed && (
-                                                    <div className="hidden lg:flex items-center gap-4 text-xs text-slate-400">
+                                                    <div className="hidden lg:flex items-center gap-5 text-xs text-[#94a3b8]">
                                                         <div className="text-center">
-                                                            <div className="font-bold text-blue-600">{c.verbal_score ?? '—'}%</div>
-                                                            <div>Verbal</div>
+                                                            <div className="font-semibold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.verbal_score ?? '—'}%</div>
+                                                            <div style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: 11 }}>Verbal</div>
                                                         </div>
                                                         <div className="text-center">
-                                                            <div className="font-bold text-amber-600">{c.mcq_score ?? '—'}%</div>
-                                                            <div>MCQ</div>
+                                                            <div className="font-semibold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.mcq_score ?? '—'}%</div>
+                                                            <div style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: 11 }}>MCQ</div>
                                                         </div>
                                                         <div className="text-center">
-                                                            <div className="font-bold text-violet-600">{c.coding_score ?? '—'}%</div>
-                                                            <div>Coding</div>
+                                                            <div className="font-semibold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.coding_score ?? '—'}%</div>
+                                                            <div style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: 11 }}>Coding</div>
                                                         </div>
                                                     </div>
                                                 )}
@@ -625,20 +618,20 @@ export default function JobDetailPage() {
                                                 <div className="flex items-center gap-3">
                                                     {c.interviewed ? (
                                                         <div className="text-right">
-                                                            <div className={`text-xl font-extrabold ${c.final_score >= 70 ? 'text-emerald-600' : c.final_score >= 50 ? 'text-amber-600' : 'text-red-500'}`}
-                                                                style={{ fontFamily: 'Syne, sans-serif' }}>
+                                                            <div style={{ fontSize: 18, fontWeight: 700, color: '#1C1B2E', fontFamily: 'Syne, sans-serif' }}>
                                                                 {c.final_score}%
                                                             </div>
-                                                            <div className="text-xs text-slate-400">Final Score</div>
+                                                            <div style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: 11, color: '#94a3b8' }}>Final</div>
                                                         </div>
                                                     ) : (
-                                                        <div className="text-slate-300 text-sm font-medium">—</div>
+                                                        <div className="text-[#94a3b8] text-sm font-medium">—</div>
                                                     )}
 
                                                     <button
                                                         onClick={() => router.push(`/dashboard/jobs/${id}/interview/${c.interview_id}/candidate/${c.candidate_id}`)}
-                                                        className="px-4 py-1.5 text-xs font-semibold text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors bg-transparent cursor-pointer">
-                                                        See Detail
+                                                        className="px-3 py-1.5 text-xs font-medium text-[#64608a] hover:text-[#1C1B2E] cursor-pointer bg-transparent border-none"
+                                                        style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                                                        View →
                                                     </button>
                                                 </div>
                                             </div>

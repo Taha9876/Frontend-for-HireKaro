@@ -72,24 +72,24 @@ export default function SettingsPage() {
 
     if (loading) {
         return (
-            <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #fafbff 0%, #f3f0ff 100%)' }}>
-                <div style={{ width: 40, height: 40, border: '4px solid #8b5cf6', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+            <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FBF8F2' }}>
+                <div style={{ width: 40, height: 40, border: '4px solid #7FA582', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                 <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
             </div>
         );
     }
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: 'linear-gradient(135deg, #fafbff 0%, #f3f0ff 100%)', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
             {/* Background Orbs */}
-            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
-            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(192,38,211,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
+            <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.18) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
                 {/* Header */}
-                <div className="page-header" style={{ display: 'flex', alignItems: 'center', gap: 16, borderRadius: 24, padding: '24px 32px', marginBottom: 32, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)' }}>
-                    <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 24px rgba(139,92,246,0.3)' }}>
+                <div className="page-header" style={{ display: 'flex', alignItems: 'center', gap: 16, borderRadius: 24, padding: '24px 32px', marginBottom: 32, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(127, 165, 130,0.05)' }}>
+                    <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #7FA582, #9DBF9E)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 24px rgba(127, 165, 130,0.3)' }}>
                         <User size={28} />
                     </div>
                     <div>
@@ -99,16 +99,16 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Profile Hero Card */}
-                <div className="profile-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)', overflow: 'hidden', marginBottom: 28 }}>
+                <div className="profile-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(127, 165, 130,0.05)', overflow: 'hidden', marginBottom: 28 }}>
                     {/* Full Banner with content inside */}
-                    <div style={{ padding: '40px 36px', background: 'linear-gradient(135deg, #7c3aed, #9333ea, #c026d3, #db2777)', position: 'relative' }}>
+                    <div style={{ padding: '40px 36px', background: 'linear-gradient(135deg, #1C1B2E, #7FA582, #F4A28C, #E88A72)', position: 'relative' }}>
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")', opacity: 0.5 }} />
                         <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
                             <div style={{ position: 'relative' }}>
                                 <div style={{ width: 88, height: 88, borderRadius: 22, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 32, fontWeight: 800, fontFamily: 'Syne, sans-serif', border: '3px solid rgba(255,255,255,0.4)', boxShadow: '0 8px 24px rgba(0,0,0,0.15)' }}>
                                     {getInitials(profile?.company_name)}
                                 </div>
-                                <div style={{ position: 'absolute', bottom: -4, right: -4, width: 28, height: 28, borderRadius: 8, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', cursor: 'pointer', color: '#8b5cf6' }}>
+                                <div style={{ position: 'absolute', bottom: -4, right: -4, width: 28, height: 28, borderRadius: 8, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', cursor: 'pointer', color: '#7FA582' }}>
                                     <Camera size={14} />
                                 </div>
                             </div>
@@ -143,12 +143,12 @@ export default function SettingsPage() {
                 {/* Info Cards Row */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 28 }}>
                     {[
-                        { label: 'Account ID', value: `#${profile?.id || '—'}`, icon: <Shield size={20} />, color: '#8b5cf6' },
-                        { label: 'Member Since', value: formatDate(profile?.created_at), icon: <Calendar size={20} />, color: '#c026d3' },
-                        { label: 'Industry', value: profile?.industry || 'Not set', icon: <Building2 size={20} />, color: '#7c3aed' },
-                        { label: 'Team Size', value: profile?.company_size || 'Not set', icon: <Users2 size={20} />, color: '#db2777' },
+                        { label: 'Account ID', value: `#${profile?.id || '—'}`, icon: <Shield size={20} />, color: '#7FA582' },
+                        { label: 'Member Since', value: formatDate(profile?.created_at), icon: <Calendar size={20} />, color: '#F4A28C' },
+                        { label: 'Industry', value: profile?.industry || 'Not set', icon: <Building2 size={20} />, color: '#1C1B2E' },
+                        { label: 'Team Size', value: profile?.company_size || 'Not set', icon: <Users2 size={20} />, color: '#E88A72' },
                     ].map((item) => (
-                        <div key={item.label} className="detail-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: '20px', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 16px rgba(139,92,246,0.04)' }}>
+                        <div key={item.label} className="detail-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: '20px', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 4px 16px rgba(127, 165, 130,0.04)' }}>
                             <div style={{ width: 40, height: 40, borderRadius: 12, background: `${item.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: item.color, marginBottom: 12 }}>
                                 {item.icon}
                             </div>
@@ -159,8 +159,8 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Edit Form */}
-                <div className="detail-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(139,92,246,0.05)', overflow: 'hidden' }}>
-                    <div style={{ padding: '24px 32px', borderBottom: '1px solid rgba(139,92,246,0.08)' }}>
+                <div className="detail-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(127, 165, 130,0.05)', overflow: 'hidden' }}>
+                    <div style={{ padding: '24px 32px', borderBottom: '1px solid rgba(127, 165, 130,0.08)' }}>
                         <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'Syne, sans-serif' }}>Edit Profile</h3>
                         <p style={{ fontSize: 13, color: '#64608a', margin: '4px 0 0', fontWeight: 500 }}>Update your company information</p>
                     </div>
@@ -170,14 +170,14 @@ export default function SettingsPage() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label style={{ fontSize: 12, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Company Name</label>
                             <div style={{ position: 'relative' }}>
-                                <Building2 size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#c4b5fd' }} />
+                                <Building2 size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#BBD4A6' }} />
                                 <input
                                     type="text"
                                     value={form.company_name}
                                     onChange={(e) => setForm({ ...form, company_name: e.target.value })}
-                                    style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(139,92,246,0.12)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                                    onFocus={e => e.target.style.borderColor = '#8b5cf6'}
-                                    onBlur={e => e.target.style.borderColor = 'rgba(139,92,246,0.12)'}
+                                    style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(127, 165, 130,0.12)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
+                                    onFocus={e => e.target.style.borderColor = '#7FA582'}
+                                    onBlur={e => e.target.style.borderColor = 'rgba(127, 165, 130,0.12)'}
                                 />
                             </div>
                         </div>
@@ -188,15 +188,15 @@ export default function SettingsPage() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                                 <label style={{ fontSize: 12, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Industry</label>
                                 <div style={{ position: 'relative' }}>
-                                    <Briefcase size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#c4b5fd' }} />
+                                    <Briefcase size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#BBD4A6' }} />
                                     <input
                                         type="text"
                                         value={form.industry}
                                         onChange={(e) => setForm({ ...form, industry: e.target.value })}
                                         placeholder="e.g. Technology, Healthcare"
-                                        style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(139,92,246,0.12)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                                        onFocus={e => e.target.style.borderColor = '#8b5cf6'}
-                                        onBlur={e => e.target.style.borderColor = 'rgba(139,92,246,0.12)'}
+                                        style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(127, 165, 130,0.12)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
+                                        onFocus={e => e.target.style.borderColor = '#7FA582'}
+                                        onBlur={e => e.target.style.borderColor = 'rgba(127, 165, 130,0.12)'}
                                     />
                                 </div>
                             </div>
@@ -205,13 +205,13 @@ export default function SettingsPage() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                                 <label style={{ fontSize: 12, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Company Size</label>
                                 <div style={{ position: 'relative' }}>
-                                    <Users2 size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#c4b5fd', zIndex: 1 }} />
+                                    <Users2 size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#BBD4A6', zIndex: 1 }} />
                                     <select
                                         value={form.company_size}
                                         onChange={(e) => setForm({ ...form, company_size: e.target.value })}
-                                        style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(139,92,246,0.12)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border-color 0.2s', appearance: 'none', cursor: 'pointer', boxSizing: 'border-box' }}
-                                        onFocus={e => e.target.style.borderColor = '#8b5cf6'}
-                                        onBlur={e => e.target.style.borderColor = 'rgba(139,92,246,0.12)'}
+                                        style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(127, 165, 130,0.12)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border-color 0.2s', appearance: 'none', cursor: 'pointer', boxSizing: 'border-box' }}
+                                        onFocus={e => e.target.style.borderColor = '#7FA582'}
+                                        onBlur={e => e.target.style.borderColor = 'rgba(127, 165, 130,0.12)'}
                                     >
                                         <option value="">Select size</option>
                                         <option value="1-10">1-10 employees</option>
@@ -229,19 +229,19 @@ export default function SettingsPage() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label style={{ fontSize: 12, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Email Address</label>
                             <div style={{ position: 'relative' }}>
-                                <Mail size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#c4b5fd' }} />
+                                <Mail size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#BBD4A6' }} />
                                 <input
                                     type="email"
                                     value={profile?.email || ''}
                                     readOnly
-                                    style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(139,92,246,0.04)', border: '2px solid rgba(139,92,246,0.08)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#94a3b8', cursor: 'not-allowed', boxSizing: 'border-box' }}
+                                    style={{ width: '100%', padding: '14px 16px 14px 48px', background: 'rgba(127, 165, 130,0.04)', border: '2px solid rgba(127, 165, 130,0.08)', borderRadius: 16, fontSize: 15, fontWeight: 600, color: '#94a3b8', cursor: 'not-allowed', boxSizing: 'border-box' }}
                                 />
                             </div>
                             <p style={{ fontSize: 12, color: '#94a3b8', fontWeight: 500, margin: 0 }}>Email cannot be changed. Contact support for assistance.</p>
                         </div>
 
                         {/* Save Button Row */}
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 16, paddingTop: 16, borderTop: '1px solid rgba(139,92,246,0.08)', marginTop: 8 }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 16, paddingTop: 16, borderTop: '1px solid rgba(127, 165, 130,0.08)', marginTop: 8 }}>
                             {saved && (
                                 <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 700, color: '#10b981' }}>
                                     <CheckCircle size={18} /> Profile updated successfully
@@ -250,7 +250,7 @@ export default function SettingsPage() {
                             <button
                                 onClick={handleSave}
                                 disabled={saving}
-                                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 32px', background: 'linear-gradient(135deg, #8b5cf6, #c026d3)', color: '#fff', fontWeight: 800, fontSize: 15, border: 'none', borderRadius: 16, cursor: saving ? 'wait' : 'pointer', boxShadow: '0 8px 24px rgba(139,92,246,0.3)', transition: 'all 0.3s', opacity: saving ? 0.7 : 1 }}
+                                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 32px', background: 'linear-gradient(135deg, #7FA582, #9DBF9E)', color: '#fff', fontWeight: 800, fontSize: 15, border: 'none', borderRadius: 16, cursor: saving ? 'wait' : 'pointer', boxShadow: '0 8px 24px rgba(127, 165, 130,0.3)', transition: 'all 0.3s', opacity: saving ? 0.7 : 1 }}
                             >
                                 {saving ? <><Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Saving...</> : <><Save size={18} /> Save Changes</>}
                             </button>
