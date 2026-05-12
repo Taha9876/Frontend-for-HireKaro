@@ -1,0 +1,237 @@
+/* ═══ Hire Karo – Premium HR Dashboard ═══ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --hk-primary: #1C1B2E;
+  --hk-primary-light: #7FA582;
+  --hk-accent: #F4A28C;
+  --hk-surface: rgba(255,255,255,0.82);
+  --hk-surface-hover: rgba(255,255,255,0.95);
+  --hk-border: rgba(28, 27, 46, 0.08);
+  --hk-border-hover: rgba(127, 165, 130, 0.30);
+  --hk-text: #1C1B2E;
+  --hk-text-secondary: #4A4860;
+  --hk-radius: 16px;
+  --hk-shadow: 0 1px 3px rgba(28,27,46,0.04), 0 8px 24px rgba(28,27,46,0.06);
+  --hk-shadow-hover: 0 12px 40px rgba(28,27,46,0.10), 0 0 0 1px rgba(127,165,130,0.20);
+}
+
+/* ── Ambient background ── */
+.dash-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  animation: orbDrift 18s ease-in-out infinite;
+}
+@keyframes orbDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(25px,-18px) scale(1.04); }
+  66%     { transform: translate(-18px,12px) scale(0.96); }
+}
+
+/* ── Glass card base ── */
+.glass-card {
+  background: var(--hk-surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--hk-border);
+  border-radius: var(--hk-radius);
+  box-shadow: var(--hk-shadow);
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+}
+.glass-card:hover {
+  border-color: var(--hk-border-hover);
+  box-shadow: var(--hk-shadow-hover);
+  transform: translateY(-3px);
+}
+
+/* ── KPI Cards ── */
+.kpi-card {
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+.kpi-card:hover { transform: translateY(-5px) scale(1.015); }
+.kpi-card:hover .kpi-icon-wrap {
+  transform: scale(1.12) rotate(4deg);
+}
+.kpi-icon-wrap {
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Counter ── */
+.counter-value {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Chart cards ── */
+.chart-card:hover { transform: translateY(-2px); }
+
+/* ── Funnel bars ── */
+.funnel-bar {
+  transition: all .45s cubic-bezier(.4,0,.2,1);
+  cursor: default;
+  border-radius: 8px;
+}
+.funnel-bar:hover {
+  filter: brightness(1.12);
+}
+
+/* ── Table ── */
+.table-row-animated {
+  transition: all .25s ease;
+}
+.table-row-animated:hover {
+  background: linear-gradient(90deg, rgba(28, 27, 46,0.04), rgba(192,38,211,0.02)) !important;
+}
+
+/* ── Action buttons ── */
+.action-btn {
+  transition: all .25s cubic-bezier(.4,0,.2,1) !important;
+}
+.action-btn:hover {
+  transform: scale(1.12) !important;
+  box-shadow: 0 4px 14px rgba(28, 27, 46,0.22) !important;
+}
+
+/* ── Activity feed ── */
+.activity-item {
+  transition: all .25s ease;
+  border-left: 3px solid transparent;
+  padding-left: 12px;
+}
+.activity-item:hover {
+  border-left-color: var(--hk-primary);
+  background: rgba(28, 27, 46,0.03);
+  border-radius: 0 10px 10px 0;
+}
+
+/* ── Progress bar ── */
+.progress-bar-animated { position: relative; overflow: hidden; border-radius: 6px; }
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1.4s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+.progress-bar-fill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: barShine 2.5s ease-in-out infinite;
+}
+@keyframes barShine {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ── SVG ring ── */
+.stat-ring { transition: transform .35s ease; }
+.stat-ring:hover { transform: scale(1.06); }
+
+/* ── Header ── */
+.header-card {
+  position: relative; overflow: hidden;
+}
+.header-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1C1B2E, #c026d3, #e879f9, #1C1B2E);
+  background-size: 200% 100%;
+  animation: gradSlide 3.5s linear infinite;
+}
+@keyframes gradSlide {
+  0%   { background-position: 0 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Pulse dot ── */
+.pulse-ring { position: relative; }
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px; height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  animation: pulseGlow 2s ease-out infinite;
+}
+@keyframes pulseGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  100% { box-shadow: 0 0 0 14px rgba(16,185,129,0); }
+}
+
+/* ── Post-job CTA ── */
+.post-job-btn {
+  position: relative; overflow: hidden;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+}
+.post-job-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 28px rgba(28, 27, 46,0.32);
+}
+.post-job-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+  transition: all .5s ease;
+  transform: translate(-50%,-50%);
+}
+.post-job-btn:hover::after { width: 320px; height: 320px; }
+
+/* ── Badge live ── */
+.badge-live {
+  animation: livePulse 2.2s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: .65; }
+}
+
+/* ── Screening insight card ── */
+.insight-card {
+  position: relative;
+  overflow: hidden;
+}
+.insight-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -50%;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(28, 27, 46,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .grid-charts { grid-template-columns: 1fr !important; }
+  .grid-bottom { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 768px) {
+  .grid-kpi { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 480px) {
+  .grid-kpi { grid-template-columns: 1fr !important; }
+}

@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* Hide Google Translate top banner / iframe */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-logo-link,
+.goog-te-gadget,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+body {
+  top: 0 !important;
+  position: static !important;
+}
+html {
+  margin-top: 0 !important;
+}
+/* Hover translation tooltip */
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+:root {
+  /* EquaHire V3 palette */
+  --background: #FBF8F2;
+  --foreground: #1C1B2E;
+  --text-secondary: #4A4860;
+  --text-muted: #807E94;
+  --coral: #F4A28C;
+  --coral-deep: #E88A72;
+  --sage: #9DBF9E;
+  --sage-deep: #7FA582;
+  --yellow: #F4D58D;
+  --yellow-deep: #E9C26A;
+  --mint: #9AD0C2;
+  --mint-deep: #7BB8A8;
+  --lilac: #C4B5E0;
+  --lilac-deep: #A693CC;
+  --ink: #1C1B2E;
+  --gradient-primary: linear-gradient(135deg, #F4A28C, #F4D58D 50%, #C4B5E0);
+  --gradient-rich: linear-gradient(135deg, #F4A28C 0%, #F4D58D 40%, #9AD0C2 75%, #C4B5E0 100%);
+  --gradient-soft: linear-gradient(135deg, #FBF8F2, #FFF4E6);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* ── Re-map legacy purple / pink / indigo / violet / fuchsia utilities to V3 palette ── */
+  /* Purple = dark ink / sage family (primary CTA + brand) */
+  --color-purple-50:  #F3F7EF;
+  --color-purple-100: #E5EEDF;
+  --color-purple-200: #C7D9C0;
+  --color-purple-300: #A4C0A1;
+  --color-purple-400: #9DBF9E;
+  --color-purple-500: #7FA582;
+  --color-purple-600: #1C1B2E;
+  --color-purple-700: #1C1B2E;
+  --color-purple-800: #15141F;
+  --color-purple-900: #0B0A14;
+
+  /* Pink = coral family (accent / warm CTA) */
+  --color-pink-50:  #FDF2EE;
+  --color-pink-100: #FAE2D8;
+  --color-pink-200: #F5C4AE;
+  --color-pink-300: #F2A890;
+  --color-pink-400: #F4B58A;
+  --color-pink-500: #F4A28C;
+  --color-pink-600: #E88A72;
+  --color-pink-700: #D97356;
+  --color-pink-800: #B85A3F;
+  --color-pink-900: #8E4530;
+
+  /* Indigo / violet = lilac family */
+  --color-indigo-50:  #F3EFFA;
+  --color-indigo-100: #E6DEF5;
+  --color-indigo-200: #D0C2EB;
+  --color-indigo-300: #C4B5E0;
+  --color-indigo-400: #B39FD6;
+  --color-indigo-500: #A693CC;
+  --color-indigo-600: #8A77B5;
+  --color-indigo-700: #6F5E99;
+  --color-indigo-800: #554778;
+  --color-indigo-900: #3B3054;
+
+  /* Violet = sage family (used for primary brand accents on dashboard) */
+  --color-violet-50:  #F3F7EF;
+  --color-violet-100: #E5EEDF;
+  --color-violet-200: #C7D9C0;
+  --color-violet-300: #A4C0A1;
+  --color-violet-400: #9DBF9E;
+  --color-violet-500: #7FA582;
+  --color-violet-600: #68935F;
+  --color-violet-700: #527A4A;
+  --color-violet-800: #3E5E37;
+  --color-violet-900: #2A4225;
+
+  /* Fuchsia = coral-leaning pink */
+  --color-fuchsia-50:  #FDF2EE;
+  --color-fuchsia-100: #FAE2D8;
+  --color-fuchsia-200: #F5C4AE;
+  --color-fuchsia-300: #F2A890;
+  --color-fuchsia-400: #F4B58A;
+  --color-fuchsia-500: #F4A28C;
+  --color-fuchsia-600: #E88A72;
+  --color-fuchsia-700: #D97356;
+  --color-fuchsia-800: #B85A3F;
+  --color-fuchsia-900: #8E4530;
+
+  /* Named palette aliases (optional shorthand) */
+  --color-coral: #F4A28C;
+  --color-coral-deep: #E88A72;
+  --color-sage: #9DBF9E;
+  --color-sage-deep: #7FA582;
+  --color-ink: #1C1B2E;
+  --color-cream: #FBF8F2;
+  --color-mint: #9AD0C2;
+  --color-lilac: #C4B5E0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), 'Plus Jakarta Sans', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ─── Glass card ─── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(28, 27, 46, 0.06);
+}
+
+/* ─── Gradient text ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #E88A72, #E9C26A, #A693CC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Section divider glow ─── */
+.section-glow {
+  position: relative;
+}
+.section-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(127, 165, 130, 0.35), transparent);
+}
+
+/* ─── FAQ accordion ─── */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+}
+.faq-answer.open {
+  max-height: 300px;
+}
+
+/* ─── Google Translate overrides ─── */
+.goog-te-banner-frame,
+.skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame { display: none !important; }
+body { top: 0 !important; position: static !important; }
+font { background: transparent !important; box-shadow: none !important; }
+.goog-tooltip, .goog-tooltip:hover { display: none !important; }
+.goog-text-highlight { background: transparent !important; box-shadow: none !important; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FBF8F2; }
+::-webkit-scrollbar-thumb { background: #C4B5E0; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #1C1B2E; }
