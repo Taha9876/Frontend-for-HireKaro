@@ -87,7 +87,14 @@ export default function CandidateDetailPage() {
     const finalScoreColor = finalScore >= 70 ? '#7FA582' : finalScore >= 50 ? '#F4A28C' : '#E88A72';
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px 36px', background: '#FBF8F2', position: 'relative', fontFamily: INTER }}>
+        <div ref={pageRef} className="overflow-hidden" style={{ minHeight: '100vh', padding: '32px 36px', background: '#FBF8F2', position: 'relative', fontFamily: INTER }}>
+            {/* Ambient Background Orbs */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div className="dash-orb absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#C4B5E0]/20 to-[#9AD0C2]/20 blur-3xl" style={{ filter: 'blur(80px)' }} />
+                <div className="dash-orb absolute bottom-[20%] left-[-10%] w-[450px] h-[450px] rounded-full bg-gradient-to-br from-[#F4A28C]/20 to-[#F4D58D]/20 blur-3xl" style={{ filter: 'blur(80px)' }} />
+                <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#1C1B2E 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+            </div>
+
             <div style={{ maxWidth: 1240, margin: '0 auto', position: 'relative', zIndex: 1 }}>
                 {/* Back Button */}
                 <button onClick={() => router.back()}

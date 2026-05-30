@@ -3,11 +3,54 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-const pricingPlans = [
+/* ─── Currency config per language ─── */
+const CURRENCY_MAP = {
+  en: { symbol: '£', code: 'GBP', rate: 0.79, position: 'before', period: '/month' },
+  fr: { symbol: '€', code: 'EUR', rate: 0.92, position: 'before', period: '/mois' },
+  de: { symbol: '€', code: 'EUR', rate: 0.92, position: 'before', period: '/Monat' },
+  es: { symbol: '€', code: 'EUR', rate: 0.92, position: 'before', period: '/mes' },
+  lv: { symbol: '€', code: 'EUR', rate: 0.92, position: 'before', period: '/mēnesī' },
+  ar: { symbol: 'ر.س', code: 'SAR', rate: 3.75, position: 'after', period: '/شهر' },
+  ja: { symbol: '¥', code: 'JPY', rate: 155, position: 'before', period: '/月' },
+};
+
+/* Base prices in USD */
+const BASE_PRICES_USD = [49, 149]; // Starter, Professional (Enterprise is custom)
+
+function getCookie(name) {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
+function getLanguageFromCookie() {
+  const cookieLang = getCookie('googtrans');
+  if (cookieLang) {
+    const parts = cookieLang.split('/').filter(Boolean);
+    const target = parts[parts.length - 1];
+    if (target && CURRENCY_MAP[target]) return target;
+  }
+  return 'en';
+}
+
+function formatPrice(usdAmount, lang) {
+  const curr = CURRENCY_MAP[lang] || CURRENCY_MAP.en;
+  const converted = Math.round(usdAmount * curr.rate);
+
+  // Format with locale-appropriate thousand separators
+  const formatted = lang === 'ja'
+    ? converted.toLocaleString('ja-JP')
+    : converted.toLocaleString('en-US');
+
+  return curr.position === 'before'
+    ? `${curr.symbol}${formatted}`
+    : `${formatted} ${curr.symbol}`;
+}
+
+const pricingPlansBase = [
   {
     name: 'Starter',
-    price: '$49',
-    period: '/month',
+    usd: 49,
     description: 'Perfect for small teams getting started',
     features: [
       'Up to 50 resume screenings per month',
@@ -22,8 +65,7 @@ const pricingPlans = [
   },
   {
     name: 'Professional',
-    price: '$149',
-    period: '/month',
+    usd: 149,
     description: 'Ideal for growing companies',
     features: [
       'Up to 500 resume screenings per month',
@@ -41,8 +83,7 @@ const pricingPlans = [
   },
   {
     name: 'Enterprise',
-    price: 'Custom',
-    period: '',
+    usd: null, // Custom
     description: 'For large organizations with custom needs',
     features: [
       'Unlimited resume screenings',
@@ -86,6 +127,7 @@ const faqs = [
 
 export default function PricingPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [lang, setLang] = useState('en');
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -94,6 +136,13 @@ export default function PricingPage() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Detect language from cookie on mount
+  useEffect(() => {
+    setLang(getLanguageFromCookie());
+  }, []);
+
+  const curr = CURRENCY_MAP[lang] || CURRENCY_MAP.en;
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -184,13 +233,27 @@ export default function PricingPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 px-2"
+              className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6 px-2"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               Choose the perfect plan for your hiring needs. No hidden fees, cancel anytime.
             </motion.p>
+
+            {/* Currency indicator pill */}
+            <motion.div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-purple-200/40 shadow-sm text-sm text-gray-600 font-medium"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              Prices shown in <span className="font-bold text-purple-700">{curr.code}</span>
+              <span className="text-[10px] text-gray-400">• Change via language selector</span>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -198,122 +261,127 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-20">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {pricingPlans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -10 }}
-              className={`relative rounded-3xl p-8 transition-all flex flex-col h-full ${
-                plan.highlighted 
-                  ? 'backdrop-blur-md bg-gradient-to-br from-purple-600/90 to-pink-600/90 text-white shadow-2xl scale-105 border border-white/20' 
-                  : 'backdrop-blur-md bg-white/40 shadow-xl hover:shadow-2xl border border-white/20'
-              }`}
-            >
-              {plan.badge && (
-                <motion.div
-                  className="absolute -top-4 left-1/2 transform -translate-x-1/2"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <motion.span 
-                    className="bg-yellow-400 text-gray-900 px-4 py-1 rounded-full text-sm font-bold shadow-lg"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    {plan.badge}
-                  </motion.span>
-                </motion.div>
-              )}
-              
-              <div className="text-center mb-8">
-                <motion.h3 
-                  className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  viewport={{ once: true }}
-                >
-                  {plan.name}
-                </motion.h3>
-                <motion.div 
-                  className="mb-4"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  viewport={{ once: true }}
-                >
-                  <span className={`text-4xl sm:text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>
-                    {plan.price}
-                  </span>
-                  <span className={`text-lg ${plan.highlighted ? 'text-purple-100' : 'text-gray-600'}`}>
-                    {plan.period}
-                  </span>
-                </motion.div>
-                <motion.p 
-                  className={`${plan.highlighted ? 'text-purple-100' : 'text-gray-600'}`}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  {plan.description}
-                </motion.p>
-              </div>
+          {pricingPlansBase.map((plan, index) => {
+            const displayPrice = plan.usd ? formatPrice(plan.usd, lang) : 'Custom';
+            const displayPeriod = plan.usd ? curr.period : '';
 
-              <ul className="space-y-4 mb-8 flex-grow">
-                {plan.features.map((feature, i) => (
-                  <motion.li 
-                    key={i} 
-                    className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
+            return (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05, y: -10 }}
+                className={`relative rounded-3xl p-8 transition-all flex flex-col h-full ${
+                  plan.highlighted 
+                    ? 'backdrop-blur-md bg-gradient-to-br from-purple-600/90 to-pink-600/90 text-white shadow-2xl scale-105 border border-white/20' 
+                    : 'backdrop-blur-md bg-white/40 shadow-xl hover:shadow-2xl border border-white/20'
+                }`}
+              >
+                {plan.badge && (
+                  <motion.div
+                    className="absolute -top-4 left-1/2 transform -translate-x-1/2"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
                     viewport={{ once: true }}
                   >
-                    <motion.svg 
-                      className={`w-5 h-5 mt-0.5 flex-shrink-0 ${plan.highlighted ? 'text-white' : 'text-purple-600'}`}
-                      fill="currentColor" 
-                      viewBox="0 0 20 20"
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 400, delay: 0.7 + i * 0.1 }}
+                    <motion.span 
+                      className="bg-yellow-400 text-gray-900 px-4 py-1 rounded-full text-sm font-bold shadow-lg"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      {plan.badge}
+                    </motion.span>
+                  </motion.div>
+                )}
+                
+                <div className="text-center mb-8">
+                  <motion.h3 
+                    className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}
+                  >
+                    {plan.name}
+                  </motion.h3>
+                  <motion.div 
+                    className="mb-4"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    viewport={{ once: true }}
+                  >
+                    <span className={`text-4xl sm:text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>
+                      {displayPrice}
+                    </span>
+                    <span className={`text-lg ${plan.highlighted ? 'text-purple-100' : 'text-gray-600'}`}>
+                      {displayPeriod}
+                    </span>
+                  </motion.div>
+                  <motion.p 
+                    className={`${plan.highlighted ? 'text-purple-100' : 'text-gray-600'}`}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    {plan.description}
+                  </motion.p>
+                </div>
+
+                <ul className="space-y-4 mb-8 flex-grow">
+                  {plan.features.map((feature, i) => (
+                    <motion.li 
+                      key={i} 
+                      className="flex items-start gap-3"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
                       viewport={{ once: true }}
                     >
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </motion.svg>
-                    <span className={`text-sm ${plan.highlighted ? 'text-white' : 'text-gray-700'}`}>
-                      {feature}
-                    </span>
-                  </motion.li>
-                ))}
-              </ul>
+                      <motion.svg 
+                        className={`w-5 h-5 mt-0.5 flex-shrink-0 ${plan.highlighted ? 'text-white' : 'text-purple-600'}`}
+                        fill="currentColor" 
+                        viewBox="0 0 20 20"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, delay: 0.7 + i * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </motion.svg>
+                      <span className={`text-sm ${plan.highlighted ? 'text-white' : 'text-gray-700'}`}>
+                        {feature}
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
 
-              <div className="mt-auto">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
-                  viewport={{ once: true }}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`block w-full py-3 rounded-full font-medium text-center transition-all ${
-                      plan.highlighted 
-                        ? 'bg-white text-purple-600 hover:bg-gray-100 shadow-lg' 
-                        : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
-                    }`}
+                <div className="mt-auto">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.2 }}
+                    viewport={{ once: true }}
                   >
-                    {plan.cta}
-                  </motion.button>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`block w-full py-3 rounded-full font-medium text-center transition-all ${
+                        plan.highlighted 
+                          ? 'bg-white text-purple-600 hover:bg-gray-100 shadow-lg' 
+                          : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
+                      }`}
+                    >
+                      {plan.cta}
+                    </motion.button>
+                  </motion.div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

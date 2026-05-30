@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import api from '@/lib/api';
 import { Mic, MicOff, Video, VideoOff, PhoneOff } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function CandidatePanelRoom() {
   const { token } = useParams();
@@ -54,6 +55,7 @@ export default function CandidatePanelRoom() {
           width: '100%',
           height: '100%',
           border: 'none',
+          borderRadius: '16px',
         },
       });
 
@@ -88,54 +90,81 @@ export default function CandidatePanelRoom() {
     setEnded(true);
   };
 
+  // Ambient backgrounds helper
+  const AmbientBg = () => (
+    <>
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#FBF8F2]">
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#C4B5E0]/20 to-[#9AD0C2]/20 blur-3xl" />
+        <div className="absolute bottom-[20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#F4A28C]/20 to-[#F4D58D]/20 blur-3xl" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#1C1B2E 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+      </div>
+    </>
+  );
+
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-900">
-        <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="flex items-center justify-center min-h-screen relative overflow-hidden bg-[#FBF8F2]">
+        <AmbientBg />
+        <div className="relative z-10 w-10 h-10 border-4 border-[#1C1B2E] border-t-transparent rounded-full animate-spin" />
       </div>
     );
 
   if (error)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-900 p-8">
-        <div className="bg-slate-800 rounded-3xl p-10 text-center max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-8 relative overflow-hidden bg-[#FBF8F2]">
+        <AmbientBg />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 bg-white/70 backdrop-blur-xl border border-red-200/50 rounded-3xl p-10 text-center max-w-md shadow-xl"
+        >
           <div className="text-4xl mb-4">🔒</div>
-          <h2 className="text-white font-bold text-xl mb-2">Access Denied</h2>
-          <p className="text-slate-400 text-sm">{error}</p>
-        </div>
+          <h2 className="text-[#1C1B2E] font-bold text-xl mb-2">Access Denied</h2>
+          <p className="text-[#4A4860] text-sm">{error}</p>
+        </motion.div>
       </div>
     );
 
   if (ended)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-900 p-8">
-        <div className="bg-slate-800 rounded-3xl p-10 text-center max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-8 relative overflow-hidden bg-[#FBF8F2]">
+        <AmbientBg />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 bg-white/70 backdrop-blur-xl border border-[#1C1B2E]/10 rounded-3xl p-10 text-center max-w-md shadow-xl"
+        >
           <div className="text-5xl mb-4">🎯</div>
-          <h2 className="text-white font-bold text-2xl mb-2">
+          <h2 className="text-[#1C1B2E] font-bold text-2xl mb-2">
             Interview Complete!
           </h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-[#4A4860] text-sm">
             Thank you for attending. You will be notified about the results.
           </p>
-        </div>
+        </motion.div>
       </div>
     );
 
   if (waiting)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-900 p-8">
-        <div className="bg-slate-800 rounded-3xl p-10 text-center max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-8 relative overflow-hidden bg-[#FBF8F2]">
+        <AmbientBg />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 bg-white/70 backdrop-blur-xl border border-[#1C1B2E]/10 rounded-3xl p-10 text-center max-w-md shadow-xl"
+        >
           <div className="text-5xl mb-6">⏳</div>
-          <h2 className="text-white font-bold text-2xl mb-3">Waiting Room</h2>
-          <p className="text-slate-400 text-sm mb-6">
+          <h2 className="text-[#1C1B2E] font-bold text-2xl mb-3">Waiting Room</h2>
+          <p className="text-[#4A4860] text-sm mb-6 leading-relaxed">
             Please wait — the panel has not joined yet. This page will
             automatically refresh.
           </p>
-          <div className="flex items-center justify-center gap-2 text-emerald-400 text-sm font-medium">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#9AD0C2]/20 border border-[#7BB8A8]/30 text-[#1C1B2E] text-xs font-semibold">
+            <div className="w-2 h-2 rounded-full bg-[#7BB8A8] animate-pulse" />
             Checking every 5 seconds...
           </div>
-        </div>
+        </motion.div>
       </div>
     );
 
@@ -145,9 +174,13 @@ export default function CandidatePanelRoom() {
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        background: '#0f172a',
+        background: '#FBF8F2',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      <AmbientBg />
+
       {/* Top Bar */}
       <div
         style={{
@@ -155,10 +188,11 @@ export default function CandidatePanelRoom() {
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '12px 24px',
-          background: '#1e293b',
-          borderBottom: '1px solid #334155',
+          background: 'rgba(255, 255, 255, 0.75)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(28, 27, 46, 0.08)',
           flexShrink: 0,
-          height: '56px',
+          height: '60px',
           zIndex: 20,
         }}
       >
@@ -168,14 +202,15 @@ export default function CandidatePanelRoom() {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              background: '#34d399',
+              background: '#7BB8A8',
+              boxShadow: '0 0 8px #7BB8A8'
             }}
           />
-          <span style={{ color: 'white', fontWeight: 700, fontSize: 14 }}>
+          <span style={{ color: '#1C1B2E', fontWeight: 800, fontSize: 15, tracking: '-0.01em' }}>
             Panel Interview
           </span>
         </div>
-        <span style={{ color: '#94a3b8', fontSize: 12 }}>
+        <span style={{ color: '#4A4860', fontSize: 12, fontWeight: 500 }}>
           You are the candidate
         </span>
       </div>
@@ -183,7 +218,8 @@ export default function CandidatePanelRoom() {
       {/* Video iframe */}
       <div
         ref={roomRef}
-        style={{ flex: 1, overflow: 'hidden', position: 'relative', zIndex: 1 }}
+        className="m-4 md:m-6 rounded-2xl overflow-hidden shadow-lg border border-[#1C1B2E]/10 bg-[#1C1B2E]/5"
+        style={{ flex: 1, position: 'relative', zIndex: 1 }}
       />
 
       {/* Controls */}
@@ -194,14 +230,17 @@ export default function CandidatePanelRoom() {
           justifyContent: 'center',
           gap: 16,
           padding: '16px 24px',
-          background: '#1e293b',
-          borderTop: '1px solid #334155',
+          background: 'rgba(255, 255, 255, 0.75)',
+          backdropFilter: 'blur(20px)',
+          borderTop: '1px solid rgba(28, 27, 46, 0.08)',
           flexShrink: 0,
-          height: '80px',
+          height: '84px',
           zIndex: 20,
         }}
       >
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={toggleMic}
           style={{
             width: 48,
@@ -212,13 +251,17 @@ export default function CandidatePanelRoom() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: micOn ? '#334155' : '#ef4444',
+            background: micOn ? '#1C1B2E' : '#E88A72',
             color: 'white',
+            boxShadow: '0 4px 12px rgba(28, 27, 46, 0.1)',
+            transition: 'background-color 0.2s'
           }}
         >
           {micOn ? <Mic size={20} /> : <MicOff size={20} />}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={toggleCam}
           style={{
             width: 48,
@@ -229,14 +272,19 @@ export default function CandidatePanelRoom() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: camOn ? '#334155' : '#ef4444',
+            background: camOn ? '#1C1B2E' : '#E88A72',
             color: 'white',
+            boxShadow: '0 4px 12px rgba(28, 27, 46, 0.1)',
+            transition: 'background-color 0.2s'
           }}
         >
           {camOn ? <Video size={20} /> : <VideoOff size={20} />}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05, y: -1 }}
+          whileTap={{ scale: 0.95 }}
           onClick={handleLeave}
+          className="bg-gradient-to-r from-[#F4A28C] to-[#E88A72] hover:shadow-lg transition-all"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -245,14 +293,13 @@ export default function CandidatePanelRoom() {
             borderRadius: 50,
             border: 'none',
             cursor: 'pointer',
-            background: '#dc2626',
             color: 'white',
             fontWeight: 700,
             fontSize: 14,
           }}
         >
           <PhoneOff size={18} /> Leave
-        </button>
+        </motion.button>
       </div>
     </div>
   );

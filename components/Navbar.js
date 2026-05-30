@@ -36,7 +36,7 @@ export default function Navbar() {
 
     return (
         <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-200/50 py-3 shadow-sm' : 'bg-transparent py-5 border-b border-transparent'}`}>
-            <nav className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-6 px-6 md:px-10">
+            <nav className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-6 px-4 sm:px-6 md:px-10">
                 <Link href="/" translate="no" className="notranslate flex items-center gap-2.5 no-underline group justify-self-start">
                     <motion.div 
                         className="notranslate flex h-9 w-9 items-center justify-center rounded-lg text-[13px] font-bold text-white shadow-md"
@@ -61,7 +61,7 @@ export default function Navbar() {
                     ))}
                 </ul>
 
-                <div className="flex items-center justify-end gap-3 justify-self-end">
+                <div className="flex items-center justify-end gap-2 sm:gap-3 justify-self-end">
                     <LanguageSwitcher />
                     {loggedIn ? (
                         <>
@@ -79,10 +79,10 @@ export default function Navbar() {
                         </>
                     ) : (
                         <>
-                            <Link href="/auth/login" className="hidden sm:inline-flex text-sm font-medium text-[#4A4860] no-underline transition hover:text-[#1C1B2E]">
+                            <Link href="/auth/login" className="hidden md:inline-flex text-sm font-medium text-[#4A4860] no-underline transition hover:text-[#1C1B2E]">
                                 Login
                             </Link>
-                            <Link href="/auth/signup">
+                            <Link href="/auth/signup" className="hidden sm:inline-flex">
                                 <motion.button
                                     whileHover={{ scale: 1.05, y: -2 }}
                                     whileTap={{ scale: 0.95 }}
@@ -125,9 +125,14 @@ export default function Navbar() {
                                     Dashboard
                                 </Link>
                             ) : (
-                                <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-[#1C1B2E] no-underline transition hover:bg-[#9AD0C2]/30">
-                                    Login
-                                </Link>
+                                <>
+                                    <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-semibold text-[#1C1B2E] no-underline transition hover:bg-[#9AD0C2]/30">
+                                        Login
+                                    </Link>
+                                    <Link href="/auth/signup" onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 mt-1 text-sm font-semibold text-white no-underline text-center bg-[#1C1B2E] rounded-full">
+                                        Book a Demo →
+                                    </Link>
+                                </>
                             )}
                         </li>
                     </ul>

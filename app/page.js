@@ -383,7 +383,7 @@ export default function HomePage() {
             </div>
 
             {/* Trust pillars row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5 max-w-xl">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 sm:gap-x-5 sm:gap-y-5 max-w-xl">
               {[
                 {
                   title: 'Bias Reduction',
@@ -434,16 +434,16 @@ export default function HomePage() {
                   ),
                 },
               ].map((p) => (
-                <div key={p.title} className="flex flex-col items-start gap-1.5">
+                <div key={p.title} className="flex flex-col items-start gap-1.5 min-w-0">
                   <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ background: `${p.bg}40`, boxShadow: `inset 0 0 0 1px ${p.ring}50` }}
                   >
                     {p.icon}
                   </div>
-                  <div>
-                    <div className="text-[13px] font-bold text-[#1C1B2E] leading-tight">{p.title}</div>
-                    <div className="text-[11px] text-[#4A4860] mt-0.5">{p.sub}</div>
+                  <div className="min-w-0">
+                    <div className="text-[13px] font-bold text-[#1C1B2E] leading-tight truncate">{p.title}</div>
+                    <div className="text-[11px] text-[#4A4860] mt-0.5 truncate">{p.sub}</div>
                   </div>
                 </div>
               ))}
