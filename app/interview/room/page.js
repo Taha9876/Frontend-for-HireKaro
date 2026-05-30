@@ -47,7 +47,7 @@ export default function InterviewRoomPage() {
                 setUsername(user);
 
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/candidate-questions?username=${user}`
+                    `/api/v1/jobs/interview/candidate-questions?username=${user}`
                 );
                 const data = await res.json();
 
@@ -230,7 +230,7 @@ export default function InterviewRoomPage() {
                     ...(finalAnswers[q.id] || { answered: false, answer: null })
                 }));
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/submit`, {
+            await fetch(`/api/v1/jobs/interview/submit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: user, answers: answersPayload, tab_switches: finalTabSwitches })
@@ -241,7 +241,7 @@ export default function InterviewRoomPage() {
                 const formData = new FormData();
                 formData.append('file', blob, `${user}.webm`);
                 await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/interview/upload-video?username=${user}`,
+                    `/api/v1/jobs/interview/upload-video?username=${user}`,
                     { method: 'POST', body: formData }
                 );
             }

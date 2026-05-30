@@ -61,7 +61,7 @@ export default function CandidateDetailPage() {
 
     const handleVideoDownload = () => {
         if (!data?.result?.video_path) return;
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/${data.result.video_path}`;
+        const url = `/${data.result.video_path}`;
         const a = document.createElement('a');
         a.href = url;
         a.download = `interview_${data.candidate.name || 'candidate'}.webm`;
@@ -155,7 +155,7 @@ export default function CandidateDetailPage() {
                                         <video
                                             controls
                                             className="w-full h-full"
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}/${result.video_path}`}
+                                            src={`/${result.video_path}`}
                                         />
                                     </div>
                                     <button onClick={handleVideoDownload}

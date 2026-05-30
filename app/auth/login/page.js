@@ -22,7 +22,7 @@ export default function LoginPage() {
         setError('');
         try {
             // Backend Auth
-            const res = await fetch(process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login` : 'http://localhost:8000/api/v1/auth/login', {
+            const res = await fetch('/api/v1/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: form.email, password: form.password })
