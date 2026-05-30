@@ -16,12 +16,17 @@ app = FastAPI(title=settings.APP_NAME, version="1.0.0")
 # CORS — local + production dono
 origins = [
     "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+    "https://frontend-for-hire-karonewversion.vercel.app",
     settings.FRONTEND_URL,
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://frontend-for-hire-karonewversion.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
