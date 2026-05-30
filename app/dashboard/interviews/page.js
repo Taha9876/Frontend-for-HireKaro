@@ -19,7 +19,7 @@ export default function InterviewsPage() {
     }, []);
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#FBF8F2] relative overflow-hidden">
             {/* Background Orbs */}
             <div className="dash-orb" style={{ position: 'absolute', top: '15%', right: '5%', width: '35vw', height: '35vw', background: 'radial-gradient(circle, rgba(244, 162, 140,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
             <div className="dash-orb" style={{ position: 'absolute', bottom: '-5%', left: '-15%', width: '45vw', height: '45vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.1) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />

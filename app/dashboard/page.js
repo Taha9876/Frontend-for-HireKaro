@@ -289,7 +289,7 @@ export default function DashboardPage() {
     }));
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '28px 32px 40px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#FBF8F2] relative overflow-hidden">
             {/* Background Orbs (palette) */}
             <div className="dash-orb dash-orb-1" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(157,191,158,0.25) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
             <div className="dash-orb dash-orb-2" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.22) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
@@ -298,7 +298,7 @@ export default function DashboardPage() {
             <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
                 {/* ── TOP BAR (hero dashboard style) ── */}
-                <div className="dash-header" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '18px 24px', marginBottom: 28, background: '#fff', border: '1px solid rgba(28,27,46,0.08)', borderRadius: 16, boxShadow: '0 10px 40px -20px rgba(28,27,46,0.15)' }}>
+                <div className="dash-header flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 mb-6 bg-white border border-[#1C1B2E]/8 rounded-2xl shadow-[0_10px_40px_-20px_rgba(28,27,46,0.15)]">
                     <div>
                         <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1C1B2E', margin: 0, letterSpacing: '-0.3px' }}>
                             {greeting}, HR Team <span style={{ display: 'inline-block' }}>👋</span>
@@ -316,15 +316,15 @@ export default function DashboardPage() {
                 </div>
 
                 {/* ── KPI CARDS ── */}
-                <div className="grid-kpi" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
+                <div className="grid-kpi grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                     {kpis.map((item, i) => <KPICard key={item.label} item={item} index={i} />)}
                 </div>
 
                 {/* ── CHARTS ROW ── */}
-                <div className="grid-charts" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 32 }}>
+                <div className="grid-charts grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
 
                     {/* Area Chart */}
-                    <div className="dash-chart chart-card glass-card" style={{ padding: 28 }}>
+                    <div className="dash-chart chart-card glass-card lg:col-span-2 p-6 sm:p-8">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                             <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--hk-text)', margin: 0 }}>AI Screening Velocity</h2>
                             <span style={{ fontSize: 12, fontWeight: 700, padding: '6px 14px', borderRadius: 10, background: 'rgba(127, 165, 130,0.1)', color: '#7FA582' }}>Live Feed</span>
@@ -354,7 +354,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Quick Stats with Rings */}
-                    <div className="dash-chart chart-card glass-card insight-card" style={{ padding: 28 }}>
+                    <div className="dash-chart chart-card glass-card insight-card p-6 sm:p-8">
                         <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--hk-text)', margin: '0 0 24px' }}>AI Insights</h2>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
                             {QUICK_STATS.map((s) => (
@@ -376,17 +376,17 @@ export default function DashboardPage() {
                 </div>
 
                 {/* ── PIPELINE + ACTIVITY ROW ── */}
-                <div className="grid-bottom" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 24, marginBottom: 32 }}>
+                <div className="grid-bottom grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
 
                     {/* Pipeline Funnel */}
-                    <div className="dash-bottom chart-card glass-card" style={{ padding: 28 }}>
+                    <div className="dash-bottom chart-card glass-card lg:col-span-7 p-6 sm:p-8">
                         <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--hk-text)', margin: '0 0 24px' }}>AI Hiring Pipeline</h2>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                             {PIPELINE.map((p, i) => {
                                 const colors = ['#F4A28C','#E9C26A','#9DBF9E','#9AD0C2','#C4B5E0','#7FA582'];
                                 return (
                                     <div key={p.name} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                                        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--hk-text)', width: 140, flexShrink: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</span>
+                                        <span className="text-xs sm:text-sm font-bold text-[#1C1B2E] w-24 sm:w-36 shrink-0 truncate">{p.name}</span>
                                         <div style={{ flex: 1, height: 28, background: 'rgba(127, 165, 130,0.08)', borderRadius: 10, overflow: 'hidden' }}>
                                             <div className="funnel-bar" style={{ width: `${p.pct}%`, height: '100%', background: `linear-gradient(90deg, ${colors[i]}, ${colors[Math.min(i+1,5)]})`, borderRadius: 10 }} />
                                         </div>
@@ -398,7 +398,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Activity Feed */}
-                    <div className="dash-bottom chart-card glass-card" style={{ padding: 28 }}>
+                    <div className="dash-bottom chart-card glass-card lg:col-span-5 p-6 sm:p-8">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22 }}>
                             <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--hk-text)', margin: 0 }}>System Events</h2>
                             <div className="pulse-ring" style={{ width: 22, height: 22 }} />
@@ -423,13 +423,13 @@ export default function DashboardPage() {
                 </div>
 
                 {/* ── RECENT JOBS TABLE ── */}
-                <div className="dash-bottom chart-card glass-card" style={{ padding: 28 }}>
+                <div className="dash-bottom chart-card glass-card p-6 sm:p-8">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22 }}>
                         <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--hk-text)', margin: 0 }}>Active Job Postings</h2>
                         <Link href="/dashboard/jobs" style={{ fontSize: 14, fontWeight: 700, color: '#7FA582', textDecoration: 'none' }}>View All →</Link>
                     </div>
-                    <div style={{ overflowX: 'auto' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: 14 }}>
+                    <div className="overflow-x-auto w-full">
+                        <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left', fontSize: 14 }}>
                             <thead>
                                 <tr style={{ background: 'rgba(127, 165, 130,0.04)', borderBottom: '1px solid rgba(127, 165, 130,0.1)' }}>
                                     {['Role', 'Positions', 'AI Matching Skills', 'Status', 'Posted', 'Actions'].map((h, i) => (

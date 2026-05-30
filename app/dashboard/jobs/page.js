@@ -36,25 +36,25 @@ export default function JobsPage() {
     };
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#FBF8F2] relative overflow-hidden">
             {/* Background Orbs */}
             <div className="dash-orb" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
             <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.18) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
                 {/* Header */}
-                <div className="page-header flex items-center justify-between mb-8 p-6 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)]">
+                <div className="page-header flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 p-5 sm:p-6 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)]">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white shadow-lg shadow-violet-500/30">
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white shadow-lg shadow-violet-500/30 flex-shrink-0">
                             <Briefcase size={24} />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-extrabold text-slate-900 m-0 tracking-tight">Job Postings</h1>
-                            <p className="text-slate-500 text-sm mt-1 font-medium">Manage and track your recruitment pipeline</p>
+                            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 m-0 tracking-tight">Job Postings</h1>
+                            <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium">Manage and track your recruitment pipeline</p>
                         </div>
                     </div>
                     <Link href="/dashboard/jobs/create"
-                        className="flex items-center gap-2 px-6 py-3 text-white text-sm font-bold rounded-full no-underline transition-all hover:scale-105"
+                        className="flex items-center justify-center gap-2 px-6 py-3 text-white text-sm font-bold rounded-full no-underline transition-all hover:scale-105 w-full sm:w-auto text-center"
                         style={{ background: 'linear-gradient(135deg, #7FA582, #9DBF9E)', boxShadow: '0 8px 24px rgba(127, 165, 130,0.35)' }}>
                         <Plus size={18} strokeWidth={3} /> Post New Job
                     </Link>

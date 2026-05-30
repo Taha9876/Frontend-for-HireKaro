@@ -529,7 +529,7 @@ export default function HomePage() {
                     </div>
 
                     {/* KPI cards */}
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {[
                         { label: 'Total Candidates', value: '1,248', trend: '↑ 12%', dot: '#F4A28C' },
                         { label: 'Shortlisted', value: '342', trend: '↑ 8%', dot: '#F4D58D' },
@@ -548,7 +548,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Two-up: Gauge + Donut */}
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {/* Bias-free gauge */}
                       <div className="rounded-lg bg-white border border-[#1C1B2E]/8 p-3">
                         <div className="text-[10px] font-semibold text-[#1C1B2E] mb-1">Bias Free Hiring Score</div>
@@ -593,7 +593,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Recent activity + AI Insight */}
-                    <div className="grid grid-cols-[1.5fr_1fr] gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr] gap-2">
                       <div className="rounded-lg bg-white border border-[#1C1B2E]/8 p-3">
                         <div className="text-[10px] font-semibold text-[#1C1B2E] mb-2">Recent Activity</div>
                         <div className="space-y-1.5">

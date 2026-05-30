@@ -90,18 +90,18 @@ export default function CandidatesPage() {
     };
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px 40px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#FBF8F2] relative overflow-hidden">
             {/* Background Orbs */}
             <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127,165,130,0.10) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
             <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.08) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
 
             <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
                 {/* Header */}
-                <div className="page-header" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, marginBottom: 28 }}>
+                <div className="page-header flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white/60 backdrop-blur-xl border border-white/80 p-5 sm:p-6 rounded-3xl shadow-[0_8px_32px_rgba(127, 165, 130,0.05)]">
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{ width: 3, height: 48, borderRadius: 2, background: 'linear-gradient(180deg, #7FA582, #F4A28C)' }} />
+                        <div style={{ width: 3, height: 48, borderRadius: 2, background: 'linear-gradient(180deg, #7FA582, #F4A28C)', shrink: 0 }} />
                         <div>
-                            <h1 style={{ fontSize: 30, fontWeight: 800, color: '#1C1B2E', margin: 0, letterSpacing: '-0.8px', fontFamily: 'Syne, sans-serif' }}>Candidates</h1>
+                            <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1C1B2E', margin: 0, letterSpacing: '-0.8px', fontFamily: 'Syne, sans-serif' }}>Candidates</h1>
                             <p style={{ fontSize: 13, color: '#64608a', margin: '4px 0 0', fontWeight: 500 }}>
                                 Browse and manage all applicants
                                 <span style={{ margin: '0 8px', color: '#ccc' }}>·</span>
@@ -109,15 +109,15 @@ export default function CandidatesPage() {
                             </p>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div style={{ position: 'relative' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, width: '100%', md: 'auto' }}>
+                        <div style={{ position: 'relative', flex: 1, minWidth: 200 }}>
                             <Search style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={16} />
                             <input
                                 type="text"
                                 placeholder="Search candidates..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                style={{ paddingLeft: 40, paddingRight: 16, paddingTop: 11, paddingBottom: 11, width: 280, background: '#fff', border: '1px solid #e8e5df', borderRadius: 12, fontSize: 13, fontWeight: 500, color: '#1C1B2E', outline: 'none', transition: 'border-color 0.2s, box-shadow 0.2s' }}
+                                style={{ paddingLeft: 40, paddingRight: 16, paddingTop: 11, paddingBottom: 11, width: '100%', background: '#fff', border: '1px solid #e8e5df', borderRadius: 12, fontSize: 13, fontWeight: 500, color: '#1C1B2E', outline: 'none', transition: 'border-color 0.2s, box-shadow 0.2s' }}
                                 onFocus={e => { e.target.style.borderColor = '#7FA582'; e.target.style.boxShadow = '0 0 0 3px rgba(127,165,130,0.10)'; }}
                                 onBlur={e => { e.target.style.borderColor = '#e8e5df'; e.target.style.boxShadow = 'none'; }}
                             />
@@ -144,14 +144,19 @@ export default function CandidatesPage() {
                 </div>
 
                 {/* Stats Bar */}
-                <div className="candidate-card" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginBottom: 24, background: '#fff', borderRadius: 18, border: '1px solid #e8e5df', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
+                <div className="candidate-card grid grid-cols-2 lg:grid-cols-4 gap-0 mb-6 bg-white border border-[#e8e5df] rounded-[18px] overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
                     {[
                         { label: 'Total', value: stats.total, accent: '#1C1B2E', sub: 'Applicants' },
                         { label: 'Shortlisted', value: stats.shortlisted, accent: '#7FA582', sub: 'Passed screening' },
                         { label: 'Rejected', value: stats.rejected, accent: '#dc5043', sub: 'Did not match' },
                         { label: 'Pending', value: stats.pending, accent: '#F4A28C', sub: 'Awaiting review' },
                     ].map((s, i) => (
-                        <div key={s.label} style={{ padding: '24px 28px', borderRight: i < 3 ? '1px solid #e8e5df' : 'none', position: 'relative', transition: 'all 0.2s', cursor: 'default' }}
+                        <div key={s.label} 
+                            className="p-4 sm:p-6 relative transition-all duration-200 cursor-default border-r border-b border-[#e8e5df] lg:border-b-0"
+                            style={{ 
+                                borderRight: (i === 1 || i === 3) ? 'none' : '1px solid #e8e5df', 
+                                borderBottom: i < 2 ? '1px solid #e8e5df' : 'none'
+                            }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.borderLeft = '3px solid ' + s.accent; }}
                             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderLeft = 'none'; }}>
                             <p style={{ fontSize: 11, fontWeight: 700, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>{s.label}</p>
@@ -181,84 +186,86 @@ export default function CandidatesPage() {
                         </p>
                     </div>
                 ) : (
-                    <div className="candidate-card" style={{ background: '#fff', borderRadius: 18, border: '1px solid #e8e5df', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
-                        {/* Table Header */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1.3fr 0.9fr 0.7fr 0.7fr 0.7fr 1.1fr 1fr', gap: 12, padding: '18px 32px', borderBottom: '1px solid #e8e5df', background: '#FDFCF9' }}>
-                            {['Candidate', 'Applied For', 'Status', 'Skills', 'Exp', 'Edu', 'Match Score', 'Actions'].map((h) => (
-                                <span key={h} style={{ fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{h}</span>
-                            ))}
+                    <div className="candidate-card overflow-x-auto w-full" style={{ background: '#fff', borderRadius: 18, border: '1px solid #e8e5df', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
+                        <div style={{ minWidth: '1000px' }}>
+                            {/* Table Header */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1.3fr 0.9fr 0.7fr 0.7fr 0.7fr 1.1fr 1fr', gap: 12, padding: '18px 32px', borderBottom: '1px solid #e8e5df', background: '#FDFCF9' }}>
+                                {['Candidate', 'Applied For', 'Status', 'Skills', 'Exp', 'Edu', 'Match Score', 'Actions'].map((h) => (
+                                    <span key={h} style={{ fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{h}</span>
+                                ))}
+                            </div>
+
+                            {/* Candidate Rows */}
+                            {filteredCandidates.map((c, idx) => {
+                                const st = statusStyles[c.status] || statusStyles.pending;
+                                return (
+                                    <div key={c.id}
+                                        style={{ display: 'grid', gridTemplateColumns: '2.2fr 1.3fr 0.9fr 0.7fr 0.7fr 0.7fr 1.1fr 1fr', gap: 12, padding: '16px 32px', alignItems: 'center', borderBottom: idx < filteredCandidates.length - 1 ? '1px solid #f3f1ec' : 'none', transition: 'all 0.2s', cursor: 'pointer', borderLeft: '3px solid transparent' }}
+                                        onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.paddingLeft = '36px'; e.currentTarget.style.paddingRight = '28px'; e.currentTarget.style.borderLeft = '3px solid #7FA582'; }}
+                                        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '32px'; e.currentTarget.style.paddingRight = '32px'; e.currentTarget.style.borderLeft = '3px solid transparent'; }}>
+                                        {/* Candidate Info */}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                                            <div style={{ width: 40, height: 40, borderRadius: 12, background: '#1C1B2E', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 15, flexShrink: 0, fontFamily: 'Syne, sans-serif' }}>
+                                                {c.candidate_name.charAt(0).toUpperCase()}
+                                            </div>
+                                            <div style={{ minWidth: 0 }}>
+                                                <p style={{ fontSize: 14, fontWeight: 700, color: '#1C1B2E', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.candidate_name}</p>
+                                                <p style={{ fontSize: 12, color: '#94a3b8', margin: '3px 0 0', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                    {c.candidate_email || 'No email'}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Job Title */}
+                                        <span style={{ fontSize: 13, fontWeight: 600, color: '#1C1B2E', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.job_title}</span>
+
+                                        {/* Status Badge */}
+                                        <div>
+                                            <span style={{ display: 'inline-block', padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 700, background: st.bg, color: st.color, textTransform: 'capitalize', letterSpacing: '0.02em' }}>
+                                                {c.status}
+                                            </span>
+                                        </div>
+
+                                        {/* Skills */}
+                                        <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.skills_score}%</span>
+
+                                        {/* Experience */}
+                                        <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.experience_score}%</span>
+
+                                        {/* Education */}
+                                        <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.education_score}%</span>
+
+                                        {/* Overall Score */}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                            <span style={{ fontSize: 15, fontWeight: 800, color: scoreColor(c.match_score), fontFamily: 'Syne, sans-serif', minWidth: 38 }}>{c.match_score}%</span>
+                                            <div style={{ flex: 1, height: 5, background: '#f3f1ec', borderRadius: 3, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.04)' }}>
+                                                <div style={{ width: `${c.match_score}%`, height: '100%', borderRadius: 3, background: `linear-gradient(90deg, ${scoreBgColor(c.match_score)}, ${c.match_score >= 75 ? '#9DBF9E' : c.match_score >= 55 ? '#F4D58D' : '#F4A28C'})`, transition: 'width 0.5s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />
+                                            </div>
+                                        </div>
+
+                                        {/* Actions */}
+                                        <div style={{ display: 'flex', gap: 8 }}>
+                                            <button
+                                                onClick={() => router.push(`/dashboard/jobs/${c.job_id}`)}
+                                                style={{ padding: '7px 14px', fontSize: 12, fontWeight: 700, color: '#fff', background: '#1C1B2E', border: 'none', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, transition: 'opacity 0.2s' }}
+                                                onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
+                                                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                                            >
+                                                View
+                                            </button>
+                                            <button
+                                                onClick={() => handleDownload(c.id, c.job_id, c.file_name)}
+                                                style={{ padding: '7px 14px', fontSize: 12, fontWeight: 700, color: '#1C1B2E', background: '#fff', border: '1px solid #e8e5df', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, transition: 'all 0.2s' }}
+                                                onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.borderColor = '#7FA582'; }}
+                                                onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#e8e5df'; }}
+                                            >
+                                                Resume
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
-
-                        {/* Candidate Rows */}
-                        {filteredCandidates.map((c, idx) => {
-                            const st = statusStyles[c.status] || statusStyles.pending;
-                            return (
-                                <div key={c.id}
-                                    style={{ display: 'grid', gridTemplateColumns: '2.2fr 1.3fr 0.9fr 0.7fr 0.7fr 0.7fr 1.1fr 1fr', gap: 12, padding: '16px 32px', alignItems: 'center', borderBottom: idx < filteredCandidates.length - 1 ? '1px solid #f3f1ec' : 'none', transition: 'all 0.2s', cursor: 'pointer', borderLeft: '3px solid transparent' }}
-                                    onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.paddingLeft = '36px'; e.currentTarget.style.paddingRight = '28px'; e.currentTarget.style.borderLeft = '3px solid #7FA582'; }}
-                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '32px'; e.currentTarget.style.paddingRight = '32px'; e.currentTarget.style.borderLeft = '3px solid transparent'; }}>
-                                    {/* Candidate Info */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                                        <div style={{ width: 40, height: 40, borderRadius: 12, background: '#1C1B2E', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 15, flexShrink: 0, fontFamily: 'Syne, sans-serif' }}>
-                                            {c.candidate_name.charAt(0).toUpperCase()}
-                                        </div>
-                                        <div style={{ minWidth: 0 }}>
-                                            <p style={{ fontSize: 14, fontWeight: 700, color: '#1C1B2E', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.candidate_name}</p>
-                                            <p style={{ fontSize: 12, color: '#94a3b8', margin: '3px 0 0', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                {c.candidate_email || 'No email'}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Job Title */}
-                                    <span style={{ fontSize: 13, fontWeight: 600, color: '#1C1B2E', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.job_title}</span>
-
-                                    {/* Status Badge */}
-                                    <div>
-                                        <span style={{ display: 'inline-block', padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 700, background: st.bg, color: st.color, textTransform: 'capitalize', letterSpacing: '0.02em' }}>
-                                            {c.status}
-                                        </span>
-                                    </div>
-
-                                    {/* Skills */}
-                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.skills_score}%</span>
-
-                                    {/* Experience */}
-                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.experience_score}%</span>
-
-                                    {/* Education */}
-                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1C1B2E' }}>{c.education_score}%</span>
-
-                                    {/* Overall Score */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                        <span style={{ fontSize: 15, fontWeight: 800, color: scoreColor(c.match_score), fontFamily: 'Syne, sans-serif', minWidth: 38 }}>{c.match_score}%</span>
-                                        <div style={{ flex: 1, height: 5, background: '#f3f1ec', borderRadius: 3, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.04)' }}>
-                                            <div style={{ width: `${c.match_score}%`, height: '100%', borderRadius: 3, background: `linear-gradient(90deg, ${scoreBgColor(c.match_score)}, ${c.match_score >= 75 ? '#9DBF9E' : c.match_score >= 55 ? '#F4D58D' : '#F4A28C'})`, transition: 'width 0.5s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />
-                                        </div>
-                                    </div>
-
-                                    {/* Actions */}
-                                    <div style={{ display: 'flex', gap: 8 }}>
-                                        <button
-                                            onClick={() => router.push(`/dashboard/jobs/${c.job_id}`)}
-                                            style={{ padding: '7px 14px', fontSize: 12, fontWeight: 700, color: '#fff', background: '#1C1B2E', border: 'none', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, transition: 'opacity 0.2s' }}
-                                            onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
-                                            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-                                        >
-                                            View
-                                        </button>
-                                        <button
-                                            onClick={() => handleDownload(c.id, c.job_id, c.file_name)}
-                                            style={{ padding: '7px 14px', fontSize: 12, fontWeight: 700, color: '#1C1B2E', background: '#fff', border: '1px solid #e8e5df', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, transition: 'all 0.2s' }}
-                                            onMouseEnter={e => { e.currentTarget.style.background = '#FDFCF9'; e.currentTarget.style.borderColor = '#7FA582'; }}
-                                            onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#e8e5df'; }}
-                                        >
-                                            Resume
-                                        </button>
-                                    </div>
-                                </div>
-                            );
-                        })}
                     </div>
                 )}
             </div>

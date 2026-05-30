@@ -80,7 +80,7 @@ export default function SettingsPage() {
     }
 
     return (
-        <div ref={pageRef} style={{ minHeight: '100vh', padding: '32px', background: '#FBF8F2', position: 'relative', overflow: 'hidden' }}>
+        <div ref={pageRef} className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#FBF8F2] relative overflow-hidden">
             {/* Background Orbs */}
             <div className="dash-orb" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(127, 165, 130,0.15) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(60px)' }} />
             <div className="dash-orb" style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(244,162,140,0.18) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%', zIndex: 0, filter: 'blur(80px)' }} />
@@ -88,8 +88,8 @@ export default function SettingsPage() {
             <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
                 {/* Header */}
-                <div className="page-header" style={{ display: 'flex', alignItems: 'center', gap: 16, borderRadius: 24, padding: '24px 32px', marginBottom: 32, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(127, 165, 130,0.05)' }}>
-                    <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #7FA582, #9DBF9E)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 24px rgba(127, 165, 130,0.3)' }}>
+                <div className="page-header flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 mb-8 bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(127, 165, 130,0.05)] rounded-3xl">
+                    <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #7FA582, #9DBF9E)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 24px rgba(127, 165, 130,0.3)', flexShrink: 0 }}>
                         <User size={28} />
                     </div>
                     <div>
@@ -101,10 +101,10 @@ export default function SettingsPage() {
                 {/* Profile Hero Card */}
                 <div className="profile-card" style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderRadius: 24, border: '1px solid rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(127, 165, 130,0.05)', overflow: 'hidden', marginBottom: 28 }}>
                     {/* Full Banner with content inside */}
-                    <div style={{ padding: '40px 36px', background: 'linear-gradient(135deg, #1C1B2E, #7FA582, #F4A28C, #E88A72)', position: 'relative' }}>
+                    <div style={{ padding: '32px 24px sm:40px 36px', background: 'linear-gradient(135deg, #1C1B2E, #7FA582, #F4A28C, #E88A72)', position: 'relative' }}>
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")', opacity: 0.5 }} />
                         <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-                            <div style={{ position: 'relative' }}>
+                            <div style={{ position: 'relative', flexShrink: 0 }}>
                                 <div style={{ width: 88, height: 88, borderRadius: 22, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 32, fontWeight: 800, fontFamily: 'Syne, sans-serif', border: '3px solid rgba(255,255,255,0.4)', boxShadow: '0 8px 24px rgba(0,0,0,0.15)' }}>
                                     {getInitials(profile?.company_name)}
                                 </div>
@@ -165,7 +165,7 @@ export default function SettingsPage() {
                         <p style={{ fontSize: 13, color: '#64608a', margin: '4px 0 0', fontWeight: 500 }}>Update your company information</p>
                     </div>
 
-                    <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 24 }}>
+                    <div style={{ padding: '24px sm:32px', display: 'flex', flexDirection: 'column', gap: 24 }}>
                         {/* Company Name */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label style={{ fontSize: 12, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Company Name</label>
@@ -183,7 +183,7 @@ export default function SettingsPage() {
                         </div>
 
                         {/* Two Column Row */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             {/* Industry */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                                 <label style={{ fontSize: 12, fontWeight: 800, color: '#64608a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Industry</label>

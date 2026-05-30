@@ -442,75 +442,83 @@ export default function JobDetailPage() {
                                     ) : (
                                         filteredCandidates.map((c, idx) => (
                                             <div key={c.id} 
-                                                style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderBottom: idx < filteredCandidates.length - 1 ? '1px solid #f3f1ec' : 'none', transition: 'background-color 0.2s', cursor: 'pointer' }}
+                                                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:px-6 sm:py-4 border-b border-[#f3f1ec] last:border-b-0 transition-colors duration-200 cursor-pointer"
+                                                onClick={() => setSelectedCandidate(c)}
                                                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#FDFCF9'; }}
                                                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
-                                                {/* Rank */}
-                                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-extrabold flex-shrink-0"
-                                                    style={{ background: idx === 0 ? '#f3e9c8' : idx === 1 ? '#f3f1ec' : idx === 2 ? '#f3e5d8' : '#f9f8f5', color: idx === 0 ? '#9a7e2e' : '#64608a' }}>
-                                                    {idx + 1}
+                                                
+                                                {/* Left Section: Rank, Avatar, Info */}
+                                                <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                                                    {/* Rank */}
+                                                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-extrabold flex-shrink-0"
+                                                        style={{ background: idx === 0 ? '#f3e9c8' : idx === 1 ? '#f3f1ec' : idx === 2 ? '#f3e5d8' : '#f9f8f5', color: idx === 0 ? '#9a7e2e' : '#64608a' }}>
+                                                        {idx + 1}
+                                                    </div>
+
+                                                    {/* Avatar */}
+                                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                                                        style={{ background: '#1C1B2E' }}>
+                                                        {c.name.charAt(0).toUpperCase()}
+                                                    </div>
+
+                                                    {/* Info */}
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="flex items-center gap-2 mb-1">
+                                                            <p className="font-semibold text-[#1C1B2E] text-sm truncate">{c.name}</p>
+                                                            <span className="px-2.5 py-0.5 rounded-md text-[10px] font-semibold capitalize flex-shrink-0"
+                                                                style={c.status === 'shortlisted' ? { background: 'rgba(127,165,130,0.10)', color: '#4a7c4f' } :
+                                                                    c.status === 'rejected' ? { background: 'rgba(244,162,140,0.15)', color: '#c06a4e' } :
+                                                                        { background: 'rgba(28,27,46,0.04)', color: '#64608a' }}>
+                                                                {c.status}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 text-xs text-[#94a3b8]">
+                                                            <span className="truncate">{c.email || 'No email'}</span>
+                                                            {c.phone && <span className="flex-shrink-0">{c.phone}</span>}
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                {/* Avatar */}
-                                                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                                                    style={{ background: '#1C1B2E' }}>
-                                                    {c.name.charAt(0).toUpperCase()}
-                                                </div>
+                                                {/* Right Section: Score & Actions */}
+                                                <div className="flex items-center justify-between sm:justify-end gap-6 flex-shrink-0">
+                                                    {/* Score Breakdown Mini */}
+                                                    <div className="hidden lg:flex items-center gap-6 text-[10px] text-[#94a3b8] uppercase tracking-wider">
+                                                        <div className="text-center">
+                                                            <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.skills_score}%</div>
+                                                            <div>Skills</div>
+                                                        </div>
+                                                        <div className="text-center">
+                                                            <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.experience_score}%</div>
+                                                            <div>Exp</div>
+                                                        </div>
+                                                        <div className="text-center">
+                                                            <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.education_score}%</div>
+                                                            <div>Edu</div>
+                                                        </div>
+                                                    </div>
 
-                                                {/* Info */}
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        <p className="font-semibold text-[#1C1B2E] text-sm">{c.name}</p>
-                                                        <span className="px-2.5 py-1 rounded-md text-[10px] font-semibold capitalize"
-                                                            style={c.status === 'shortlisted' ? { background: 'rgba(127,165,130,0.10)', color: '#4a7c4f' } :
-                                                                c.status === 'rejected' ? { background: 'rgba(244,162,140,0.15)', color: '#c06a4e' } :
-                                                                    { background: 'rgba(28,27,46,0.04)', color: '#64608a' }}>
-                                                            {c.status}
+                                                    {/* Score Bar */}
+                                                    <div className="hidden md:flex flex-col items-end gap-2 w-32">
+                                                        <span style={{ fontSize: 18, fontWeight: 800, color: '#1C1B2E', fontFamily: 'Syne, sans-serif' }}>
+                                                            {c.match_score}%
                                                         </span>
+                                                        <div className="w-full h-1.5 bg-[#f3f1ec] rounded-full overflow-hidden">
+                                                            <div className="h-full rounded-full"
+                                                                style={{ width: `${c.match_score}%`, background: c.match_score >= 75 ? '#7FA582' : c.match_score >= 55 ? '#F4A28C' : '#E88A72' }} />
+                                                        </div>
                                                     </div>
-                                                    <div className="flex items-center gap-3 text-xs text-[#94a3b8]">
-                                                        <span className="truncate">{c.email || 'No email'}</span>
-                                                        {c.phone && <span>{c.phone}</span>}
-                                                    </div>
-                                                </div>
 
-                                                {/* Score Breakdown Mini */}
-                                                <div className="hidden lg:flex items-center gap-6 text-[10px] text-[#94a3b8] uppercase tracking-wider">
-                                                    <div className="text-center">
-                                                        <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.skills_score}%</div>
-                                                        <div>Skills</div>
+                                                    {/* Actions */}
+                                                    <div className="flex gap-2">
+                                                        <button onClick={(e) => { e.stopPropagation(); setSelectedCandidate(c); }}
+                                                            className="px-4 py-2 text-xs font-semibold text-white bg-[#1C1B2E] rounded-lg border-none cursor-pointer hover:opacity-80 transition-opacity">
+                                                            Report
+                                                        </button>
+                                                        <button onClick={(e) => { e.stopPropagation(); handleDownload(c.id, c.file_name); }}
+                                                            className="px-4 py-2 text-xs font-semibold text-[#1C1B2E] border border-[#e8e5df] rounded-lg hover:bg-[#FDFCF9] bg-white cursor-pointer">
+                                                            Resume
+                                                        </button>
                                                     </div>
-                                                    <div className="text-center">
-                                                        <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.experience_score}%</div>
-                                                        <div>Exp</div>
-                                                    </div>
-                                                    <div className="text-center">
-                                                        <div className="font-extrabold text-[#1C1B2E] text-sm" style={{ fontFamily: 'Syne, sans-serif' }}>{c.education_score}%</div>
-                                                        <div>Edu</div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Score Bar */}
-                                                <div className="hidden md:flex flex-col items-end gap-2 w-32">
-                                                    <span style={{ fontSize: 18, fontWeight: 800, color: '#1C1B2E', fontFamily: 'Syne, sans-serif' }}>
-                                                        {c.match_score}%
-                                                    </span>
-                                                    <div className="w-full h-1.5 bg-[#f3f1ec] rounded-full overflow-hidden">
-                                                        <div className="h-full rounded-full"
-                                                            style={{ width: `${c.match_score}%`, background: c.match_score >= 75 ? '#7FA582' : c.match_score >= 55 ? '#F4A28C' : '#E88A72' }} />
-                                                    </div>
-                                                </div>
-
-                                                {/* Actions */}
-                                                <div className="flex gap-2 flex-shrink-0">
-                                                    <button onClick={() => setSelectedCandidate(c)}
-                                                        className="px-4 py-2 text-xs font-semibold text-white bg-[#1C1B2E] rounded-lg border-none cursor-pointer hover:opacity-80 transition-opacity">
-                                                        Report
-                                                    </button>
-                                                    <button onClick={() => handleDownload(c.id, c.file_name)}
-                                                        className="px-4 py-2 text-xs font-semibold text-[#1C1B2E] border border-[#e8e5df] rounded-lg hover:bg-[#FDFCF9] bg-white cursor-pointer">
-                                                        Resume
-                                                    </button>
                                                 </div>
                                             </div>
                                         ))
