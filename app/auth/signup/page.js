@@ -11,6 +11,7 @@ export default function SignupPage() {
     const [step, setStep] = useState('signup'); // signup | otp | success
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [fieldErrors, setFieldErrors] = useState({ email: '', password: '' });
     const [email, setEmail] = useState('');
     const otpIds = ['otp-0', 'otp-1', 'otp-2', 'otp-3', 'otp-4', 'otp-5'];
     const [otpValues, setOtpValues] = useState(['', '', '', '', '', '']);
@@ -41,12 +42,48 @@ export default function SignupPage() {
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
         setError('');
+        // Clear field-specific error on change
+        if (e.target.name === 'email' || e.target.name === 'password') {
+            setFieldErrors(prev => ({ ...prev, [e.target.name]: '' }));
+        }
+    };
+
+    const validateForm = () => {
+        const errors = { email: '', password: '' };
+        let isValid = true;
+
+        // Email validation: must contain @ with text before and after
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(form.email)) {
+            errors.email = 'Please enter a valid email address (e.g. you@company.com)';
+            isValid = false;
+        }
+
+        // Password validation: min 8 chars, at least 1 letter, 1 digit, 1 special character
+        const minLength = form.password.length >= 8;
+        const hasLetter = /[a-zA-Z]/.test(form.password);
+        const hasDigit = /\d/.test(form.password);
+        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(form.password);
+
+        if (!minLength || !hasLetter || !hasDigit || !hasSpecial) {
+            const missing = [];
+            if (!minLength) missing.push('at least 8 characters');
+            if (!hasLetter) missing.push('a letter');
+            if (!hasDigit) missing.push('a number');
+            if (!hasSpecial) missing.push('a special character (!@#$%…)');
+            errors.password = `Password must contain ${missing.join(', ')}`;
+            isValid = false;
+        }
+
+        setFieldErrors(errors);
+        return isValid;
     };
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
+        if (!validateForm()) return;
+        setLoading(true);
         try {
             await api.post('/api/v1/auth/signup', {
                 email: form.email,
@@ -138,7 +175,9 @@ export default function SignupPage() {
     };
 
     const inputCls = "w-full rounded-xl border border-[#1C1B2E]/10 bg-white px-4 py-3 text-sm text-[#1C1B2E] placeholder:text-[#807E94] outline-none transition focus:border-[#7FA582] focus:ring-4 focus:ring-[#9DBF9E]/20";
+    const inputErrorCls = "w-full rounded-xl border border-[#E88A72] bg-white px-4 py-3 text-sm text-[#1C1B2E] placeholder:text-[#807E94] outline-none transition focus:border-[#E88A72] focus:ring-4 focus:ring-[#F4A28C]/20";
     const labelCls = "mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4A4860]";
+    const fieldErrorCls = "mt-1.5 flex items-start gap-1.5 text-xs text-[#B85A3F]";
     const primaryBtn = "w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#1C1B2E] py-3 text-sm font-semibold text-white shadow-lg shadow-[#1C1B2E]/20 transition duration-300 hover:-translate-y-0.5 hover:shadow-2xl disabled:cursor-not-allowed disabled:opacity-60";
 
     return (
@@ -250,7 +289,13 @@ export default function SignupPage() {
                                         <div>
                                             <label htmlFor="signup_email" className={labelCls}>Work Email</label>
                                             <input id="signup_email" name="email" type="email" required value={form.email}
-                                                onChange={handleChange} placeholder="you@company.com" className={inputCls}/>
+                                                onChange={handleChange} placeholder="you@company.com" className={fieldErrors.email ? inputErrorCls : inputCls}/>
+                                            {fieldErrors.email && (
+                                                <p className={fieldErrorCls}>
+                                                    <svg className="w-3.5 h-3.5 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/></svg>
+                                                    {fieldErrors.email}
+                                                </p>
+                                            )}
                                         </div>
                                         <div className="grid grid-cols-2 gap-3">
                                             <div>
@@ -278,7 +323,14 @@ export default function SignupPage() {
                                         <div>
                                             <label htmlFor="signup_password" className={labelCls}>Password</label>
                                             <input id="signup_password" name="password" type="password" required value={form.password}
-                                                onChange={handleChange} placeholder="Min. 8 characters" className={inputCls}/>
+                                                onChange={handleChange} placeholder="Min. 8 characters" className={fieldErrors.password ? inputErrorCls : inputCls}/>
+                                            {fieldErrors.password && (
+                                                <p className={fieldErrorCls}>
+                                                    <svg className="w-3.5 h-3.5 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/></svg>
+                                                    {fieldErrors.password}
+                                                </p>
+                                            )}
+                                            <p className="mt-1.5 text-[10px] text-[#807E94]">Min. 8 chars, with letters, numbers & a special character</p>
                                         </div>
 
                                         <button type="submit" disabled={loading} className={`${primaryBtn} mt-2`}>
